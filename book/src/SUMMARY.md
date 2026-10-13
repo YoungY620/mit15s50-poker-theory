@@ -1,19 +1,19 @@
 # Summary
 
-[课程简介](README.md)
+[Course Introduction](README.md)
 
-# 讲座
+# Lectures
 
-- [L1 扑克理论导论](ch01-intro.md)
-- [L2 分析技术](ch02-analysis.md)
-- [L3 基本策略](ch03-basic-strategy.md)
-- [L4 翻牌前分析](ch04-preflop.md)
-- [L5 锦标赛打法](ch05-tournament.md)
-- [L6 扑克经济学](ch06-poker-economics.md)
-- [L7 博弈论](ch07-game-theory.md)
-- [L8 决策制定](ch08-decisions.md)
+- [L1 Introduction to Poker Theory](ch01-intro.md)
+- [L2 Analytical Techniques](ch02-analysis.md)
+- [L3 Basic Strategy](ch03-basic-strategy.md)
+- [L4 Preflop Analysis](ch04-preflop.md)
+- [L5 Tournament Play](ch05-tournament.md)
+- [L6 Poker Economics](ch06-poker-economics.md)
+- [L7 Game Theory](ch07-game-theory.md)
+- [L8 Decision Making](ch08-decisions.md)
 
-# 作业案例
+# Assignments
 
 - [Case 1](cases/case1.md)
 - [Case 2](cases/case2.md)

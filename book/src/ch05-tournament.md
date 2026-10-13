@@ -1,312 +1,312 @@
-# L5 锦标赛打法
+# L5 Tournament Play
 
-本章把扑克当作一项投资来讨论：假设你已经是一名盈利玩家，如何在锦标赛（tournament）这种与现金局（cash game）截然不同的结构中兑现你的优势，并管理好你的资金。
+This chapter treats poker as an investment: assuming you are already a winning player, how do you cash in your edge in a tournament — a structure fundamentally different from a cash game — and how do you manage your bankroll?
 
-## 现金局与锦标赛
+## Cash Games vs Tournaments
 
-锦标赛是你用买入费换取比赛筹码、只有比对手活得更久才能拿到奖金的结构——最终拿到所有筹码的人赢得一份固定的奖池份额，而不是等价于筹码的现金。现金局中每个筹码都有确定的货币价值，你可以随时进出。两者的对比如下：
+A tournament is a structure in which you exchange a buy-in for tournament chips and earn money only by outlasting your opponents — the player who ends up with all the chips wins a fixed share of a prize pool, not cash equivalent to the chips. In a cash game, every chip has a definite monetary value, and you can enter or leave whenever you like. The comparison:
 
-| 现金局 | 锦标赛 |
+| Cash Games | Tournaments |
 | --- | --- |
-| 筹码 = 赢利（winnings） | 名次 = 赢利 |
-| 筹码期望（chip EV, cEV）= 金钱期望（$EV） | cEV ≈ $EV（方向一致但不严格相等） |
-| 随时来去 | 被锁定在锦标赛结构里 |
-| 无限次买入 | 一次固定买入 |
-| 盲注固定 | 盲注级别不断上涨 |
-| 可以选桌（table selection） | 只能选玩家池（player pool selection） |
-| 流动性更高 | 附带成本（overhead）更高 |
-| 方差更低 | 方差更高 |
-| 文献丰富 | 文献很少 |
+| Chips = Winnings | Finish Position = Winnings |
+| Chip EV (cEV) = \$EV | cEV ≈ \$EV (same direction, not strictly equal) |
+| Come-and-go at will | Locked into tournament structure |
+| Unlimited buy-ins | One fixed buy-in |
+| Fixed blinds | Increasing blind levels |
+| Table selection | Player pool selection |
+| Higher liquidity | Higher overhead |
+| Lower variance | Higher variance |
+| Well-documented | Limited literature |
 
-几点值得展开。cEV 与 $EV 在锦标赛中大体同向，但某些场合正 cEV 的决策可能是负 $EV 的（见后文 ICM）。现金局里你被淘汰可以立刻重新买入，"就像没发生过"；锦标赛第一手出局则没有重来机会。现金局你可以直接观察同桌八九个人再决定入座；锦标赛只能选定一个"参赛人群"——你可能报名一场 90 条鱼 10 个职业的比赛，却被分到全是职业的桌子。现金局流动性强、随时能兑现时薪，是最好的职业选择；但中高级别现金局很难赢——输家会很快察觉并退出，而锦标赛里一些大牌职业可能已经是输家了，只是还不知道，因为大赛事的"长期"可能要好几年才能显现。
+A few rows deserve elaboration. cEV and \$EV largely move together in tournaments, but in some spots a decision that is positive cEV can be negative \$EV (see ICM below). In a cash game, if you get knocked out you can buy back in immediately, "like it never happened"; busting on the first hand of a tournament offers no redo. In a cash game you can watch the eight or nine players at a table before deciding to sit; in a tournament you can only select a "player pool" — you might register for an event with 90 fish and 10 pros and be seated at a table full of pros. Cash games are liquid and let you realize your hourly rate at will, making them the best professional choice; but mid-to-high-stakes cash games are hard to beat — losers notice quickly and drop out, whereas in tournaments some big-name pros may already be losers without knowing it, because the "long run" of major events can take years to reveal itself.
 
-**为什么打锦标赛**：更难精通、文献少所以优势空间更大；更受公众关注；成绩是永久的（track record）；能以高 stakes 对抗习惯低 stakes 的对手；投资回报率（ROI）通常更高。
+**Why tournaments?** They are harder to master and sparsely documented, so there is more room for an edge; they are more publicized; results are permanent (a track record); they let you play high stakes against opponents used to lower stakes; and ROI is generally higher.
 
-**为什么不打锦标赛**：更难精通；打得差也不易察觉，长期结果来得极慢；方差更大；单场耗时很长；需要高 stakes 才有时薪可言；有发牌员小费、差旅住宿等附带成本；需要更多规划与研究。
+**Why not tournaments?** They are harder to master; it is less obvious when you are playing badly, and the long run takes forever; variance is higher; each event takes a long time; high stakes are generally required for a worthwhile hourly; there are incidental costs such as dealer tipping, travel, and hotels; and they demand more planning and research.
 
-## 锦标赛生命周期
+## Tournament Life Cycle
 
-锦标赛最重要的概念是**节奏（tempo）**。生命周期分三段：早期阶段（early game）、泡沫期与刚入圈阶段（bubble and early cashes）、后期/决赛桌（late game / final table）。早期会淘汰约 90% 的选手，约占比赛时间的一半。
+The most important tournament concept is **tempo**. The life cycle has three phases: the early game, the bubble and early cashes, and the late game / final table. The early game eliminates roughly 90% of the field and occupies about half the total playing time.
 
-### 早期阶段
+### Early Game
 
-早期打法与现金局非常相似：此时 cEV ≈ $EV——当你有 1000 筹码、夺冠需要 100000 时，50 筹码的得失对奖金期望几乎没有影响。你的打法完全由筹码量决定；早期还有额外价值：建立对对手的阅读（reads）和自己的牌桌形象（image）。
+Early play closely resembles a cash game: here cEV ≈ \$EV — when you hold 1,000 chips and winning requires 100,000, a swing of 50 chips barely affects your payout expectation. Your playing style is dictated entirely by your stack size, and the early game carries extra value: establishing reads on your opponents and building your own table image.
 
-按 M（筹码量与一圈盲注及前注成本之比，即 Harrington 的 M）划分筹码区：
+Stack zones are defined by M (the ratio of your stack to the cost of one orbit of blinds and antes — Harrington's M):
 
-| 筹码区 | 名称 |
+| Stack Size | Zone |
 | --- | --- |
-| $M < 2$ | 死亡区（Dead Zone） |
-| $2 < M < 8$ | 偷盲期（Steal Period） |
-| $8 < M < 12$ | 偷盲/反偷期（Steal/Re-steal Period） |
-| $12 < M < 30$ | 价值下注区（Value Betting Zone） |
-| $M > 30$ | 暗三条挖矿区（Set Mining Zone） |
+| $M < 2$ | Dead Zone |
+| $2 < M < 8$ | Steal Period |
+| $8 < M < 12$ | Steal/Re-steal Period |
+| $12 < M < 30$ | Value Betting Zone |
+| $M > 30$ | Set Mining Zone |
 
-**关于节奏**：锦标赛与现金局最大的区别是攻击性（aggression）的拿捏。Doyle Brunson 说过"永远别在锦标赛里超速"——不要在筹码很深时过度激进。想夺冠你迟早得赢下几次 coin flip（胜率接近五五开的对决），这不可避免；你的目标是在不摊牌的情况下慢慢积累筹码、避免主动进入五五开，让真正的对决来临时你有更多筹码。这些微小差别在整场比赛中被不断复利，把你夺冠的概率从 1% 提升到 3%–4%——优势就是这样兑现的。
+**A note on tempo:** the biggest difference between tournaments and cash games is calibrating your aggression. Doyle Brunson said to "never get caught speeding in a tournament" — do not be overly aggressive when your stack is deep. To win a tournament you will eventually have to win some coin flips (confrontations near 50/50); that is inevitable. Your goal is to grow your stack slowly without showdowns, avoid voluntarily entering flips, and arrive at the unavoidable ones with more chips. These small differences compound over the whole event, raising your probability of winning from 1% to 3%–4% — that is where your edge materializes.
 
-### M < 2：死亡区
+### M < 2 – Dead Zone
 
-落入此区只应该是因为你刚输掉一手牌、而输之前筹码只比对手略多。在这里你几乎没有弃牌赢率（fold equity，对手弃牌带给你的那部分期望）——大盲有赔率跟注你的任何全下，甚至会不看牌就跟。你的全部目标是攒够筹码重获弃牌赢率。**任何情况下都不要跌破 M = 1**：哪怕随后翻倍，你仍在死亡区，等于至少落后一次必须赢下的对决。宁可拿任意两张牌全下，也不要跌破 M = 1。
+You should reach this zone only because you just lost a hand in which you had slightly more chips than your opponent. Here you have virtually no fold equity (the portion of your expectation that comes from opponents folding) — the big blind has the odds to call any push and may call without even looking. Your entire goal is to accumulate enough chips to regain fold equity. **Never fall under M = 1 under any circumstance**: even if you double up afterward, you are still in the dead zone, effectively at least one must-win confrontation behind. Go all in with any two cards before letting your M drop below 1.
 
-### 2 < M < 8：偷盲期
+### 2 < M < 8 – Steal Period
 
-此时你唯一的动作是全下或弃牌（push or fold）。每偷到一次盲注，你的筹码量就增加约 10%–40%——除非你真有 AA，这比靠好牌在摊牌赢得的边际优势更有价值。具体做法：
+Your only move here is all-in or fold (push or fold). Every time you steal the blinds, your stack grows by roughly 10%–40% — unless you literally hold AA, that is worth more than the edge you would have playing good cards to a showdown. Concretely:
 
-- 找出不保卫盲注的玩家专偷他们——你在早期就该读人，这些"软柿子"是你最好的朋友；
-- 对外装成会保卫盲注的人（比如口头宣称会反击），但别真这么做——如果大家都弃牌轮到你大盲，你白赚近 1 个 M；
-- 尽量避免摊牌：除非认为自己是约 70% 的热门，否则不要跟注全下。
+- Identify players who do not protect their blinds and steal from them — you should have been reading people during the early game; these pushovers are your best friends;
+- Project the image of someone who defends their blinds (e.g., verbally announce that you will fight back), but do not actually do it — if everyone folds to your big blind, you collect nearly 1 M for free;
+- Avoid showdowns at all costs: do not call an all-in unless you believe you are about a 70% favorite.
 
-这背后是 Sklansky 的**缺口理论（Gap Theory）**：跟注全下需要的牌力远强于主动全下。因为主动下注时你拥有弃牌赢率带来的全部权益，跟注时则没有——很多场合你可以用任意两张牌全下，却只有好牌才能跟注。本阶段的目标是保持 $M \geq 2$，并通过翻倍或连续偷盲（连偷三手大约能从 8M 升到 11M）进入下一个区。
+Behind this is Sklansky's **Gap Theory**: calling an all-in requires a much stronger hand than pushing all in yourself. When you bet, you own the full equity conferred by fold equity; when you call, you do not — there are many spots where you can push with any two cards (ATC) but can call only with a good hand. The goal in this zone is to keep $M \geq 2$ and to reach the next zone by doubling up or chaining steals (three steals in a row take you from about 8M to 11M).
 
-### 8 < M < 12：偷盲/反偷期
+### 8 < M < 12 – Steal/Re-steal Period
 
-到了这里，面对加注你可以选择弃牌，这在更深的死亡区做不到。原因：标准偷盲加注是 3BB（约 2M）；对手再加注全下时你还要补约 6M，底池赔率要求 $\frac{6}{6+11} \approx \frac{6}{17} = 35\%$ 的胜率——不足以支持用任意两张牌（ATC, any two cards）跟注。对手的再加注不再是"必须跟"，你重新获得了弃牌的选择权。偷盲（steal）是主动抢盲注；反偷（re-steal）是识别出某人在偷盲后对他再加注反击，也包括自己不在盲注位时对偷盲者加注。
+At this depth you regain the option to fold to a raise, which was unavailable deeper. Why? Your standard steal raise is 3BB (about 2M); when an opponent re-raises all in, you must call about 6M more, and the pot odds demand $\frac{6}{6+11} \approx \frac{6}{17} = 35\%$ equity — not enough to justify calling with any two cards. The re-raise is no longer a forced call, and folding is back on the menu. Stealing is the initial attempt to take the blinds; re-stealing is identifying that someone is stealing and re-raising them — including raising a stealer when you are not in the blinds yourself.
 
-### 12 < M < 30：价值下注区
+### 12 < M < 30 – Value Betting Zone
 
-在这个区你真的会看到翻牌（课件该节标题写作 $15 < M < 30$）。你的起手牌价值开始取决于它击中翻牌的能力，打法接近现金局。准则：
+In this zone you will actually see flops (the slide section title reads $15 < M < 30$). Your hand's preflop value now depends on its ability to connect with the flop, and play approaches that of a cash game. Guidelines:
 
-- 翻牌前不要平跟（flat call）入局，自己加注进来，单挑时在翻牌持续下注（c-bet）；
-- 在互不关联（uncorrelated）的牌面上，拿暗三条（set）打光筹码是可以接受的；
-- 不要用小的两对、顶对顶踢（TPTK）打光，也不要在明显有同花/顺子可能的牌面上用暗三条打光。
+- Do not flat call preflop — come in for a raise yourself, and continuation bet (c-bet) the flop when heads-up;
+- Going broke with a set on an uncorrelated board is acceptable;
+- Do not go broke with a low two pair or top pair top kicker (TPTK), nor with a set on a board where a flush or straight is obvious.
 
-### M > 30：暗三条挖矿区
+### M > 30 – Set Mining Zone
 
-**暗三条挖矿（set mining）**指翻牌前用口袋对子便宜地平跟，希望翻牌击中隐蔽的暗三条。总则：
+**Set mining** means flat calling cheaply preflop with a pocket pair, hoping to flop a hidden set. General rules:
 
-- 耐心等待怪兽牌，做成后猛烈地价值下注；
-- 在一手被加注又再加注的牌里，数一数有多少手牌能赢你——如果你的牌不是绝对最大的可能牌型，不要为 50M 打光；
-- 便宜地看翻牌，用底池赔率（pot odds）评估追坚果牌（nut）的听牌，隐含赔率（implied odds）要保守估计；
-- 如果你管不住自己的手，在攒到 30M 之前连 JJ 及以下的对子都直接弃掉。
+- Wait patiently for monster hands and value bet them aggressively once made;
+- In a hand that has been raised and re-raised, count how many hands can beat you — if yours is not the absolute best possible hand, do not go broke for 50M;
+- See flops cheaply, use pot odds to evaluate draws to the nuts, and estimate implied odds conservatively;
+- If you cannot keep it together, fold JJ and worse pairs until you have 30M.
 
-## 翻牌后打法（Flop, Turn, River Play）
+## Flop, Turn, River Play
 
-以下建议适用于中等筹码（$M > 10$）。基本思路是给出每个阶段各类牌力的价值，并推荐激进下注：翻牌前标准加注为 3BB，每个已平跟者再加 1BB；翻牌后各条街下注约 2/3 底池，以遏制听牌。$M < 10$ 属于翻牌前打法（后续讲座），$M > 30$ 则建议非常保守。
+The advice below applies to medium stacks ($M > 10$). The basic idea is to state the value of each class of hand at every stage and to recommend aggressive betting: the standard preflop raise is 3BB plus 1BB for each prior caller; postflop bets on each street are about 2/3 of the pot to discourage draws. $M < 10$ is preflop play (covered in a later lecture), and $M > 30$ calls for very conservative play.
 
-### 思维层级（Levels of Thinking）
+### Levels of Thinking
 
-- **L0** — 不读牌/对牌力无所谓；
-- **L1** — "我有什么牌？"（读自己的牌，hand reading）；
-- **L2** — "他有什么牌？"（读对手，opponent reading）；
-- **L3** — "他认为我有什么牌？"（表象/扮演，representation）；
-- **L4** — "他认为他在扮演什么牌？"；
-- **L5** — 以此类推……
+- **L0** — Not reading / indifference to hand value;
+- **L1** — "What cards do I have?" (hand reading);
+- **L2** — "What cards does he have?" (opponent reading);
+- **L3** — "What cards does he think I have?" (representation);
+- **L4** — "What cards does he think he is representing?";
+- **L5** — and so on …
 
-**你的目标是恰好比对手高一个层级**，而不是越高越好。
+**Your goal is to be exactly one level above your opponents** — not as high as possible.
 
-课件用一手在线牌局演示了这个推理过程（下注单位为美元）：Hero（Desmond_MIT）手持 T♠T♥。第一层思考是"我们对任意两张牌（ATC）都有一手好牌"；加入读人后，率先加注的 UTG 被放在 77+、ATo+、TJs+ 的范围上。
+The slides demonstrate this reasoning with an online hand (bets in dollars): Hero (Desmond_MIT) holds T♠T♥. Level-one thinking says "we have a good hand versus any two cards"; adding opponent reading, the UTG opener is put on 77+, ATo+, TJs+.
 
-![思维层级示例：Hero 持 T♠T♥，认为自己领先于任意两张牌，并把 UTG 读为 77+、ATo+、TJs+](assets/ch05-1.png)
+![Levels of thinking: Hero holds T♠T♥, a good hand against any two cards, and reads UTG as 77+, ATo+, TJs+](assets/ch05-1.png)
 
-随后 MP1 做出再加注，其范围被读为 TT+、AQo+、AJs+；UTG 面对再加注又做出第四次加注——此时他的范围被压缩到 QQ+、AK，TT 从"好牌"变成了"坏牌"。
+MP1 then re-raises and is read as TT+, AQo+, AJs+; UTG comes back with a fourth raise — compressing his range to QQ+, AK, and TT turns from a good hand into a bad one.
 
-![同一手牌的后续：UTG 第四次加注后范围被读为 QQ+、AK，TT 变成坏牌](assets/ch05-2.png)
+![The same hand, continued: after UTG's fourth raise his range is read as QQ+, AK, and TT is now a bad hand](assets/ch05-2.png)
 
-这就是 Phil Gordon 在《小绿书》（*Phil Gordon's Little Green Book*）里的名言：**"第四次加注意味着 AA"（The Fourth Raise Means Aces）**。
+This is Phil Gordon's maxim from *Phil Gordon's Little Green Book*: **"The Fourth Raise Means Aces."**
 
-**层级错配（mismatched levels）**是常见的输钱方式：当对手根本不在读你（不到 L2）时，你在 L3 思考"我在扮演什么牌"就是浪费——对阵 L1 玩家，Phil Ivey 也没有优势，因为所有"扮演"都对牛弹琴。示例：盲注 25/50，Villain（后位）与 Hero（按钮位）各有 $2000。
+**Mismatched levels** are a common way to lose money: thinking at L3 ("what am I representing?") is wasted when your opponent is not trying to read you at all (below L2) — against an L1 player, even Phil Ivey has no edge, because every act of "representation" falls on deaf ears. Example: blinds 25/50, Villain (late position) and Hero (button) each have \$2000.
 
-- 翻牌前（底池 $75）：Hero 持 K♣J♣，Villain 平跟 $50，Hero 加注到 $250，Villain 跟注；
-- 翻牌 7♣T♣3♣（底池 $575，两人）：Villain 下注 $200，Hero 加注到 $600，Villain 全下 $2000。
+- Preflop (pot \$75): Hero holds K♣J♣, Villain calls \$50, Hero raises to \$250, Villain calls;
+- Flop 7♣T♣3♣ (pot \$575, two players): Villain bets \$200, Hero raises to \$600, Villain goes all in for \$2000.
 
-同一个动作，在弱手和强手眼中意味着完全不同的范围：
+The same action means entirely different ranges to a weak player and to a strong player:
 
-| 弱手的范围 | 强手的范围 |
+| Weak Player's Range | Strong Player's Range |
 | --- | --- |
-| JJ+ | A♣X♣（坚果同花听牌） |
-| AT | 也许 TT |
-| TT、77、33 | |
-| T7、T3、73 | |
-| 任意两张 ♣ | |
+| JJ+ | A♣X♣ (nut flush draw) |
+| AT | Maybe TT |
+| TT, 77, 33 | |
+| T7, T3, 73 | |
+| Any two ♣ | |
 
-你最早的"阅读"之一就是判断一个人是好玩家还是差玩家。同一个人在不同阶段可能在 ±1 个层级间跳动——例如有人擅长翻牌前读人，到了翻牌却只盯自己的牌（介于 L1 与 L2）；有人觉得小同花很大，却不认为小对子大（介于 L0 与 L1）。合理的默认假设是：**新玩家在 L1，普通锦标赛玩家在 L2，现金局玩家在 L3**。
+One of your first "reads" is simply whether someone is a good or bad player. The same person may jump ±1 level between spots — for instance, someone good at preflop opponent reading who stares only at his own cards on the flop (between L1 and L2); or someone who thinks a low flush is big but does not think a low pair is big (between L0 and L1). A reasonable default assumption: **new players are L1, average tournament players are L2, and cash game players are L3**.
 
-彼此熟悉的玩家之间会出现竞相"升层"以压制对方的军备竞赛——这在现金局更常见，但锦标赛也有：2011 年 WSOP 主赛事 Shaun Deeb 的 AA 对 Max Heinzelmann 的 A6 就是 L5 思维的实例。挪威名将 Annette Obrestad（18 岁成为最年轻的 WSOP 金手链得主，15 岁起以 Annette_15 的网名打线上）曾在不看底牌的情况下赢下一整场比赛，是"只读对手、不读自己牌"的极端示范。
+Players who know each other well enter an arms race, each climbing one level higher to dominate the other — more common in cash games, but tournaments have examples too: Shaun Deeb's AA versus Max Heinzelmann's A6 in the 2011 WSOP Main Event is an instance of L5 thinking. Norwegian star Annette Obrestad (youngest WSOP bracelet winner at 18, playing online as Annette_15 since age 15) once won an entire tournament without looking at her hole cards — an extreme demonstration of reading opponents while ignoring one's own hand.
 
-**强弱跑步机（Strong vs Weak Treadmill）**概括了这种层级循环：
+The **Strong vs Weak Treadmill** summarizes this cycle of levels:
 
-| 层级 | 实际牌力 | 扮演的牌力 |
+| Level | Actual Hand | Represented Hand |
 | --- | --- | --- |
-| L1（读牌） | 强 | 强 |
-| L3（扮演） | 强 | 弱 |
-| L5 | 强 | 强 |
-| L7 | 强 | 弱 |
+| L1 (reading) | Strong | Strong |
+| L3 (representation) | Strong | Weak |
+| L5 | Strong | Strong |
+| L7 | Strong | Weak |
 
-为什么要学思维层级？本章后续的翻牌后建议都假设对手是能进行基本读人的普通玩家：这套策略对纯新手并非最优，对职业玩家大概会输，但至少足以击败低 stakes 牌局。
+Why learn levels of thinking? The postflop recommendations that follow assume opponents are average players capable of basic opponent reading: the strategy is not optimal against brand-new players, it probably loses to pros, but it is at least enough to beat low-stakes games.
 
-### 翻牌前打法
+### Preflop Play
 
-起手牌按"翻牌击中能赢的牌型"的可能性排序；位置（position）实质性地影响牌力——很多牌在后位能赢、在前位会输。这里的层级大致对应 Sklansky-Karlson 排名，具体范围来自 Harrington 的《Harrington on Hold'em》。
+Hands are ranked by the likelihood of flopping a hand that wins; position affects hand strength materially — many hands are winners in late position but losers in early position. The tiers roughly track the Sklansky-Karlson rankings, and the specific ranges come from Harrington's *Harrington on Hold'em*.
 
-按这套打法，你入池的牌很少，但入局时通常领先；翻牌后决策简单，因为你要么完全击中要么完全错过；你赢下的是中等底池而非巨池。任何要玩的牌都由你自己加注到 3BB + 每个跟注者 1BB（约占全部起手牌的 15%），并希望到翻牌时形成单挑（heads-up）。
+Playing this way, you enter few pots but are generally ahead when you do; your flop decisions are easy because you either hit completely or miss completely; and you win medium-size pots rather than huge ones. Every hand you play, you raise yourself to 3BB + 1BB per caller (about 15% of all starting hands), hoping to be heads-up by the flop.
 
-**开池范围（opening range）**：
+**Opening ranges:**
 
-| 位置 | 范围 |
+| Position | Range |
 | --- | --- |
-| 盲注位与 UTG/UTG+1 | TT+、AQs+、AKo+ |
-| MP1、MP2、MP3 | 88+、AJ+、KQ+ |
-| 后位（LP）、关煞位（CO）、按钮位（BTN） | 77+、同花 Ax（Axs）、高张同花连张 |
+| Blinds and UTG/UTG+1 | TT+, AQs+, AKo+ |
+| MP1, MP2, MP3 | 88+, AJ+, KQ+ |
+| LP, CO, BTN | 77+, suited aces (Axs), high suited connectors |
 
-前位范围极紧（约前 5%），因为你信息最少、之后每一条街都处于最差位置；中位约放宽到 15%。
+The early-position range is extremely tight (roughly the top 5%) because you have the least information and will hold the worst position on every later street; the middle-position range widens to about 15%.
 
-**面对加注时的范围**：整体上调一档——
+**Ranges when facing a raise:** shift everything up one tier —
 
-| 位置 | 范围 |
+| Position | Range |
 | --- | --- |
-| 前位或中位 | TT+、AQs+、AKo+ |
-| 后位（LP）、CO、BTN | 88+、AJ+、KQ+ |
+| Early or middle position | TT+, AQs+, AKo+ |
+| LP, CO, BTN | 88+, AJ+, KQ+ |
 
-### 翻牌打法
+### Flop Play
 
-翻牌前你是进攻方，翻牌就应该用 2/3 底池持续下注（c-bet）。盈亏平衡所需的成功率只有
+Having been the preflop aggressor, you should continuation bet the flop for 2/3 of the pot. The break-even success rate is only
 
 $$\frac{2/3}{1 + 2/3} = \frac{2}{5} = 40\%,$$
 
-即约 40% 的次数奏效就有利可图；下注尺度保持不变以避免被剥削（exploitation）。任何不如"顶对好踢脚（TPGK, top pair good kicker）"的成牌都视为听牌——可以半诈唬（semi-bluff），也可以在底池赔率合适时跟注。
+so the bet is profitable if it works about 40% of the time; keep the sizing constant to avoid exploitation. Any made hand worse than top pair good kicker (TPGK) is treated as a drawing hand — you may semi-bluff with it, or call when the pot odds are right.
 
-翻牌圈牌力分级：
+Flop hand-strength tiers:
 
-| 层级 | 牌型 |
+| Tier | Hands |
 | --- | --- |
-| Tier 1 | K 高同花、最大顺子（无对子牌面）；最大的两副暗三条、葫芦 |
-| Tier 2 | A 高同花、最大顺子（有对子牌面）；T 高同花、第二大顺子（无对子牌面）；最小暗三条、任意两对 |
-| Tier 3 | 超对（overpair）、顶对好踢脚 |
-| 听牌 | 顶对差踢脚、中对/底对、不成超对的口袋对子、四张同花听牌、顺子听牌 |
+| Tier 1 | K-high flush, top straight (unpaired board); top two sets, full house |
+| Tier 2 | A-high flush, top straight (paired board); T-high flush, second-best straight (unpaired board); bottom set, any two pair |
+| Tier 3 | Overpair, top pair good kicker |
+| Drawing | Top pair bad kicker, middle/bottom pair, pocket pair that is not an overpair, four-flush, straight draw |
 
-牌面有对子意味着葫芦成为可能，同花、顺子在有对子的牌面上要降级处理。Tier 1 值得打光（30M 也可以）；Tier 2 大约值两个下注——例如 T 高同花不该弃，但下注被加注后就只能跟注不再加注；Tier 3 被加注后按听牌处理。
+A paired board means a full house is possible, so flushes and straights are demoted on paired boards. Tier 1 is worth going broke with (even for 30M); Tier 2 is worth about two bets — for example, do not fold a T-high flush, but if your bet is raised, only call and do not raise again; Tier 3 is treated as a drawing hand once raised.
 
-### 转牌/河牌打法
+### Turn/River Play
 
-到转牌时底池通常已有约 10M，往往只剩"全下或弃牌"的决定，不需要再费心多榨一个下注。此时要用手牌范围（hand range）评估自己的牌力：哪些牌既符合他到目前为止的行动、又能赢你。
+By the turn the pot is usually already about 10M, and the decision is often just all-in or fold — there is no need to squeeze out one more bet. Evaluate your hand strength against hand ranges: which hands both fit his action so far and beat you.
 
-### 读牌范围（Reading Hand Ranges）
+### Reading Hand Ranges
 
-翻牌结束后，你应该对对手的范围有合理的估计；之后的每个决策都让你排除其中一部分牌，从而更清楚自己的处境。一个"讲不通的故事"可能是诈唬，但完全空气诈唬（complete bluff）的概率通常可以忽略。
+After the flop you should have a reasonable estimate of your opponent's range; each subsequent decision lets you eliminate part of it, clarifying where you stand. A story that "doesn't make sense" could be a bluff, but the probability of a complete bluff is usually negligible.
 
-课件用两手在线牌局演示了逐步排除的过程。第一手 Hero 在按钮位持 K♣T♠：翻牌前 Hero 加注、UTG 的 Villain 跟注——Hero 被读为 22+、JT+，Villain 被读为 88-JJ、78+、AQ-；翻牌 2♦5♠9♥，Villain 过牌后加注，范围收窄为 Hero 99-JJ、79、T9，Villain 88-JJ、KJ+、AQ-。第二手 Hero 持 A♥K♥，翻牌 2♥5♥T♥，Hero 下注后 Villain 跟注：Villain 的范围修正为 T5、55、TT、AT、小同花，88-JJ、KJ+、AQ- 被划掉。
+The slides walk through two online hands to show this elimination process. In the first, Hero holds K♣T♠ on the button: preflop Hero raises and the UTG Villain calls — Hero is read as 22+, JT+, Villain as 88-JJ, 78+, AQ-; the flop comes 2♦5♠9♥, Villain check-raises, and the ranges narrow to Hero 99-JJ, 79, T9 and Villain 88-JJ, KJ+, AQ-. In the second, Hero holds A♥K♥, the flop is 2♥5♥T♥, Hero bets and Villain calls: Villain's range is revised to T5, 55, TT, AT, and low flushes, with 88-JJ, KJ+, AQ- crossed out.
 
-![读牌范围示例：Hero 持 A♥K♥，翻牌 2♥5♥T♥，跟注后 Villain 的范围修正为 T5、55、TT、AT 与小同花，88-JJ、KJ+、AQ- 被排除](assets/ch05-3.png)
+![Reading hand ranges: Hero holds A♥K♥ on a 2♥5♥T♥ flop; after the call, Villain's range is revised to T5, 55, TT, AT, and low flushes, with 88-JJ, KJ+, AQ- eliminated](assets/ch05-3.png)
 
-**Zeebo 定理（Zeebo's Theorem）**："没有任何玩家能够在任何下注轮弃掉葫芦，无论下注多大。"因此当对手可能有葫芦时，不要用更小的牌诈唬；反过来，你拿葫芦时应当假定对手不会弃牌地收取价值。
+**Zeebo's Theorem**: "No player is capable of folding a full house on any betting round, regardless of the size of the bet." So when your opponent can have a full house, do not bluff with a worse hand; conversely, when you hold the full house, collect value on the assumption that you will be paid off.
 
-![Zeebo 定理示例：Hero 持 K♥K♦，公共牌 K♠Q♥K♣3♠Q♦，Hero 组成葫芦](assets/ch05-4.png)
+![Zeebo's Theorem: Hero holds K♥K♦ on a board of K♠Q♥K♣3♠Q♦ for a full house](assets/ch05-4.png)
 
-## 心理概念
+## Psychological Concepts
 
-Mike Caro 是最早的扑克理论家之一，著有《Caro's Book of Poker Tells》，倡导四色牌组（4-color decks），还开发了早期的扑克 AI"Orac"。其体系的基本概念是：目标是做出 +EV 的决策，单场、单手的胜负不重要。其余核心心理概念包括：
+Mike Caro was one of the first poker theorists, author of *Caro's Book of Poker Tells*, an advocate of 4-color decks, and the developer of the early poker AI "Orac." His system's fundamental concept: the goal is to make +EV decisions; the results of any single session or hand do not matter. The remaining core psychological concepts:
 
-**形象（Image）**：
+**Image**:
 
-- 筹码堆的组织和整洁程度会暗示打法风格；
-- 广告效应（advertisement）——对手会记住你亮过的牌；
-- 盲注小时偏松凶（LAG, loose-aggressive），盲注高时偏紧凶（TAG, tight-aggressive）。
+- The organization and tidiness of a chip stack suggests a playing style;
+- Advertisement — opponents remember the hands you show;
+- Prefer loose-aggressive (LAG) play when the blinds are small, tight-aggressive (TAG) when the blinds are high.
 
-**操纵（Manipulation）**：不同对手天性地"想跟注"或"想弃牌"，要因人而异；不要害怕把整桌的节奏带松。
+**Manipulation**: different opponents naturally "want to call" or "want to fold" — tailor your play to the person; do not be afraid to loosen up the whole table.
 
-**长期观念**：
+**Long-run concepts**:
 
-- 已经投入的不是你的（沉没成本不计）；
-- 长期来看牌不会"回本"——运气没有记忆；
-- **痛苦阈值（Threshold of Misery）**：玩家输得最多的时候，往往是刚输掉超出计划的金额之后；
-- 不要试图证明你是最强的——这不是篮球。
+- What you have already invested does not matter (sunk costs are not yours);
+- Cards will not "break even" in the long run — luck has no memory;
+- **Threshold of Misery**: players often lose the most money immediately after losing more than they planned;
+- Do not try to prove you are the best — this is not basketball.
 
-**恐惧与上头（tilt）**的典型表现：被迫亮出烂牌；输钱；赢的时候打短局、输的时候打长局。
+Typical signs of **fear and tilt**: being forced to show down bad hands; losing money; playing short sessions while ahead and long sessions while behind.
 
-**稳定心态的技术**：
+**Techniques for stabilizing**:
 
-- 把资金按市值记账（mark your bankroll to market）；
-- 记住扑克最重要的秘密："时刻打出你最好的水平"；
-- 不要想着连胜连败，要想着盈亏平衡期（breakeven periods）；
-- 对手牌保持短时记忆——线上打牌更容易做到。
+- Mark your bankroll to market;
+- Remember poker's most important secret: "Play your best game all the time";
+- Do not think in terms of winning or losing streaks — think in terms of breakeven periods;
+- Keep a short memory for hands — this is easier online.
 
-## 泡沫期打法
+## Bubble Play
 
-泡沫期（bubble）大致在距钱圈还有约 10% 人数的时候（若 10% 的选手进钱圈，从剩余约 20% 起气氛就开始变化）。此时普通业余玩家明显打得太紧——例如 WSOP 剩 250 人、前 240 名有奖金时，他们宁可放弃微小的夺冠期望也不冒出局风险。可以说你在泡沫期的表现基本决定了你能走多远：这是业余玩家犯最大错误的时段，善于利用的好玩家在此阶段筹码翻倍的机会远超 50%。边缘决策要使用 ICM（见下节）。
+The bubble begins roughly when the field is about 10% of the remaining players away from the money (if 10% of the field cashes, the atmosphere starts changing at about 20% left). The average amateur plays noticeably too tight — for example, with 250 players left at the WSOP and 240 places paid, they would rather forfeit a sliver of added chance at first place than risk busting. Arguably, your bubble performance determines how deep you finish: this is when amateurs make their biggest mistakes, and a good player who exploits them is much better than 50% to double up during this phase. Use ICM (next section) in marginal spots.
 
-泡沫期的元游戏（metagame）有两种形态：传统上非常被动；近年大家都学会"泡沫期要凶"之后，普通玩家又变得过度激进。观察同桌弱玩家在做糟糕的跟注还是糟糕的弃牌，你很快就能判断身处哪种元游戏。能欺负人就欺负人；别人欺负你时，也不必事事顶回去。
+The bubble metagame comes in two forms: traditionally very passive; more recently, after everyone learned to "be aggressive on the bubble," the average player has become overly aggressive. Watch whether the weak players at your table are making bad calls or bad folds, and you will quickly know which metagame you are in. Bully people when you can; when others bully you, you need not push back at everything.
 
-## 独立筹码模型（ICM）
+## Independent Chip Model (ICM)
 
-**独立筹码模型（Independent Chip Model, ICM）**用于把锦标赛中的 cEV 换算成 $EV。它基于你最终落在各个奖金名次的概率：
+The **Independent Chip Model (ICM)** converts tournament cEV into \$EV. It is built on your probability of finishing in each paid position:
 
-$$\$EV_i = \sum_j P(\text{第 } j \text{ 名}) \times \text{奖金}_j,$$
+$$\$EV_i = \sum_j P(\text{finishing } j\text{-th}) \times \text{payout}_j,$$
 
-其中名次概率由所有玩家的筹码量递归导出，目前只能算法求解。直觉上：
+where the finishing probabilities are derived recursively from all players' stacks and, as of now, can only be solved algorithmically. Intuitively:
 
-- 赢家通吃（winner-takes-all）时，cEV 接近 $EV；
-- 奖金分布平坦（flat）时，cEV 与 $EV 相差很大；
-- 筹码大幅变动时，$EV 的变化不对称——输比赢更疼（存在曲率：赢来的筹码贬值，输掉的筹码很贵）。再考虑金钱本身的效用，大注冒险的门槛就更高了。
+- When the winner takes all, cEV is close to \$EV;
+- When payouts are flat, cEV and \$EV diverge substantially;
+- For large swings, \$EV moves are asymmetric — losing hurts more than winning helps (there is curvature: chips you win are devalued, chips you lose are expensive). Factoring in the utility of money itself raises the threshold for taking big risks even further.
 
-**示例**：$20 买入的 100 人赛只剩 4 人，各持 2500 筹码，奖金为第 1 名 $1000、第 2 名 $600、第 3 名 $400、第 4 名 $0。假设四人水平相同，每人的权益（equity）都是总奖池 $2000 的 25%，即 $500。
+**Example**: a \$20 buy-in, 100-player tournament is down to 4 players, each holding 2,500 chips; payouts are 1st \$1000, 2nd \$600, 3rd \$400, 4th \$0. Assuming equal skill, each player's equity is 25% of the \$2000 prize pool, i.e., \$500.
 
-现在 Adam 与 David 全下对决并淘汰了 David：
+Now Adam and David get all in, and Adam eliminates David:
 
-| 玩家 | 筹码 | 权益（ICM） | 奖金 |
+| Player | Chips | Equity (ICM) | Payout |
 | --- | --- | --- | --- |
-| Adam | 5000 | $766 | $1000 |
-| Bob | 2500 | $616 | $600 |
-| Charlie | 2500 | $616 | $400 |
-| David | 0 | $0 | $0 |
+| Adam | 5000 | \$766 | \$1000 |
+| Bob | 2500 | \$616 | \$600 |
+| Charlie | 2500 | \$616 | \$400 |
+| David | 0 | \$0 | \$0 |
 
-你可能以为 Adam 直接继承 David 的 $500 变成 $1000，但 ICM 下 Adam 只多拿了 $266，Bob 和 Charlie 什么都没做就各多拿 $116。原因在于边际奖金结构：第 2 名比第 3 名多 $200，第 1 名比第 2 名多 $400。David 出局后 Bob 和 Charlie 已锁定至少 $400，余下要分配的只是 $200 与 $400 两档边际奖金。最终赢家并不会拿走与全部筹码相称的 $2000 权益——他实际上向先于自己出局的玩家"让出"了权益，第一名因此是单位筹码权益最低的位置。若改为赢家通吃（第 1 名 $2000），则 Adam $1000、Bob $500、Charlie $500、David $0，cEV 与 $EV 完全重合。
+You might expect Adam to simply inherit David's \$500 and reach \$1000, but under ICM Adam gains only \$266, while Bob and Charlie each gain \$116 for doing nothing. The reason is the marginal payout structure: 2nd pays \$200 more than 3rd, and 1st pays \$400 more than 2nd. Once David is out, Bob and Charlie have locked up at least \$400, and only the two marginal jumps of \$200 and \$400 remain to be allocated. The eventual winner never holds \$2000 of equity proportional to all the chips — he effectively "gives up" equity to the players knocked out before him, making first place the position with the lowest equity per chip. If the event were winner-take-all (1st pays \$2000), the equities would be Adam \$1000, Bob \$500, Charlie \$500, David \$0, and cEV and \$EV would coincide exactly.
 
-**WSOP 卫星赛示例**：卫星赛（satellite）是前若干名赢得大赛门票的比赛，特别容易让人犯巨大的错误。设 10 人剩余，前 9 名各得 $10000 门票，第 10 名 $0；每人 2500 筹码，故每人权益为 $9000。盲注 200/400，小盲位的 Irene 加注到 2500（即全下），大盲位的 Jessica 拿到 K♦K♥。她的 M 约为 3，对手在该位置正确地用任意两张牌全下，KK 对 ATC 的胜率为 82%。
+**WSOP satellite example**: a satellite is a tournament in which the top finishers win entry to a larger event, and it is especially prone to enormous mistakes. Suppose 10 players remain, places 1–9 each win a \$10000 seat, 10th gets \$0; everyone has 2,500 chips, so each player's equity is \$9000. With blinds 200/400, Irene in the small blind raises to 2,500 (all in), and Jessica in the big blind looks down at K♦K♥. Her M is about 3, her opponent is correctly shoving any two cards from that spot, and KK versus ATC wins 82% of the time.
 
-- 筹码期望：$cEV = 0.82 \times 5000 + 0.18 \times 0 = 4100$，$\Delta cEV = +1600$——大赚；
-- 金钱期望：$\$EV = 0.82 \times \$10000 + 0.18 \times 0 = \$8200$，$\Delta \$EV = \$8200 - \$9000 = -\$800$——反而亏钱。
+- Chip expectation: $cEV = 0.82 \times 5000 + 0.18 \times 0 = 4100$, so $\Delta cEV = +1600$ — a huge gain;
+- Dollar expectation: $\$EV = 0.82 \times \$10000 + 0.18 \times 0 = \$8200$, so $\Delta \$EV = \$8200 - \$9000 = -\$800$ — a loss.
 
-所以这里应该弃掉 KK；事实上即使拿到 AA，只要不是超过约 90% 的热门（比如确定对手的口袋对子被你压制），也应该弃牌——假装看一眼牌然后弃掉。实战中 Jessica 几乎 100% 会跟注，这是全桌其他人喜闻乐见的错误。若所有人都理性，每个人的跟注范围都是 0%，于是轮到行动就该直接用任意两张牌全下，直到盲注强行把某人套入为止。这就是卫星赛是 ICM 威力最大、最值得寻找的比赛类型的原因。
+So KK should be folded here; in fact, even AA should be folded unless you are more than about a 90% favorite (say you know you hold a pocket pair dominating theirs) — pretend to look at your cards and then fold. In practice Jessica calls here almost 100% of the time, a mistake the rest of the table is delighted to see. If everyone played rationally, every player's calling range would be 0%, so on every hand the player to act should simply shove any two cards until the blinds finally force someone all in. This is why satellites are where ICM has the most leverage — and the tournaments most worth seeking out.
 
-## 后期阶段
+## Late Game
 
-- 不要被 stakes 吓倒——把决赛桌当成一场单桌锦标赛（single-table tournament）。本质上它就是一场 10 人 SNG，只是奖金稍平，而且所有人都像在"越级打牌"：按 $100 买入、1000 人赛做的资金规划，打到最后 10 人时等效于一场 $10000 的赛事；
-- 继续根据所处筹码区偷盲/反偷；
-- 时刻意识到 ICM——清楚每个名次的边际奖金，此时不是拿全部筹码赌 coin flip 的时候（例如不要为 2% 的边际优势用 AK 跟注全下）；
-- 剥削那些资金不足（under-bankrolled）的玩家。
+- Do not be overwhelmed by the stakes — treat the final table like a single-table tournament. That is essentially what it is: a 10-handed SNG with slightly flatter payouts, except everyone is playing over their heads — bankrolled for a \$100 buy-in, 1,000-player event, the last 10 players are effectively contesting a \$10000 tournament;
+- Continue to steal and re-steal according to your stack zone;
+- Stay conscious of ICM — know the marginal payout of each position; this is not the time to flip for your whole stack (for example, do not call an all-in with AK for a 2% edge);
+- Exploit players who are under-bankrolled.
 
-## 资金管理（Bankroll Management）
+## Bankroll Management
 
-**什么是资金（bankroll）**？一般指"你专门用于扑克投资的钱"；更精确地说，是"一旦输掉就被你认为不可挽回、并迫使你停止打牌"的那笔钱——不是因为你羞愧，而是剩余资金能支撑的 stakes 太低，靠打牌再也挣不回来了。例如你本可投入 $20000，输掉 $19900 后你不会去一分两分的牌桌上把它磨回来，而是会找份正常工作重建资金。资金概念只对盈利玩家有意义：负期望玩家无论如何早晚破产，他该做的是学会赢，或降到自己真正能赢的级别。几个实例：
+**What is a bankroll?** Generally, "the amount of money you devote to poker investments"; more precisely, the amount whose loss you would deem "irrecoverable" and that would force you to stop playing — not out of shame, but because the stakes your remaining money could support are so low you could never grind it back. For example, if you could conceivably put \$20000 into poker and lose \$19900, you would not grind one-cent/two-cent games to recover it — you would get a normal job and rebuild. The concept only matters for winning players: a negative-expectation player goes broke eventually no matter what, and his job is to learn to win or move down to stakes he can actually beat. Some examples:
 
-- 新手："一大笔钱"——新玩家输掉 $10000 大概就永远告别扑克了；
-- 业余玩家：可自由支配、未投入长期投资的现金（输掉不至于无家可归的那部分）；
-- 职业玩家：可动用现金加上全部借款能力——Phil Hellmuth 即使输光身家也能再融到钱继续打；成绩记录足够好的人即使身无分文，也能靠被赞助拥有几十万的"资金"。
+- New players: "a large amount of money" — a new player who loses \$10000 probably quits poker forever;
+- Amateurs: expendable cash not committed to long-term investments (the portion whose loss would not leave you homeless);
+- Pros: expendable cash plus full borrowing capacity — Phil Hellmuth could lose his entire net worth and still raise more money to keep playing; with a good enough track record, you can be broke and still command a six-figure "bankroll" through staking.
 
-**经验法则**：以下数字基于 2% 的破产风险（risk of ruin），按平均买入计算，且假设你不随盈亏升降 stakes——实际上你应该升降 stakes：输了降注会让破产率渐近趋零（亏向"时薪不值得"而非破产），赢了升注则让 2% 被新的 2% 取代、风险被复利放大。法则同时假设你是稳定盈利玩家、方差处于正常水平：
+**Rules of thumb**: the following numbers are based on a 2% risk of ruin, computed off average buy-ins, and assume you do not move up or down in stakes with your results — in practice you should: moving down after losses drives the ruin probability asymptotically toward zero (you bleed toward "hourly not worth it" rather than actual ruin), while moving up after wins replaces the old 2% with a new 2%, compounding your risk. The rules also assume solid winning play and typical variance:
 
-| 游戏类型 | 建议资金 |
+| Game Type | Recommended Bankroll |
 | --- | --- |
-| 现金局——无限注（NL） | 20 个最大买入 |
-| 现金局——限注（Limit） | 300 个大注（big bets） |
-| 单桌锦标赛（STT） | 30 个买入 |
-| 多桌锦标赛（MTT） | 50–100 个买入 |
+| Cash games — No-Limit (NL) | 20 max buy-ins |
+| Cash games — Limit | 300 big bets |
+| Single-Table Tournaments (STT) | 30 entries |
+| Multi-Table Tournaments (MTT) | 50–100 entries |
 
-这些数字基于平均买入：如果全桌都翻倍了，你实际上在打一场大两倍的游戏。因此现金局翻倍后是否留桌取决于牌桌——对手明显偏弱就留下，对手偏强就该换桌；你也不会希望桌上风险超出自己通常的风险指标。若你的赢率显著高于平均，所需买入数可以下调。若你打牌时总为输钱揪心，多半不是心理素质问题，而是你的资金根本不达标。
+These numbers use the average buy-in: if the whole table has doubled up, you are effectively playing a game twice as big. So whether to stay after doubling in a cash game depends on the table — stay if the opponents are clearly weak, change tables if they are strong; either way, you should not want more at risk than your usual risk metrics dictate. If your win rate is well above average, the required number of buy-ins drops. If you constantly agonize over losses while playing, it is usually not a psychological weakness — your bankroll is simply inadequate.
 
-**理论基础：凯利判据（Kelly Criterion）**。若你的效用函数是对数型的，最大化长期效用增长率要求按优势比例下注。例如在一赔一的偏硬币赌局中你有 60% 胜率，最优下注比例是 $f^* = 0.6 - 0.4 = 0.2$，即资金的 20%。这是二十一点（BlackJack）算牌时下注尺度的理论基础——牌面对你有利时下大注；投资管理中把更多资金分配给高 alpha 标的也是同一思想。
+**Theoretical basis: the Kelly Criterion**. If your utility function is logarithmic, maximizing long-run utility growth requires betting in proportion to your edge. For example, in an even-money biased-coin game where you win 60% of the time, the optimal fraction is $f^* = 0.6 - 0.4 = 0.2$, i.e., 20% of your bankroll. This is the theoretical foundation of bet sizing in blackjack card counting — bet big when the count favors you — and the same idea governs allocating more capital to higher-alpha positions in investment management.
 
-**以 WSOP 为例**：WSOP 主赛事是最大的赛事之一，6000+ 人参赛，买入 $10000，按上述法则合适的资金要求超过 $1000000——与同等规模的其他投资相比，打一百次 WSOP 主赛事的风险调整后收益（risk-adjusted returns）很糟糕。但反过来说，WSOP 是所有 $10000 赛事中牌桌最软的，且深名次还有奖金之外的曝光价值（Chris Moneymaker 夺冠后从赞助中赚到的钱远超奖金本身）。
+**The WSOP as an example**: the WSOP Main Event is one of the biggest tournaments, with 6000+ entries and a \$10000 buy-in, so the appropriate bankroll by the rules above exceeds \$1000000 — compared with other investments of that size, playing one hundred WSOP Main Events offers terrible risk-adjusted returns. On the other hand, the WSOP has the softest field of any \$10000 event, and a deep run carries publicity value beyond the prize money (Chris Moneymaker earned far more from sponsorships after winning than from the prize itself).
 
-**风险管理工具**：
+**Risk management tools**:
 
-- **赞助（staking）**：WSOP 级别的盈利好手可能有 +$5000 的 $EV（+50% ROI），但方差巨大，有相应风险偏好的投资者可以吃下方差、换取部分盈利。常见分成是投资者拿 50% 上行收益并承担 100% 亏损——玩家先偿还买入费再分剩余的一半，长期赞助还带"补亏（makeup）"条款。这是一种股权投资：输了不用还钱。
-- **出售份额与互换百分比（selling shares / trading percentages）**：职业玩家之间几乎普遍会在大赛中互换一小部分成绩；也会把单场比赛拆成 10 份、按 10% 加价（markup）卖给个人投资者（如把 10 场比赛切成每份 $1500 筹集 $15000），让小投资者也能分散到多位玩家身上，在保留期望的同时显著降低方差。
+- **Staking**: a winning player at the WSOP level might have +\$5000 of \$EV (+50% ROI) with enormous variance, and an investor with suitable risk preferences can absorb that variance in exchange for a share of the profit. A common deal gives the investor 50% of the upside while covering 100% of losses — the player first repays the buy-in, then splits half of the remainder, and long-term staking carries a "makeup" clause. This is an equity investment: losses are not owed back.
+- **Selling shares and trading percentages**: it is nearly universal for pros to trade small percentages of their results in big events with one another; players also split a single event into 10 shares sold to individual investors at a 10% markup (e.g., cutting 10 tournaments into \$1500 pieces to raise \$15000), letting small investors diversify across many players — retaining the expectation while materially reducing variance.
 
-**其他考虑**：
+**Other considerations**:
 
-- **对手方风险（counterparty risk）**：被赞助者不打比赛、赢了不分成，或线下俱乐部被查、线上平台跑路，都是真实摩擦。若你估计牌局每晚有 1/10 的概率被查封，就该把预期毛赢利下调 10%；
-- **生活方式**；
-- **当前扑克环境**：2003 年 WSOP 借口袋摄像头（hole card cams）推广，Moneymaker 与次年同样经卫星赛夺冠的 Greg Raymer 引爆了线上扑克的五年黄金期；随后玩家整体变强，"黑色星期五"事件（Full Tilt 被证实为庞氏骗局、各线上平台退出美国）又使市场明显收缩——当年一桌六个业余配一个职业，如今 $10000 赛事大约五五开；
-- **选局（game selection）**：软局仍然存在（WSOP 边赛、低 stakes 局），如果选局得当、资金管理到位，扑克可以成为你其他事业之外很好的分散化收益来源。
+- **Counterparty risk**: a staked player might skip the tournament or refuse to share winnings; an underground club might get raided; an online site might abscond. If you estimate the club you play in has a 1-in-10 chance of being raided on any given night, you should mark down your expected gross winnings by 10%;
+- **Lifestyle**;
+- **The current poker environment**: the 2003 WSOP promoted itself with hole-card cameras, and Moneymaker's win — followed the next year by Greg Raymer, who also qualified via satellite — ignited a five-year golden age of online poker; then the player pool collectively improved, and Black Friday (Full Tilt exposed as a Ponzi scheme, online sites exiting the US) contracted the market noticeably — a table once seated six amateurs per pro, while today's \$10000 events are roughly fifty-fifty;
+- **Game selection**: soft games still exist (WSOP side events, low-stakes games), and with proper game selection and bankroll management, poker can be an excellent source of diversified income alongside your other pursuits.
 
-## 要点小结
+## Key Takeaways
 
-- 锦标赛中名次决定奖金，cEV 只近似等于 $EV；盲注上涨和一次性买入使锦标赛方差更大、更考验节奏。
-- 最重要的概念是节奏：不摊牌地慢慢积累筹码，避免主动进入五五开，把必须赢的 coin flip 留到筹码更深时。
-- 按 M 划分打法：$M<2$ 死亡区（绝不跌破 1）；$2<M<8$ 只推或弃、以偷盲为生（缺口理论：跟注需要比下注强得多的牌）；$8<M<12$ 可反偷也可对再加注弃牌；$12<M<30$ 价值下注区；$M>30$ 便宜挖矿、只用怪兽牌打光。
-- 思维层级只需比对手高一层：默认新手 L1、普通锦标赛玩家 L2、现金局玩家 L3；对不读你的对手玩层级就是错配。"第四次加注意味着 AA"。
-- 中筹码翻牌后打法：自己加注（3BB+每跟注者 1BB）入局，翻牌 2/3 底池持续下注（40% 成功率即保本），按 Tier 1–3 与听牌分级处理牌力。
-- 泡沫期是普通玩家犯最大错误、也是你奠定名次深度的阶段；传统元游戏太紧，新元游戏太凶，先判断牌桌再决定剥削方向。
-- ICM：输比赢更疼。极端情形（如卫星赛）下 cEV 大赚的跟注可以是 $EV 大亏——10 人争 9 张门票时连 KK、AA 都该弃给全下。
-- 资金管理基于 2% 破产风险：NL 现金局 20 个买入、限注 300 大注、STT 30 个、MTT 50–100 个买入；理论基础是凯利判据；高方差赛事可用赞助和出售份额分散风险。
+- In tournaments, finish position determines winnings, and cEV only approximately equals \$EV; rising blinds and the single buy-in make tournaments higher-variance and more demanding of tempo.
+- The most important concept is tempo: grow your stack slowly without showdowns, avoid voluntarily entering coin flips, and save the must-win flips for when you are deeper.
+- Play by M: $M<2$ is the Dead Zone (never fall below 1); $2<M<8$ is push-or-fold, living off steals (Gap Theory: calling requires a much stronger hand than betting); $8<M<12$ allows re-stealing and folding to re-raises; $12<M<30$ is the Value Betting Zone; $M>30$ means cheap set mining and going broke only with monsters.
+- Think exactly one level above your opponents: by default new players are L1, average tournament players L2, cash game players L3; leveling against someone who is not reading you is a mismatch. "The Fourth Raise Means Aces."
+- Medium-stack postflop play: enter with your own raise (3BB + 1BB per caller), c-bet 2/3 pot on the flop (break-even at 40%), and classify your hand into Tiers 1–3 and draws.
+- The bubble is where average players make their biggest mistakes and where you build your finishing depth; the traditional metagame is too tight, the modern one too aggressive — diagnose your table first, then pick the direction of exploitation.
+- ICM: losing hurts more than winning helps. In extreme cases (like satellites) a hugely +cEV call can be hugely −\$EV — with 10 players fighting for 9 seats, even KK and AA should be folded to a shove.
+- Bankroll management is based on a 2% risk of ruin: 20 buy-ins for NL cash, 300 big bets for limit, 30 entries for STTs, 50–100 buy-ins for MTTs; the theoretical basis is the Kelly Criterion; staking and selling shares spread the risk of high-variance events.

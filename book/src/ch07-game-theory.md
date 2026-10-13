@@ -1,172 +1,172 @@
-# 博弈论
+# L7 Game Theory
 
-本章为 Bill Chen（Susquehanna International Group）的客座讲座，围绕阿尔伯塔大学（University of Alberta）的 Cepheus 程序展开：它"解决"了单挑限注德州扑克。我们将依次介绍博弈论最优（Game Theory Optimal, GTO）策略与纳什均衡、后悔最小化（regret minimization）、反事实后悔（Counterfactual Regret, CFR）及其改进 CFR+，最后讨论计算机求解方法向其他扑克变体、大额下注游戏和多人游戏的延伸。
+This chapter is a guest lecture by Bill Chen (Susquehanna International Group), built around the University of Alberta's Cepheus program, which "solved" heads-up limit hold'em. We cover Game Theory Optimal (GTO) strategies and Nash equilibrium, regret minimization, Counterfactual Regret (CFR) and its improved variant CFR+, and finally the extension of computer solutions to other poker variants, big bet games, and multiplayer games.
 
-## Cepheus 的成就
+## What Cepheus Accomplished
 
-Cepheus 是单挑限注德州扑克（Heads-up Limit Hold'em）的一个 GTO 解。经过 900 CPU-年 的计算，其策略的可剥削性（exploitability）已低于 1/1000 个大盲注，与完美策略几乎无法区分。
+Cepheus is a GTO solution to heads-up limit hold'em (HULHE). After 900 CPU-years of computation, its strategy has an exploitability of less than 1/1000 of a big blind — virtually indistinguishable from a perfect strategy.
 
-这个数字意味着什么？1/1000 大盲注即 1/2000 个大注（big bet）。单挑限注德州的标准差约为每手 5 个大盲注，因此要以统计显著性确认这一优势，大约需要打 2500 万手牌——以正常速度单挑打上 50 年，你仍有一定概率落后。实践中通常以每手盈利 1/100 个大注作为"打法具有实战意义"的分界线；低于它的差距只属于理论层面。
+What does that number mean? 1/1000 of a big blind is 1/2000 of a big bet. The standard deviation of heads-up limit hold'em is about 5 big blinds per hand, so confirming even this edge with statistical significance would take roughly 25 million hands — playing heads-up at normal speed for 50 years, you would still have some probability of being behind. In practice, a win rate of 1/100 of a big bet per hand is the usual threshold for a strategy to be practically meaningful; anything below it is merely theoretical.
 
-这是第一个被真正求解的真实扑克游戏，无疑是里程碑。此前《The Mathematics of Poker》曾在纸面上求解过 A-K-Q 游戏等玩具模型，而 Cepheus 面对的是完整游戏。不过，鉴于 Bowling、Burch、Johanson 与 Tammelin 等人的前期工作，这一结果只是时间（和大量 CPU）问题。这是否意味着扑克会像国际象棋一样被计算机彻底统治？我们在本章末尾讨论。
+This is the first real poker game ever solved, and unquestionably a milestone. *The Mathematics of Poker* had previously solved toy games such as the AKQ game on paper, but Cepheus faced the full game. That said, given the prior work of Bowling, Burch, Johanson, and Tammelin, the result was only a matter of time (and a great deal of CPU). Does this mean poker will go the way of chess, dominated by computers? We return to that question at the end of the chapter.
 
-## 纳什均衡
+## Nash Equilibrium
 
-约翰·纳什（John F. Nash）因"在非合作博弈理论中对均衡的开创性分析"获得 1994 年诺贝尔奖，他的工作推广了冯·诺依曼（John von Neumann）与摩根斯坦（Oskar Morgenstern）最早研究的两人零和博弈。
+John F. Nash won the 1994 Nobel Prize "for pioneering analysis of equilibria in the theory of non-cooperative games," extending the two-player zero-sum games first studied by John von Neumann and Oskar Morgenstern.
 
-**纳什均衡（Nash equilibrium）** 是这样一组策略：每位玩家各取一个策略，且没有任何玩家能通过单方面改变自己的策略而获益。在两人零和博弈（zero-sum game）中，纳什均衡也称为**博弈论最优（GTO）**——它同时是最小最大（minimax）解：在对手能看到你的策略并作出最佳回应的前提下，这是你所能做到的最好结果。
+A **Nash equilibrium** is a set of strategies — one for each player — such that no player has an incentive to unilaterally change his strategy. In two-player zero-sum games, a Nash equilibrium is also called **Game Theory Optimal (GTO)**: it is simultaneously the minimax solution — the best you can do given that your opponent can see your strategy and respond optimally to it.
 
-最简单的例子是石头剪刀布：纳什均衡是各以 1/3 的概率出三种手势。这个均衡看起来平淡，因为双方期望都是 0；但它的意义在于无人能剥削你。如果对手以 1/2 剪刀、1/2 石头出牌，你应该 100% 出石头（赢剪刀、平石头，期望 +0.5）。可见 GTO 不一定是"最好"的打法——即使单挑中，针对对手的偏离进行剥削往往收益更高；GTO 的价值是保证自己永不被剥削：对手无法利用你，虽然你也没有充分利用对手的错误。
+The simplest example is rock-paper-scissors: the Nash equilibrium is to play each throw with probability 1/3. The equilibrium looks unexciting because both players expect 0, but its point is that nobody can exploit you. If your opponent plays 1/2 scissors and 1/2 rock, you should play 100% rock (beating scissors, tying rock, for an expectation of +0.5). So GTO is not necessarily the *best* way to play — even heads-up, exploiting an opponent's deviations is often more profitable. The value of GTO is the guarantee that you can never be exploited: your opponent cannot take advantage of you, although you are not fully taking advantage of his mistakes either.
 
-## 一个博弈论扑克示例
+## A Game Theory Poker Example
 
-考虑 Rose 与 Colin 两人的简化扑克游戏（名字取自行玩家 Row 与列玩家 Column；若是三人游戏则引入 Larry，即"层"Layer）：
+Consider a simplified poker game between Rose and Colin (named after the row player and column player of matrix games; a three-player game would introduce Larry, for "layer"):
 
-- 双方各下前注（ante）\$50，底池 \$100。Rose 从整副牌中看一张牌：若为黑桃，她在摊牌（showdown）时获胜，否则落败。
-- Rose 可以下注 \$100 或过牌（check）。
-- 若 Rose 下注，Colin 可以跟注 \$100 或弃牌（fold）。Colin 弃牌则 Rose 赢得底池；跟注则以 \$300 底池摊牌。
+- Each player antes \$50 for a \$100 pot. Rose looks at one card from a full deck: she wins at showdown if it is a spade, and loses otherwise.
+- Rose may bet \$100 or check.
+- If Rose bets, Colin may call \$100 or fold. If Colin folds, Rose wins the pot; if he calls, there is a showdown for the \$300 pot.
 
-双方的最优策略是什么？
+What are the optimal strategies?
 
-**Rose 拿到黑桃时永远下注。** 她没有理由不下注。关键在于她拿到非黑桃时的诈唬（bluff）频率，以及 Colin 的跟注频率。
+**Rose always bets a spade.** She has nothing to lose by betting. The interesting questions are her bluffing frequency when she does not have a spade, and Colin's calling frequency.
 
-- 若 Colin 100% 跟注，Rose 就永不诈唬：有黑桃时净赢 \$150，无黑桃时净输 \$50，总净收益为 0。
-- 若 Colin 从不跟注，Rose 就每次都下注，每手净赢 \$50。
-- 若 Colin 以一半频率跟注，Rose 对是否诈唬无差异（indifferent）：无黑桃时无论怎么做都净输 \$50，有黑桃时净赢 \$100，每手净期望为 -\$12.50。这正是 Colin 的正确策略。
+- If Colin calls 100% of the time, Rose never bluffs: she nets +\$150 when she has a spade and −\$50 when she does not, for a total net gain of zero.
+- If Colin never calls, Rose bets every time and nets \$50 per hand.
+- If Colin calls half the time, Rose is indifferent to bluffing: without a spade she nets −\$50 either way, and with a spade she nets +\$100, for an expectation of −\$12.50 per hand. This is the correct strategy for Colin.
 
-频率从何而来？Rose 诈唬是冒 \$100 赢底池中的 \$100（1 赔 1 的赔率），因此 Colin 必须以 1/2 的频率跟注，才能让 Rose 的诈唬无利可图。反过来，Rose 的诈唬与价值下注（value bet，即黑桃下注）之比应为 1:2——这正是 Colin 跟注时面对的底池赔率（pot odds，底池 \$200 对跟注 \$100）——使 Colin 对是否跟注无差异。因此 Rose 应该以一半的红桃（hearts）下注诈唬：可以固定下注较大的红桃，而对 8♥ 这类边缘牌以一半频率随机下注。
+Where do the frequencies come from? When Rose bluffs, she risks \$100 to win the \$100 in the pot (1-to-1 odds), so Colin must call with frequency 1/2 to make her bluffs unprofitable. Conversely, Rose's ratio of bluffs to value bets (the spade bets) should be 1:2 — exactly the pot odds Colin faces when calling (the \$200 pot against his \$100 call) — which makes Colin indifferent to calling. Rose should therefore bluff with half of her hearts: she can always bet the high hearts and randomize on a borderline card like the 8♥, betting it half the time.
 
-这组策略就是该游戏的纳什均衡与 GTO 策略，游戏对 Colin 的价值为每手 \$12.50。
+These strategies form the Nash equilibrium and the GTO strategy of the game; the value of the game to Colin is \$12.50 per hand.
 
-## GTO 的形式化定义
+## Formal Definition of GTO
 
-设博弈的值函数为 $u(\sigma_x, \sigma_y)$，其中 $\sigma_x \in X$、$\sigma_y \in Y$ 分别是两位玩家的策略；X 方赢得 $u$，Y 方输掉 $u$。策略可以取凸线性组合：若 $\sigma_{x_k} \in X$，系数 $a_k \ge 0$ 且 $\sum_k a_k = 1$，则 $\sigma_x = \sum_k a_k \sigma_{x_k}$ 也是一个策略，且 $u$ 是双线性的：
+Let the game have a value function $u(\sigma_x, \sigma_y)$, where $\sigma_x \in X$ and $\sigma_y \in Y$ are the two players' strategies; player X wins $u$ and player Y loses $u$. Strategies admit convex linear combinations: if $\sigma_{x_k} \in X$, with coefficients $a_k \ge 0$ and $\sum_k a_k = 1$, then $\sigma_x = \sum_k a_k \sigma_{x_k}$ is also a strategy, and $u$ is bilinear:
 
 $$u(\sigma_x, \sigma_y) = \sum_k a_k \, u(\sigma_{x_k}, \sigma_y).$$
 
-即混合策略的支付等于各纯策略支付的加权平均。我们称一对策略 $(\sigma_x^*, \sigma_y^*)$ 处于 $\epsilon$-均衡，若
+That is, the payoff of a mixed strategy is the weighted average of the pure-strategy payoffs. We say a pair of strategies $(\sigma_x^*, \sigma_y^*)$ is in $\epsilon$-equilibrium if
 
 $$\max_{\sigma_x} u(\sigma_x, \sigma_y^*) \;-\; \min_{\sigma_y} u(\sigma_x^*, \sigma_y) \;\le\; \epsilon.$$
 
-当 $\epsilon = 0$ 时即为纳什均衡。Cepheus 用 900 CPU-年 找到的正是一对与均衡之差小于 1/1000 大盲注的策略 $(\sigma_x^*, \sigma_y^*)$。
+When $\epsilon = 0$ this is a Nash equilibrium. What Cepheus found with its 900 CPU-years was precisely a pair $(\sigma_x^*, \sigma_y^*)$ within 1/1000 of a big blind of equilibrium.
 
-## 后悔最小化
+## Regret Minimization
 
-求解算法的核心思想借自**后悔最小化（regret minimization）**。设在每个时间步 $t$，玩家可以从 $n$ 个纯策略中取一个线性组合
+The core idea behind the solving algorithm is borrowed from **regret minimization**. Suppose that at each time step $t$ the player chooses a linear combination of $n$ pure strategies
 
 $$\sigma^t = \sum_{k=1}^{n} a_k^t \sigma_k, \qquad \sum_{k=1}^n a_k^t = 1,\; a_k^t \ge 0.$$
 
-玩家选定 $\sigma^t$ 后，由一个全知的对手（adversary）给出各纯策略本步的值 $u^t(\sigma_k)$，玩家的实际收益为 $u^t(\sigma^t) = \sum_k a_k^t u^t(\sigma_k)$。对手可以让某个策略有时得分高、有时得分低。
+After the player commits to $\sigma^t$, an all-knowing adversary reveals the values $u^t(\sigma_k)$ of each pure strategy for this step, and the player's actual payoff is $u^t(\sigma^t) = \sum_k a_k^t u^t(\sigma_k)$. The adversary may make a given strategy score well at some times and badly at others.
 
-定义策略 $k$ 的**累计后悔（regret）**为一直采用 $k$ 与实际采用 $\sigma^t$ 的收益之差在时间上的总和：
+Define the total **regret** of strategy $k$ as the accumulated difference between always playing $k$ and actually playing $\sigma^t$:
 
 $$R_k^T = \sum_{t=1}^{T} \bigl( u^t(\sigma_k) - u^t(\sigma^t) \bigr).$$
 
-后悔可正可负：负后悔意味着你的实际打法比始终用 $k$ 更好。我们的目标是让平均正后悔趋于零，即 $R_k^T / T < \epsilon_t$，其中 $\epsilon_t$ 是趋于 0 的序列。实现方法是**后悔匹配（regret matching）**：记 $R_k^{T+} = \max(R_k^T, 0)$，令
+Regret can be positive or negative: negative regret means your actual play has been better than always playing $k$. The goal is to drive the average positive regret to zero, i.e. $R_k^T / T < \epsilon_t$ for a sequence $\epsilon_t$ converging to 0. This is achieved by **regret matching**: writing $R_k^{T+} = \max(R_k^T, 0)$, set
 
 $$a_k^T = \frac{R_k^{T-1,+}}{\sum_{j=1}^{n} R_j^{T-1,+}},$$
 
-即按各选项的正后悔比例分配权重；若所有后悔都非正，则随机选取策略。
+i.e. weight each option in proportion to its positive regret; if all regrets are non-positive, pick a strategy at random.
 
-**示例。** 设 $n=2$，每步对手让一个策略值 1、另一个值 0：
+**Example.** Let $n=2$, and at each step the adversary makes one strategy worth 1 and the other worth 0:
 
-1. $t=1$：任选 $\sigma^t = \sigma_1$。对手给出 $u^t(\sigma_1)=0$，$u^t(\sigma_2)=1$。于是 $R_1=0$，$R_2=1$（用了 $\sigma_1$ 本身不会产生后悔，后悔来自没用 $\sigma_2$）。
-2. $t=2$：按权重取 $\sigma^t = \sigma_2$。对手给出 $u^t(\sigma_1)=1$，$u^t(\sigma_2)=0$。现在 $R_1=1$，$R_2=1$。
-3. $t=3$：取 $\sigma^t = \sigma_1/2 + \sigma_2/2$。对手给出 $u^t(\sigma_1)=0$，$u^t(\sigma_2)=1$。现在 $R_1=0.5$，$R_2=1.5$。
-4. $t=4$：取 $\sigma^t = \sigma_1/4 + 3\sigma_2/4$。对手给出 $u^t(\sigma_1)=0$，$u^t(\sigma_2)=1$。现在 $R_1=-0.25$，$R_2=1.75$。
-5. $t=5$：只有 $R_2$ 为正，取 $\sigma^t = \sigma_2$。若对手改让 $\sigma_1$ 得分，$R_1$ 回升到 0.75，依此往复。
+1. $t=1$: pick arbitrarily $\sigma^t = \sigma_1$. The adversary gives $u^t(\sigma_1)=0$, $u^t(\sigma_2)=1$. Then $R_1=0$, $R_2=1$ (playing $\sigma_1$ itself generates no regret; the regret comes from not having played $\sigma_2$).
+2. $t=2$: by the weights, pick $\sigma^t = \sigma_2$. The adversary gives $u^t(\sigma_1)=1$, $u^t(\sigma_2)=0$. Now $R_1=1$, $R_2=1$.
+3. $t=3$: pick $\sigma^t = \sigma_1/2 + \sigma_2/2$. The adversary gives $u^t(\sigma_1)=0$, $u^t(\sigma_2)=1$. Now $R_1=0.5$, $R_2=1.5$.
+4. $t=4$: pick $\sigma^t = \sigma_1/4 + 3\sigma_2/4$. The adversary gives $u^t(\sigma_1)=0$, $u^t(\sigma_2)=1$. Now $R_1=-0.25$, $R_2=1.75$.
+5. $t=5$: only $R_2$ is positive, so pick $\sigma^t = \sigma_2$. If the adversary now rewards $\sigma_1$ instead, $R_1$ climbs back to 0.75, and so on.
 
-对手看似可以不断刁难我们，但存在如下界：在该例中
+The adversary seems able to torment us indefinitely, but there is a bound: in this example
 
 $$\bigl(R_1^{T+}\bigr)^2 + \bigl(R_2^{T+}\bigr)^2 \le T,$$
 
-因为当两个后悔都为正时，每步新增量的交叉项相互抵消，二次和每步至多增加 1。于是平均后悔 $R_k^T / T \le 1/\sqrt{T}$。一般有
+because when both regrets are positive, the cross terms of each step's increments cancel, so the quadratic sum grows by at most 1 per step. Hence the average regret satisfies $R_k^T / T \le 1/\sqrt{T}$. In general,
 
 $$\frac{R_k^T}{T} \le \frac{(n-1)\,\Delta}{\sqrt{T}},$$
 
-其中 $\Delta$ 是各选项收益的最大偏差，$n$ 是策略个数。平均后悔以 $1/\sqrt{T}$ 的速度趋于零。
+where $\Delta$ is the maximum deviation among the options' payoffs and $n$ is the number of strategies. Average regret converges to zero at the rate $1/\sqrt{T}$.
 
-注意这里的"策略"是扑克意义下的完整策略——例如拿到 A6o（不同花 A-6）后在每个决策点怎么做的完整描述——而不是一次支付。
+Note that a "strategy" here means a full strategy in the poker sense — a complete description of what you do at every decision point, e.g. after being dealt A6o (ace-six offsuit) — not a single payoff.
 
-## 从后悔最小化到 GTO
+## From Regret Minimization to GTO
 
-后悔最小化如何逼近 GTO？设 X 的纯策略为 $\{\sigma_{x,k}\}_{k=1}^m$，Y 的纯策略为 $\{\sigma_{y,j}\}_{j=1}^n$。不再让对手任意给定收益，而是让双方互为对手做后悔匹配：X 在 $t$ 步的收益函数取 $u_x^t(\cdot) = u(\cdot, \sigma_y^t)$，Y 取 $u_y^t(\cdot) = -u(\sigma_x^t, \cdot)$。每步双方各自更新后悔、调整策略，再取全部历史策略的平均
+How does regret minimization approach GTO? Let X's pure strategies be $\{\sigma_{x,k}\}_{k=1}^m$ and Y's be $\{\sigma_{y,j}\}_{j=1}^n$. Instead of an adversary assigning arbitrary payoffs, let the two players regret-match against each other: X's payoff function at step $t$ is $u_x^t(\cdot) = u(\cdot, \sigma_y^t)$ and Y's is $u_y^t(\cdot) = -u(\sigma_x^t, \cdot)$. At each step both players update their regrets and adjust their strategies; then take the average of all historical strategies:
 
 $$\bar{\sigma}_x^T = \frac{1}{T}\sum_{t=1}^T \sigma_x^t, \qquad \bar{\sigma}_y^T = \frac{1}{T}\sum_{t=1}^T \sigma_y^t.$$
 
-考察这对平均策略的可剥削性：
+Examine the exploitability of this pair of average strategies:
 
 $$u(\sigma_{x,k}, \bar{\sigma}_y^T) - u(\bar{\sigma}_x^T, \sigma_{y,j}) = \frac{R_{x,k}^T}{T} + \frac{R_{y,j}^T}{T} < 2\epsilon_t,$$
 
-即平均策略与 GTO 之差在 $2\epsilon_t$ 以内。直观地说：对手观察你的策略后能找到的最佳回应常被称为"克星"（nemesis）策略；只要你不在精确均衡上，克星策略的得分总高于博弈值。双方互相计算克星回应，两个值之差就是可剥削性——Cepheus 把这个数字压到了 1/1000 大盲注以下。
+so the average strategies are within $2\epsilon_t$ of GTO. Intuitively: the best response your opponent can find after observing your strategy is often called the "nemesis" strategy; as long as you are not at the exact equilibrium, the nemesis always scores above the game value. Each side computes the nemesis response to the other, and the difference between the two values is the exploitability — the number Cepheus pushed below 1/1000 of a big blind.
 
-## 反事实后悔（CFR）
+## Counterfactual Regret (CFR)
 
-CFR 是这项工作的主要创新。首先注意：收敛不要求每一步使用 $u$ 的真实值，只要使用 $u$ 的无偏样本即可——由中心极限定理，样本后悔会收敛到真实后悔。因此不必真的去计算"我的万亿字节级的策略打你的万亿字节级的策略值多少"，只需实际打出一手牌（或几种变化），用其结果作为一次采样。
+CFR is the major innovation of this work. First note that convergence does not require the true value of $u$ at every step — an unbiased sample of $u$ suffices, because by the Central Limit Theorem the sampled regrets converge to the true regrets. So there is no need to actually compute "what is my terabyte-sized strategy worth against your terabyte-sized strategy"; one can simply play out a hand (or a few variations of it) and use the result as one sample.
 
-主要想法是从每位玩家的**信息集（information set）**——他拿到的底牌、公共牌以及各玩家的行动序列——构建一棵"个人树"，在这棵树上玩家需要做决策的每个节点处分别做后悔匹配。之所以称为"反事实"后悔，是因为加权方式假设玩家"自己一路打到了该节点"：自然（发牌）按自身概率加权，对手的行动按其当前策略 $\sigma_y^t$ 的概率加权，而玩家自己通向该节点的选择权重取 1。
+The main idea is to build a "personal tree" from each player's **information set** — the cards he was dealt, the community cards, and the sequence of actions by each player — and to run regret matching separately at every node of that tree where the player has a decision. It is called *counterfactual* regret because of the weighting, which assumes the player "plays himself to that node": nature (the deal) is weighted by its own probabilities, the opponent's actions are weighted by their probabilities under his current strategy $\sigma_y^t$, and the player's own choices along the path to the node are given weight 1.
 
-这意味着手牌可以内生地采样：实际打出一手牌或一手牌的几个变体，就完成一次迭代。与虚拟对打（fictitious play）等方法相比，无需计算难求的最佳回应，每次模拟只是对树的一趟遍历，收敛因而可行。
+This means hands can be sampled intrinsically: playing out one hand, or a few variations of a hand, completes one iteration. Compared with methods such as fictitious play, there is no need to compute a hard-to-find best response; each simulation is a single pass through the tree, which makes convergence feasible.
 
-## CFR 的改进与 CFR+
+## Improving CFR: CFR+
 
-- **CFR+**：最终算法有两处关键改动。其一是把后悔**下限截断在 0**，而不是允许出现很大的负后悔（例如"翻前弃掉 AA"会迅速积累巨额负后悔）。原因在于这是一个双方策略同步演化的过程：早期评估出的差策略未必真差，一旦它其实是对当前对手策略的正确回应，后悔从 0 重新积累要比从一个巨大的负数爬回来快得多。其二是用沿树的**穷举式搜索**代替蒙特卡洛采样。
-- **分支加权**：可以让平均后悔更高的分支被更频繁地访问。例如转牌来 A♥ 的分支早已收敛、几乎无正后悔，就可以降低其访问频率并按权重 10 折算结果，把算力集中在尚未解决的 2♣ 分支上。
-- **一般加权灵活性**：例如对较晚的迭代加大权重；在河牌圈，跟注的后悔可能是整个底池，而弃牌的后悔至多一个下注，加权方案可以修正这种不对称。
+- **CFR+**: the final algorithm makes two key changes. First, regrets are **floored at 0** rather than allowed to become very negative (folding aces preflop, for example, quickly accumulates an enormous negative regret). The reason is that this is a process in which both strategies evolve simultaneously: a strategy evaluated as bad early on may not truly be bad, and once it is in fact the right response to the opponent's current strategy, regret can re-accumulate from 0 much faster than it can climb back from a huge negative number. Second, Monte Carlo sampling is replaced by a more **exhaustive search** along the tree.
+- **Branch weighting**: branches with higher average regret can be visited more often. For example, if the branch where the A♥ comes on the turn has long since converged and carries almost no positive regret, its visit frequency can be reduced and its results rescaled by a weight of 10, concentrating computation on the still-unresolved 2♣ branch.
+- **General weighting flexibility**: for instance, later iterations can be weighted more heavily; on the river, the regret of calling can be the whole pot while the regret of folding is at most one bet, and a weighting scheme can correct this asymmetry.
 
-一个有趣的演化现象：若从完全随机的初始策略出发，"每手牌都下注和加注"会迅速成为优势策略——随机对手经常弃牌，即使他加注回来，你也可以再加回去指望他弃牌；若他跟注，下条街底池更大、他只需 1/3 的弃牌率你就该继续下注。随后对手策略演化，这种打法再被逐步"拉回"。实现上需要维护两棵树：一棵小盲（small blind）策略树，一棵大盲（big blind）策略树。
+One interesting evolutionary phenomenon: starting from a completely random initial strategy, "bet and raise every time with every hand" quickly becomes the dominant strategy — a random opponent folds often, and even when he raises back you can re-raise hoping he folds; if he calls, the pot is bigger on the next street and you should keep betting as long as he folds 1/3 of the time. As the opponent's strategy evolves, this style is gradually walked back. The implementation maintains two trees: one for the small blind's strategy and one for the big blind's.
 
-## 限注德州扑克的规模
+## The Size of Limit Hold'em
 
-这棵树有多大？集中看数量最多的河牌圈节点即可（树中只需数叶子）。
+How big is the tree? It suffices to concentrate on the river nodes, which are the most numerous (in a tree you only need to count the leaves).
 
-- **行动序列**：假设四注封顶（4-bet cap，文献中的常规近似），每条街（翻前、翻牌、转牌）有 9 种能进入下一条街的行动序列：过牌-过牌算 1 种；投入 $k$ 注（$k \ge 1$）恰有 2 种方式（如下注-加注-再加注-跟注，或过牌-下注-加注-再加注-跟注），故封顶 $k$ 注时每街共 $2k+1 = 9$ 种。那些以弃牌结束、到不了河牌的序列占比很小。
-- **翻牌对称性**：利用花色对称，不同翻牌共有 1755 种——单色 $\binom{13}{3}=286$ 种，两色 $13 \times \binom{13}{2} = 1014$ 种，三色 $\binom{15}{3} = 455$ 种（点数可重复，故从 15 个"可重复点数值"中选 3，而非 $\binom{13}{3}$）。
-- **转牌与河牌**：$49 \times 48 = 2352$ 种。于是到达河牌的行动序列共 $1755 \times 9^3 \times 2352 \approx 30$ 亿种。
-- **河牌手牌类型**：$47 \times 46 = 2162$ 种，合计约 $6.5 \times 10^{12}$ 种"手牌-河牌"局面。每个河牌节点大约需要访问 1000 次。这是巨大的计算问题，但仍然可解（tractable）——尤其有 900 CPU-年可用，再加上大量捷径：花色对称、把问题拆成约 100 个子博弈分别求解、在河牌阶段利用缓存（cache）局部性加速、把后悔更新优化为简单加法等。存储完整策略需要 TB 级内存。
+- **Action sequences**: assume a 4-bet cap (the standard approximation in the literature). On each street (preflop, flop, turn) there are 9 action sequences that reach the next street: check-check counts as 1; putting in exactly $k$ bets ($k \ge 1$) can happen in exactly 2 ways (e.g. bet–raise–reraise–call, or check–bet–raise–reraise–call), so a cap of $k$ bets gives $2k+1 = 9$ sequences per street. Sequences that end in a fold and never reach the river are a small fraction of the nodes.
+- **Flop symmetries**: using suit symmetry, there are 1755 distinct flops — $\binom{13}{3}=286$ one-suited, $13 \times \binom{13}{2} = 1014$ two-suited, and $\binom{15}{3} = 455$ three-suited (ranks may repeat, so we choose 3 from 15 "rank values with repetition," not $\binom{13}{3}$).
+- **Turns and rivers**: $49 \times 48 = 2352$. Hence there are $1755 \times 9^3 \times 2352 \approx 3$ billion action sequences reaching the river.
+- **River hand types**: $47 \times 46 = 2162$, giving about $6.5 \times 10^{12}$ "hand–river" situations in total. Each river node must be visited roughly 1000 times. This is an enormous computational problem, but still tractable — especially with 900 CPU-years available, plus many shortcuts: suit symmetries, splitting the problem into about 100 subgames solved separately, exploiting cache locality once the computation reaches the river, and optimizing the regret updates into simple additions. Storing the full strategy requires terabytes of memory.
 
-## 求解其他扑克游戏
+## Solving Other Poker Games
 
-**奥马哈高低（Omaha 8）**：结构与限注德州完全相同，只是手牌类型从 $\binom{47}{2}$ 变为 $\binom{47}{4}$，树规模约为原来的 82.5 倍——若限注德州要 900 CPU-年，这大约需要 75,000 CPU-年，仍属可解。还可以通过**分桶（bucketing）**压缩：把手牌类型归入桶中，同一桶内的牌按相同方式处理，相当于只考虑策略空间的子空间 $X' \subset X$、$Y' \subset Y$，求解子博弈 $u(X', Y')$，再评估该解在完整博弈中的优度。分桶设计得好（通常在河牌圈更必要）结果就很接近；把 AA 和 75s 放进同一桶自然不会得到好答案。阿尔伯塔团队早年正是用这些方法做出了强大的限注德州程序。
+**Omaha 8 (Omaha high-low)**: identical structure to limit hold'em, except the hand types go from $\binom{47}{2}$ to $\binom{47}{4}$, making the tree about 82.5 times larger — if limit hold'em takes 900 CPU-years, this would take roughly 75,000 CPU-years, still tractable. **Bucketing** offers further compression: group hand types into buckets and play every hand in a bucket the same way — in effect restricting to subspaces $X' \subset X$ and $Y' \subset Y$ of the strategy spaces, solving the subgame $u(X', Y')$, and then evaluating how good that solution is in the full game. With well-designed buckets (usually more necessary on the river) the result is quite close; putting AA and 75s in the same bucket will obviously not give a good answer. The Alberta group originally used exactly these methods to build strong limit hold'em programs.
 
-**Razz（七张低牌 stud）**：无疑是 stud 类中最简单的变体——只有 13 种牌型，花色无关（同花不计）。但困难在于：四张明牌共有 $13^8$ 种出现方式，行动序列为 $9^4$ 种（多一条街），河牌手牌类型仍是 $\binom{15}{3} = 455$ 种，合计约 $2.44 \times 10^{15}$ 种河牌局面，是德州的 374 倍。不过可以大量简化：实际上只有 78 个不同的"子游戏"（A 对 2 的局面等）；某些街的行动近乎平凡（你明牌 Q 而对手补成 2 时，第三条街不会打成加注战）；Razz 的分桶也更自然（如 K-8-6-2 与 K-8-6-A 很接近，可按牌点序归并起手牌）。
+**Razz (seven-card stud low)**: unquestionably the simplest stud variant — only 13 card types, and suits are irrelevant (flushes do not count). The difficulty is that the four upcards can come in $13^8$ ways, there are $9^4$ action sequences (one extra street), and there are still $\binom{15}{3} = 455$ river hand types, totaling about $2.44 \times 10^{15}$ river situations — a factor of 374 over hold'em. Much simplification is possible, however: there are really only 78 distinct "subgames" (the A-versus-2 game, and so on); some streets are nearly trivial (when you show a queen and your opponent completes a deuce, third street will not become a raising war); and bucketing is more natural in Razz (e.g. K-8-6-2 is very close to K-8-6-A, so starting hands can be merged by rank order).
 
-## 大额下注游戏
+## Big Bet Games
 
-无限注（No Limit）与底池限注（Pot Limit）游戏的困难在于下注尺度是**连续**的：对每种下注尺度又存在连续的应对，后续还有更多的街。求解必须在下注尺度之间做某种插值。即便某些尺度本身非最优，完整策略也必须包含对这些下注的回应。商业程序 Snowie 只假设三种尺度（半池、满池、全下），这恐怕太粗：对手若下 1/4 池或 1.1 倍池怎么办？回应 1.1 倍池下注时，是该加到 1.1 倍池，还是加到 0.9 倍池以回到原先的筹码深度？这些都是难题。
+The difficulty with No Limit and Pot Limit games is that bet sizes form a **continuum**: each bet size has a continuum of responses, with further streets behind. Any solution requires some kind of interpolation between bet sizes. Even if some sizes are themselves non-optimal, a complete strategy must include responses to those bets. The commercial program Snowie assumes only three sizes (half pot, full pot, all-in), which is likely too coarse: what if the opponent bets 1/4 pot or 1.1× pot? And responding to a 1.1× pot bet, should you raise to 1.1× pot, or to 0.9× pot so as to return to the original stack depth? These are hard questions.
 
-另一条路是蛮力加密尺度（0.01 倍池、0.02 倍池……），但这样会产生大量期望极其接近的选项，后悔最小化需要很长时间才能区分它们，还要同时平衡价值下注与诈唬的比例。有希望的方向包括：研究只允许满池下注的"刚性"底池限注游戏，可能揭示有趣的结构；小筹码（small stack）游戏由于大量行动很快终结（全下），可能更适合求解。
+The alternative is brute-force densification of sizes (0.01× pot, 0.02× pot, ...), but that produces a large number of options with extremely close expectations, which regret minimization takes a long time to distinguish — all while balancing value bets against bluffs. Promising directions include studying a "rigid" pot limit game where only full-pot bets are allowed, which may reveal interesting structure, and small stack games, where much of the action terminates quickly (all-in), making them more amenable to solution.
 
-## 多人游戏（3 人及以上）
+## Multiplayer Games (3+ Players)
 
-Risk 与 Szafron 的论文《Using Counterfactual Regret Minimization to Create Competitive Multiplayer Poker Agents》（2011）讨论了这一问题，其程序曾在年度三人限注德州赛事中包揽前两名。两个核心障碍：
+The paper *Using Counterfactual Regret Minimization to Create Competitive Multiplayer Poker Agents* by Risk and Szafron (2011) addresses this problem; its programs finished first and second in an annual three-player limit hold'em event. Two core obstacles:
 
-1. **没有 $\epsilon$-收敛保证**：CFR 不再保证收敛到纳什均衡的 $\epsilon$ 邻域内。
-2. **多重均衡**：多人博弈可能存在多个纳什均衡，尤其在锦标赛/卫星赛（satellite）等按比例分配名次的赛制中，非线性效应显著——你不知道对手们正在玩哪个（可能是合谋的）均衡。《The Mathematics of Poker》中的"石头-疯子"（Rock-Maniac）游戏表明，其他玩家可以用简单策略确保你输钱。非扑克版本如三人猜奇偶、"落单者赢"：若两人合谋，一人出 1、另一人出 2，第三人永远无法获胜。扑克中也会出现类似局面。不过若非锦标赛且无合谋，打纳什均衡策略通常结果尚可。这是一个富饶的研究领域。
+1. **No $\epsilon$-convergence guarantee**: CFR no longer guarantees convergence to within an $\epsilon$ neighborhood of a Nash equilibrium.
+2. **Multiple equilibria**: multiplayer games can have many Nash equilibria, especially in tournaments and satellites with proportional payouts for places other than first, where nonlinear effects are significant — you do not know which (possibly collusive) equilibrium your opponents are playing. The "Rock-Maniac" game in *The Mathematics of Poker* shows that other players can use a simple strategy to ensure you lose. A non-poker version is three-player odds-and-evens with "odd man out wins": if two players collude, one always playing 1 and the other always playing 2, the third player can never win. Analogous situations arise in poker. Still, outside of tournaments and absent collusion, playing a Nash equilibrium usually turns out fine. This is a rich area of study.
 
-## 延伸讨论
+## Further Discussion
 
-**Cepheus 对实战的影响。** 这是否意味着扑克将像国际象棋一样被计算机统治？至少对其他游戏还不是。就单挑限注德州本身，这一解的影响也很有限：此类近似最优的策略在解发布前已存在多年，顶尖线上牌手早已打得接近最优，这个游戏在解出来之前实际上已经"死了"。即使手握完整 GTO 策略，也还需要学会它。
+**Cepheus's impact on real play.** Does this mean poker will be dominated by computers the way chess is? At least for other games, not yet. Even for heads-up limit hold'em itself, the solution's impact is limited: approximately optimal strategies of this kind had existed for years before the solution was published, top online players were already playing near-optimally, and the game was effectively "dead" before it was solved. Even with the full GTO strategy in hand, you still have to learn it.
 
-**分桶与近似的其他技巧。** 一种取巧的做法是设法砍掉整条河牌街，用河牌的估计权益（equity）代替展开——注意这不是摊牌权益，因为你可能还要面对下注，应使用某种隐含价值。另一种是按游戏特性自然分桶，如奥马哈河牌只把实际用到的两张牌分组、忽略其余。但这类做法会丢失**阻牌效应（card removal）**：在毫盲（milli-big-blind）精度的 GTO 解中，阻牌是相当重要的一部分。基本原理是：底池为 $p$、对手下注 1 时，他冒 1 赢 $p$，你要让他对诈唬无差异，就需以约 $p/(p+1)$ 的频率跟注；若你完全不顾阻牌，对手就能专挑"你更可能拿中等牌"的场合诈唬。典型例子是 PLO（底池限注奥马哈）中板面有三张同花时，手持该花色的 A（如同花面握 A♠）是极好的诈唬：你同时封锁了对手的坚果牌和大量强牌。
+**Other tricks for bucketing and approximation.** One shortcut is to cut out the river street entirely, substituting an estimated equity on the river for the full expansion — note this is not showdown equity, since you may still face a bet, so some kind of implied value must be used. Another is game-specific natural bucketing, such as grouping only the two cards that actually play on an Omaha river and ignoring the rest. But such approaches lose **card removal** effects: in GTO solutions at milli-big-blind precision, card removal is a significant component. The underlying principle: with a pot of $p$ facing a bet of 1, the bettor risks 1 to win $p$, so to make him indifferent to bluffing you must call with frequency about $p/(p+1)$; if you ignore card removal entirely, the opponent can pick exactly the spots where you are more likely to hold a mediocre hand and bluff there. The canonical example is PLO (pot-limit Omaha) with three of a suit on board: holding the ace of that suit (e.g. A♠ on a spade-flush board) is an excellent bluff, since you simultaneously block the opponent's nuts and many of his strong hands.
 
-**效用理论（utility theory）。** 牌手常在"该参加什么比赛、打什么局"上运用效用分析，但局内的个人效用优化少有研究。限注德州需要数百注的资金（bankroll），通常假设"进了局就只想赢最多的钱"对多数场合是正确的。但在锦标赛中筹码价值非线性（如 ICM 已计算的），主赛事决赛桌上 \$200 万到 \$350 万 与 \$0 到 \$200 万 对个人效用完全不同，因此边际手牌的取舍可能确实需要效用修正——这是值得研究的方向。
+**Utility theory.** Players routinely apply utility analysis to "which tournaments to enter and which games to play," but optimizing personal utility *within* a game has rarely been studied. Limit hold'em requires a bankroll of hundreds of bets, so the assumption "once in the game, just try to win the most money" is correct for most situations. In tournaments, however, chip value is nonlinear (as ICM already computes): at a main event final table, the step from \$2 million to \$3.5 million is worth far less in personal utility than the step from \$0 to \$2 million, so the treatment of marginal hands may genuinely require a utility correction — a direction worth studying.
 
-**检测并利用对手的偏离。** 偏离 GTO 去剥削对手，同时也暴露了自己被剥削的可能，这是一个动态问题：对手何时上头（tilt）、持续多久、有多少证据？CMU 的团队曾研究"零损失剥削"思路：估计对手因打法欠佳已让渡了多少权益，只取用其中一部分（如一半），使自己暴露的剥削风险受限。
+**Detecting and exploiting opponents' deviations.** Deviating from GTO to exploit an opponent also exposes you to exploitation — a dynamic problem: when does the opponent go on tilt, for how long, and with what evidence? The CMU group studied a "zero-loss exploitation" idea: estimate how much equity the opponent has already given up by playing sub-optimally, and take only a fraction of it (say half), so that your own exposure to being exploited stays bounded.
 
-**扑克与交易。** 扑克之所以受交易公司青睐，是因为它在单一游戏中浓缩了交易的核心要素：众多参与者、不完全信息、必须揣摩对手意图（他挂单的动机是出货还是别的什么），以及在已知"价值 \$10"时围绕对手特征调整买卖报价（bid/offer）的能力。扑克策略分析与量化交易策略分析在方法上也高度相似。
+**Poker and trading.** Poker is prized by trading firms because it concentrates the essentials of trading in a single game: many participants, incomplete information, the need to read a counterparty's intent (is his bid motivated by unloading risk or something else), and the ability to adjust your bid/offer around a known "value of \$10" based on counterparty characteristics. The analysis of poker strategies is also methodologically very similar to the analysis of quantitative trading strategies.
 
-## 参考文献
+## References
 
 1. Bowling, M., Burch, N., Johanson, M., Tammelin, O. (2014). *Heads-up Limit Hold'em Poker is Solved*.
 2. Risk, N., Szafron, D. (2011). *Using Counterfactual Regret Minimization to Create Competitive Multiplayer Poker Agents*.
 3. Zinkevich, M., Johanson, M., Bowling, M., Piccione, C. (2008). *Regret Minimization in Games with Incomplete Information*.
 
-## 要点小结
+## Key Takeaways
 
-- Cepheus 用 900 CPU-年 将单挑限注德州解到可剥削性低于 1/1000 大盲注，是首个被求解的真实扑克游戏；这一差距在实战中（约需 2500 万手才能显著检出）等同于完美。
-- 纳什均衡是无人能通过单方面改变策略获益的策略组合；两人零和博弈中即 GTO（最小最大解）。GTO 保证不被剥削，但不一定充分利用对手的错误。
-- Rose-Colin 示例展示了 GTO 的典型结构：价值下注永远执行，诈唬频率（1:2）使对手跟注无差异，跟注频率（1/2）使诈唬无差异。
-- 后悔匹配按各纯策略的正后悔比例分配权重，平均后悔以 $R_k^T/T \le (n-1)\Delta/\sqrt{T}$ 的速率收敛；双方互为对手做后悔匹配并取历史平均策略，可在 $2\epsilon_t$ 内逼近 GTO。
-- CFR 在每位玩家的信息集树的每个决策节点上分别做后悔匹配，以反事实权重加权，用无偏采样代替精确计算，使大规模博弈可解；CFR+ 通过后悔截零与穷举遍历进一步加速。
-- 限注德州河牌圈约有 $6.5 \times 10^{12}$ 种局面，借助花色对称、分桶、子博弈分解等捷径方可求解；Omaha 8（82.5 倍）与 Razz（374 倍）理论上可解，大额下注游戏受连续下注尺度困扰，多人游戏则缺乏收敛保证且存在多重均衡。
+- Cepheus solved heads-up limit hold'em to an exploitability below 1/1000 of a big blind using 900 CPU-years — the first real poker game ever solved; the residual gap (detectable only after roughly 25 million hands) is equivalent to perfection in practice.
+- A Nash equilibrium is a set of strategies where no player can gain by unilaterally changing strategy; in two-player zero-sum games it is the GTO (minimax) solution. GTO guarantees you cannot be exploited, but does not fully capitalize on opponents' mistakes.
+- The Rose–Colin example shows the typical structure of GTO: value bets are always made, the bluff frequency (1:2) makes the opponent indifferent to calling, and the calling frequency (1/2) makes bluffs indifferent.
+- Regret matching weights each pure strategy in proportion to its positive regret, with average regret converging at the rate $R_k^T/T \le (n-1)\Delta/\sqrt{T}$; two players regret-matching against each other and averaging their historical strategies approaches GTO within $2\epsilon_t$.
+- CFR performs regret matching separately at every decision node of each player's information-set tree, weighted counterfactually, and replaces exact computation with unbiased sampling, making huge games solvable; CFR+ further accelerates convergence by flooring regrets at zero and using exhaustive traversal.
+- Limit hold'em has about $6.5 \times 10^{12}$ river situations, solvable only with shortcuts such as suit symmetries, bucketing, and subgame decomposition; Omaha 8 (82.5×) and Razz (374×) are tractable in principle, big bet games are complicated by continuous bet sizes, and multiplayer games lack convergence guarantees and admit multiple equilibria.

@@ -1,205 +1,205 @@
-# L4 翻牌前分析
+# L4 Preflop Analysis
 
-翻牌前（pre-flop）是锦标赛中最值得精确求解的决策点：变量少、可以算得很干净，而大多数现场玩家在这里错得离谱。本讲从一手看似该弃牌的烂牌出发，建立范围（range）的语言，再系统推导单挑和多人局面下 M ≤ 10 时的全下/弃牌（push/fold）法则。
+Preflop is the most precisely solvable decision point in tournament poker: the variables are few, the math is clean, and most live players get it spectacularly wrong. This chapter starts from a seemingly foldable trash hand, builds the language of ranges, and then systematically derives push/fold rules for heads-up and multi-way play at M ≤ 10.
 
-## 动机：为什么用一整讲讲翻牌前
+## Motivator: Why Spend a Whole Lecture on Preflop?
 
-- 在锦标赛中，你的大部分价值来自翻牌前接近最优的打法；
-- 大多数现场玩家的翻牌前决策偏差极大——他们害怕被一手差牌淘汰，或害怕亮出差牌，而翻牌前的打法本身就很反直觉；
-- 翻牌前容易求解：变量少、假设少，可以逼近纳什均衡（Nash equilibrium）；翻牌后则变量太多，只能靠模式匹配。
+- In tournaments, most of your value comes from playing preflop close to optimally;
+- Most live players are way off in their preflop decision-making — they fear getting knocked out on a bad hand or showing down a bad hand, and preflop play is deeply counterintuitive;
+- Preflop is easy to solve: few variables, few assumptions, so we can get close to a Nash equilibrium. Postflop has a million variables and reduces to pattern matching.
 
-## 场景 A：9♠6♥ 该不该全下
+## Scenario A: Should We Push 9♠6♥?
 
-无限注德州扑克锦标赛，盲注 125/250，前注（ante）25。大盲位（BB）玩家 trifluvian 剩 1100（M = 2.59），我们在按钮位/小盲位（BTN/SB）有 3400（M = 8）。注意单挑规则的小变化：按钮位同时是小盲，翻牌前第一个行动、之后每轮最后行动。底池已有 425，我们手持 9♠6♥，怎么办？
+No-limit hold'em tournament, blinds 125/250 with a 25 ante. The big blind, trifluvian, has 1100 left (M = 2.59); we are on the button/small blind (BTN/SB) with 3400 (M = 8). Note the small heads-up rule variation: the button is also the small blind, acting first preflop and last on every later street. The pot is already 425, we hold 9♠6♥ — what do we do?
 
-翻牌前的全下本质上是半诈唬（semi-bluff）：即便被跟注，我们的胜率几乎不会低于 30%。使用半诈唬 EV 公式：
+A preflop all-in is essentially a semi-bluff: even when called, we are virtually never worse than 30% to win. Using the semi-bluff EV formula:
 
 $$EV = Pot \times Fold\% + (1-Fold\%) \times (Win\% \times WinAmt - Lose\% \times LoseAmt)$$
 
-假设对手的跟注范围为 22+、A2+、JT+（占全部起手牌的 27.60%，这是相当宽的跟注范围）。用 PokerTracker 的胜率计算器计算 96o 对该范围的胜率：我们不必知道对手具体拿什么牌，只需知道"他若跟注，就等概率持有范围内的任意一手"，于是 96o 对范围 {22+, A2+, JT+} 的胜率为 **34.26%**——被跟注时我们是约 35-65 的劣势方。
+Assume the opponent calls with 22+, A2+, JT+ (27.60% of all starting hands — a fairly wide calling range). Plugging 96o versus that range into PokerTracker's equity calculator: we never need to know his exact hand, only that "if he calls, he is equally likely to hold any hand in the range." Against {22+, A2+, JT+}, 96o wins **34.26%** of the time — when called, we are roughly a 35–65 underdog.
 
-输赢金额（注意 BB 已投入的盲注和前注不计入）：
+Win and loss amounts (note that the blinds and antes the BB has already posted are not counted):
 
 $$WinAmt = 4500 - (3400 - (125+25)) = 1250$$
 $$LoseAmt = 1100 - (125+25) = 950$$
 
-代入：弃牌的 EV 为 0，而全下的 EV 为
+Plugging in: the EV of folding is 0, while the EV of pushing is
 
 $$EV_{push} = (1-27.6\%) \times 425 + 27.6\% \times [34.26\% \times 1250 - 65.74\% \times 950] = 307.7 - 54.2 = \mathbf{253.5}$$
 
-在这个看似边缘的局面里，全下平均能赚 253.5 个筹码——而赢下整个锦标赛也只需要 1000 筹码。反过来说，弃牌等于白送对手约 250 筹码。
+In this seemingly marginal spot, pushing earns 253.5 chips on average — and it only takes 1000 chips to win the whole tournament. Put the other way around, folding hands the opponent about 250 chips for free.
 
-### 一般化：结论不依赖于跟注范围的假设
+### Generalizing: The Conclusion Does Not Depend on the Call-Range Assumption
 
-上面的计算假设了对手的跟注范围。把跟注比例 $F\%$ 作为变量（胜率 $W\%$ 随 $F\%$ 变化：对手跟得越紧，被跟注时我们越被压制）：
+The calculation above assumed a specific calling range. Make the call frequency $F\%$ a variable (the win rate $W\%$ moves with $F\%$: the tighter he calls, the more crushed we are when called):
 
 $$EV_{push} = (1-F\%) \times 425 + F\% \times [W\% \times 1250 - (1-W\%) \times 950]$$
 
-![全下 EV 随对手跟注比例的变化：总权益 = 弃牌权益 + 摊牌权益，且始终为正](assets/ch04-1.png)
+![Push EV as a function of the opponent's call frequency: total equity = fold equity + showdown equity, and it stays positive throughout](assets/ch04-1.png)
 
-如上图，总权益（Total Equity）= 弃牌权益（Fold Equity，随对手跟注率线性下降）+ 摊牌权益（SD Equity，几乎全程为负，仅当对手跟注极宽时才略高于零）。关键观察：**整条曲线上 EV 都是正的**——无论对手用什么跟注策略，这里都应该全下。对手 100% 弃牌时 EV 趋于底池 425；对手跟注增多时 EV 下降但仍为正，全程平均约 175 筹码。
+As shown above, Total Equity = Fold Equity (declining linearly in the call frequency) + Showdown Equity (negative over nearly the whole range, creeping just above zero only when the opponent calls extremely wide). The key observation: **EV is positive along the entire curve** — no matter what calling strategy the opponent adopts, pushing is correct here. When he folds 100% of the time, EV approaches the pot of 425; as he calls more, EV drops but stays positive, averaging about 175 chips across the curve.
 
-弃牌的代价有多糟？弃掉这手牌约损失 175 筹码的 EV，这比拿 3♣4♦ 去跟注 A♠K♠ 的全下还要糟：
+How bad is folding? Open-folding this hand costs about 175 chips of EV — worse than calling an all-in with 3♣4♦ against A♠K♠:
 
 $$1250 \times 35.42\% - 950 \times 64.58\% = -171$$
 
-### 反直觉性与本章目标
+### Counterintuitiveness and Chapter Goals
 
-推/弃决策很不直观：弃牌权益与摊牌权益随各变量同时变化、方向诡异，无法靠直觉判断。影响决策的变量有：我们的牌、我们的位置、我们的筹码量、对手的跟注范围。我们的目标是得出对"所有跟注范围"或"任意两张牌"都成立的速用规则，最终能画出"绿色区域全下、黄色区域弃牌"式的决策图。
+Push/fold decisions are not intuitive: fold equity and showdown equity move simultaneously in strange directions as every variable changes, so intuition cannot be trusted. The variables that drive the decision are: our cards, our position, our stack, and the opponent's calling range. Our goal is quick rules that hold "for all call ranges" or "for any two cards," ultimately producing a decision chart of the form "push in the green region, fold in the yellow region."
 
-## 范围的定义
+## Range Definition
 
-**范围（range）是一手牌的集合。** 同花性用牌旁的 o（offsuit，不同花）或 s（suited，同花）表示。
+**A range is a set of hands.** Suitedness is marked by an o (offsuit) or s (suited) next to the hand.
 
-![PokerTracker 对范围 33+, A4s+, KTs+, A8o+ 的表示：13×13 网格，对角线为口袋对，右上为同花，左下为不同花](assets/ch04-2.png)
+![PokerTracker's representation of the range 33+, A4s+, KTs+, A8o+: a 13×13 grid with pocket pairs on the diagonal, suited hands upper right, offsuit hands lower left](assets/ch04-2.png)
 
-范围的记法用系列中最低（或最高）的牌表示：
+Ranges are denoted by the lowest (or highest) hand in a series:
 
-- AA KK QQ 写作 **QQ+**；
-- AA KK AK AQ KQ 写作 **KK+, AQ+, KQ+**；
-- 较少见地，用 "-" 表示系列中最好的牌：55 44 33 22 54 53 52 43 42 可写作 55-, 54-, 43-。
+- AA KK QQ is written **QQ+**;
+- AA KK AK AQ KQ is written **KK+, AQ+, KQ+**;
+- Less commonly, "-" marks the best hand in a series: 55 44 33 22 54 53 52 43 42 can be written 55-, 54-, 43-.
 
-范围有两个用途：
+Ranges serve two purposes:
 
-- **分析对手**：估计对手持牌分布后计算我们的胜率，例如拿着 AT，对 ATC（any two cards，任意两张牌）有 63% 的胜率；
-- **决定我们的打法**：制定基于范围的规则，例如"用 AT+、88+ 全下，其余弃牌"。
+- **Analyzing opponents**: estimate an opponent's hand distribution and compute our equity — e.g., holding AT, we are 63% against ATC (any two cards);
+- **Determining our plays**: build range-based rules — e.g., "push with AT+, 88+, and fold everything else."
 
-### Sklansky-Karlson 排名
+### Sklansky-Karlson Rankings
 
-最常用的起手牌百分位排名是 Sklansky-Karlson 排名，依据的是两人对局中翻牌前领先的可能性。排名前 10 的手牌依次是：AA, KK, AKs, QQ, AKo, JJ, AQs, TT, AQo, 99。
+The most common percentile ranking of starting hands is the Sklansky-Karlson ranking, based on the likelihood of being ahead preflop in a two-player hand. The top 10 hands in order: AA, KK, AKs, QQ, AKo, JJ, AQs, TT, AQo, 99.
 
-David Sklansky 是著名扑克理论家，三条 WSOP 金手链、一个 WPT 冠军得主，就读于沃顿商学院，在 TwoPlusTwo 出版社出版了 13 本著作。他提出的**扑克基本定理（Fundamental Theorem of Poker）**是：
+David Sklansky is a renowned poker theorist: three WSOP bracelets, one WPT title, studied at Wharton, and author of 13 books published by TwoPlusTwo Publishing. His **Fundamental Theorem of Poker** states:
 
-> 每当你的打法不同于"看得到对手所有牌时的打法"，对手就获益；每当你的打法与之一致，对手就受损。
+> Every time you play a hand differently from the way you would have played it if you could see all your opponents' cards, they gain; and every time you play your hand the same way you would have played it if you could see all their cards, they lose.
 
-Sklansky-Karlson 排名来自 Sklansky 2003 年 10 月 4 日发表的"重要无限注数学问题"：盲注 1/2，你在小盲位拿到 A8o，只剩两个选择——弃牌，或者**亮开手牌全下**（对手看到你的 A8o 后再决定）。当筹码不超过多少 x 时，亮牌全下仍是 +EV？Sklansky 给出的答案约为 x ~ 70。
+The Sklansky-Karlson ranking comes from Sklansky's October 4, 2003 post "Important No Limit Math Problem": blinds 1/2, you are in the small blind with A8o, and your only options are to fold or to **push all-in with your cards face up** (the opponent sees your A8o before deciding). For what stack size x is the face-up shove still +EV? Sklansky's answer was roughly x ~ 70.
 
-推导：假设大盲仅在胜率 ≥ 50% 时跟注（忽略底池赔率的细微影响——它只轻微改变 x，不影响手牌排序）。则大盲的跟注范围是 A8+、22+（占 13.12%），A8o 对该范围的胜率为 33%。令 EV 为零求临界点：
+Derivation: assume the big blind calls only when his win probability is ≥ 50% (ignoring the subtle effect of pot odds — it shifts x only slightly and does not change the hand ordering). Then the BB's calling range is A8+, 22+ (13.12% of hands), and A8o wins 33% against it. Setting EV to zero for the break-even point:
 
 $$EV = 87\% \times 3 + 13\% \times [33\% \times x - 67\% \times (x-1)] = 0 \Rightarrow x \approx 62$$
 
-即筹码不超过 62 时，亮牌全下 A8o 是 +EV 的。每手牌的 x 值取决于两个因素：**你略优于多少手牌**（决定弃牌权益）和**落后时的获胜概率**（决定被跟注后的摊牌权益）。Victor Chubukov（Karlson）在同年 10 月 24 日对全部手牌求解：AA 的 x = ∞（任意多筹码亮牌全下都不亏），KK 的 x = 1290（可用 $0 = 0.9955 \times 3 + 0.0045 \times (0.1805x - 0.8195(x-1))$ 验证，在 x ≈ 1040 处约为零）；一路算到 32o 的 x ≈ 1.8。另一种排序方式是按"对三个随机手牌的胜率"排名，可能更适用于多人底池，但本课程主要假设只有一个跟注者，故采用 Sklansky-Karlson 排名。
+So with 62 chips or fewer, shoving A8o face-up is +EV. Each hand's x value depends on two factors: **how many hands you are marginally better than** (which drives fold equity) and **your chance of winning when behind** (which drives showdown equity when called). Victor Chubukov (Karlson) solved for every hand on October 24 of the same year: AA has x = ∞ (face-up shoving aces never loses chips on average, no matter the stack), KK has x = 1290 (verifiable via $0 = 0.9955 \times 3 + 0.0045 \times (0.1805x - 0.8195(x-1))$, which crosses zero near x ≈ 1040); all the way down to 32o with x ≈ 1.8. An alternative ranking — equity versus three random hands — may be more relevant for multi-way pots, but this course generally assumes a single caller, so we use Sklansky-Karlson.
 
-百分位与范围的对应：前 1% 是 AA；前 5% 是 TT+、AQs+、AQo+；前 30% 是 22+、A2s+、K4s+、Q9s+、JTs、A2o+、K8o+、QJo。
+Mapping percentiles to ranges: the top 1% is AA; the top 5% is TT+, AQs+, AQo+; the top 30% is 22+, A2s+, K4s+, Q9s+, JTs, A2o+, K8o+, QJo.
 
-值得背诵的简化范围：
+Simplified ranges worth memorizing:
 
-| 百分位 | 范围 | 记忆法 |
+| Percentile | Range | Mnemonic |
 |---|---|---|
-| 5% | TT+, AQ+ | 优质牌 |
-| 10% | 55+, AT+ | AT 起步 |
-| 20% | 22+, A2+, KQ | A2 或口袋对 |
-| 30% | 22+, A2+, Broadway | 任意两张大牌（10 及以上） |
-| 50% | 口袋对 + 点数相加为 16 的牌 | 网格对角线 |
-| 100% | 任意两张牌 | 整个网格 |
+| 5% | TT+, AQ+ | Premium hands |
+| 10% | 55+, AT+ | Starts at AT |
+| 20% | 22+, A2+, KQ | A2 or a pocket pair |
+| 30% | 22+, A2+, Broadway | Any two broadway cards (T and up) |
+| 50% | Pairs plus hands whose ranks add to 16 | The grid diagonal |
+| 100% | Any two cards | The whole grid |
 
-![13×13 起手牌网格：Broadway 约占网格一角（30%），"点数相加为 16"构成对角线（50%）](assets/ch04-3.png)
+![The 13×13 starting-hand grid: Broadway hands occupy roughly one corner (30%); "ranks adding to 16" forms the diagonal (50%)](assets/ch04-3.png)
 
-### +EV 范围与最优范围
+### +EV Ranges and Optimal Ranges
 
-对一个决策而言，**+EV 范围**指该决策平均而言有利可图的范围；**最优范围（optimal range）**指以筹码计最赚钱的手牌集合。例子：对抗 AQ，用 55+、AT+ 跟注有 53% 的胜率，是盈利的，但不是最优——因为其中的 AT 和 AJ 输给 AQ。最优范围是 22+、AQ+，胜率达 60%。若一个范围是最优的，则该范围内每一手牌单独都是 +EV 的。这正是我们用"解出范围"来证明"范围内任意手牌都适用该规则"的原因。
+For a given decision, a **+EV range** is one that is profitable on average; an **optimal range** is the set of hands that is most profitable in chip terms. Example: against AQ, calling with 55+, AT+ wins 53% of the time — profitable, but not optimal, because the AT and AJ in it lose to AQ. The optimal range is 22+, AQ+, winning 60%. If a range is optimal, every single hand in it is individually +EV. This is exactly why solving for a range proves the rule works for any hand inside it.
 
-## 基本假设
+## Basic Assumptions
 
-- 我们的有效筹码 M < 10（M 为筹码量除以一个完整盲注圈的成本）；
-- 对手的跟注范围是某个"前 x%"的手牌，且所有人对手牌强弱排序基本一致；
-- 不考虑 ICM（独立筹码模型），只最大化筹码期望值（cEV）；
-- M < 10 时基本只有全下或弃牌两种选择。**为什么不加注？** 若加注 3BB（约 2M），对手再加注到 6M 时你的底池赔率（pot odds）是 8/20 = 40%，你还能以很小的代价弃掉 99-、A5-、K9- 这类边缘牌；但如果加注后剩余不足 4M，底池赔率变为 4/12 = 30%，基本永远该跟注——弃牌权益没了。所以 M < 10 时最大化弃牌权益最重要，直接全下。
+- Our effective M < 10 (M is the stack divided by the cost of one full round of blinds);
+- The opponent's calling range is some "top x%" of hands, and everyone roughly agrees on the hand ordering;
+- Ignore ICM (Independent Chip Model); maximize chip expected value (cEV) only;
+- At M < 10 there are basically two options: push or fold. **Why not raise?** Raising to 3BB (about 2M) still lets you fold to a re-raise up to 6M, where your pot odds are 8/20 = 40% — you can get away from marginal hands like 99-, A5-, K9- cheaply. But if a raise leaves you with less than 4M behind, the pot odds become 4/12 = 30%, which is basically always a call — the fold equity is gone. So at M < 10, maximizing fold equity matters most: just shove.
 
-## 单挑（Heads Up）
+## Heads Up
 
-**目标**：推导盲注对盲注、M ≤ 10 时最优的推/跟范围。方法论分五步：
+**Goal**: derive the optimal push/call ranges for blind-versus-blind play at M ≤ 10. The methodology has five steps:
 
-1. 建立范围对范围的胜率表；
-2. 推导估计范围胜率的两因子模型；
-3. 建立半诈唬的 EV 模型；
-4. 对每个 M 求纳什均衡（若存在）；
-5. 对不稳定的均衡，找出合理的范围。
+1. Build a table of range-versus-range equities;
+2. Derive a two-factor model to estimate range-versus-range equities;
+3. Build an EV model for semi-bluffs;
+4. For each M, find the Nash equilibrium if one exists;
+5. For unstable equilibria, find reasonable ranges.
 
-### 第一步：范围对范围胜率
+### Step 1: Range-versus-Range Equity
 
-在 PokerTracker 中固定我们的范围，对对手的每个跟注范围计算胜率。例如我们推前 50%：对手跟 50% 时胜率 50%（对称），对手跟 100% 时我们约有 60%，对手只跟 AA 时只有约 17%。把每条"我们推 X% vs 对手跟 Y%"的曲线拟合成函数：Y ≥ 10% 时呈对数关系（$r^2$ 达 0.99、0.98）；但对手范围收紧到 5% 时 $r^2$ 降到 0.95，3% 时 0.89，1% 时完全失效——因为前 1% 只有 AA、KK、AK 三手牌，对手是否跟 AK 会让胜率断崖式跳变。反过来看（固定对手范围、变动我们的推注范围）规律相同：若对手跟前 50%，我们推前 30% 时有 55% 胜率。整表中的典型数值：我们推前 50% vs 对手跟前 20% → 赢 40%；推 100% vs 跟 30% → 赢 39%；推 5% vs 跟任何牌 → 赢 73%。
+In PokerTracker, fix our range and compute equity against each of the opponent's calling ranges. Say we push the top 50%: if he calls 50%, our equity is 50% (symmetric); if he calls 100%, we have about 60%; if he calls only AA, we have about 17%. Fit each "we push X% vs. he calls Y%" curve with a function: for Y ≥ 10% the relationship is logarithmic ($r^2$ of 0.99, 0.98); but as his range tightens, $r^2$ falls to 0.95 at 5% and 0.89 at 3%, and fails completely at 1% — because the top 1% contains only three hands (AA, KK, AK), so whether or not he calls AK makes equity jump discontinuously. The same pattern holds in reverse (fixing his range and varying our pushing range): if he calls the top 50%, pushing the top 30% wins 55%. Typical values from the full table: push top 50% vs. call top 20% → win 40%; push 100% vs. call 30% → win 39%; push 5% vs. call anything → win 73%.
 
-![范围对范围胜率表：绿色为我们占优，红色为对手占优](assets/ch04-4.png)
+![The range-versus-range equity table: green favors us, red favors the opponent](assets/ch04-4.png)
 
-### 第二步：两因子对数模型
+### Step 2: A Two-Factor Logarithmic Model
 
-对整表做对数变量的多元回归，得到：
+Running a multiple regression on the whole table with logarithmic variables gives:
 
 $$HeroWin\% = 50\% + 0.085 \times \ln(VillainRange) - 0.085 \times \ln(HeroRange) + \varepsilon$$
 
-$R^2 = 0.98$（81 个观测，标准误 0.01）。截距 50% 与两系数绝对值相同（对称性）很耐人寻味，直觉上也合理：对手跟注范围越宽，他持有的弱牌越多，我们胜率越高；我们推注范围越宽，我们自身弱牌越多，胜率越低。误差集中在小于 5% 的极紧范围，其余地方可接受——而 M < 10 时没人只用 5% 的范围行动，可以忽略。
+$R^2 = 0.98$ (81 observations, standard error 0.01). The 50% intercept and the two identical-magnitude coefficients (symmetry) are intriguing, and intuitive: the wider he calls, the more weak hands he holds, the higher our equity; the wider we push, the more weak hands we hold ourselves, the lower our equity. The error concentrates in extremely tight ranges below 5% and is tolerable elsewhere — and at M < 10 nobody plays a sub-5% range, so we can ignore it.
 
-### 第三步：半诈唬 EV 模型（以 M 为单位）
+### Step 3: Semi-Bluff EV Model (in Units of M)
 
-令大小盲之和为 1（即所有 EV 以 M 计），则：
+Let the small blind plus big blind equal 1 (all EV measured in M):
 
 $$EV = FoldEquity + ShowdownValue$$
 $$FoldEquity = 1 \times (1 - VillainCall\%)$$
 $$ShowdownValue = VillainCall\% \times [SDWinAmt \times HeroWin\% - SDLoseAmt \times HeroLose\%]$$
 $$SDWinAmt = Stack + \tfrac{2}{3}, \quad SDLoseAmt = Stack$$
 
-（+2/3 来自赢下一个大盲；筹码记作支付盲注前还是后会带来 ±1/3 的细微差别，影响不大。）把第二步的胜率模型代入，就得到只含三个变量——对手跟注率、我们推注率、筹码量——的大方程：
+(The +2/3 comes from winning one big blind; whether the stack is recorded before or after posting the blind introduces a ±1/3 nuance that makes little difference.) Substituting the Step 2 equity model yields one big equation in only three variables — his call frequency, our push frequency, and stack size:
 
 $$EV = (1 - VillainCall\%) + VillainCall\% \times \left[\left(Stack + \tfrac{2}{3}\right) \times HeroWin\% - Stack \times HeroLose\%\right]$$
 
-### 第四步：纳什均衡
+### Step 4: Nash Equilibria
 
-对 M = 20 的 EV 网格，小盲（SB）想最大化 EV、大盲（BB）想最小化 EV，此时 SB 平均每手亏 0.49M。把每个 M 的 EV 网格画出来（绿色利于 SB，黄色中性，红色利于 BB）：
+For the M = 20 EV grid, the small blind (SB) wants to maximize EV while the big blind (BB) wants to minimize it; the SB loses 0.49M per hand on average. Plotting the EV grid for each M (green favors SB, yellow neutral, red favors BB):
 
-- **M = 1**：SB 推 100%、BB 跟 100% 是纳什均衡——双方都动弹不得，这很符合直觉；
-- **M = 2**：推 100%/跟 100% 仍是均衡（偏移的代价只有约 0.01M）；
-- **M = 3**：出现**不稳定的纳什均衡**——若 SB 推 80%，BB 该跟 100%；若 BB 跟 100%，SB 该推 65%……如石头剪刀布般循环。
+- **M = 1**: SB pushes 100% and BB calls 100% is a Nash equilibrium — neither side can move, exactly as intuition suggests;
+- **M = 2**: push 100%/call 100% is still an equilibrium (deviating costs only about 0.01M);
+- **M = 3**: an **unstable Nash equilibrium** appears — if SB pushes 80%, BB should call 100%; if BB calls 100%, SB should push 65%... it cycles like rock-paper-scissors.
 
-所以网上查到的"翻牌前纳什均衡表"大多不可靠：稳定均衡只在 M ≤ 2 成立，而那时本来就该推得极宽。对 M > 2 需要另找规律。
+So the "preflop Nash equilibrium charts" found online are mostly unreliable: stable equilibria exist only at M ≤ 2, where you should be pushing extremely wide anyway. For M > 2 we need a different approach.
 
-### SB 推注的经验法则
+### Rules of Thumb for SB Pushing
 
-对每个 M 和每个候选推注范围，在四种情景下分别取最大 EV 的列：平均情形（对对手跟注范围无信息）、最坏情形（对手最优响应）、紧手对手（假设 15% 跟注范围，如 33+、A4+、KT+）、松手对手（假设 80% 跟注范围，如 22+、T2+、93+ 等）。
+For each M and each candidate pushing range, take the max-EV column under four scenarios: average case (no information about the opponent's calling range), worst case (opponent plays the best response), tight villain (assumed 15% calling range, e.g., 33+, A4+, KT+), and loose villain (assumed 80% calling range, e.g., 22+, T2+, 93+, etc.).
 
-![M = 1, 3, 5, 10 时各情景下的最优推注范围（蓝色标记列）：随 M 增大从 100% 漂移到约 50%，但对紧手对手始终推 100%](assets/ch04-5.png)
+![Optimal pushing ranges (blue-marked columns) under each scenario for M = 1, 3, 5, 10: they drift from 100% down to about 50% as M grows, but against a tight villain pushing 100% is always best](assets/ch04-5.png)
 
-- 若读对手为紧手，**推 100% 永远最优**——他 85% 的时候直接弃牌，弃牌权益碾压一切；
-- 其他情景下，M = 1 时推 100% 最优，随 M 增大缓慢漂移，M = 10 时约为推 50%；
-- 最大的错误是推注频率低于 50% 的手牌。
+- If you read the opponent as tight, **pushing 100% is always optimal** — he folds 85% of the time, and fold equity crushes everything;
+- In the other scenarios, pushing 100% is optimal at M = 1, then the optimum drifts slowly down to about 50% at M = 10;
+- The biggest mistake is pushing less often than 50% of hands.
 
-单挑推注的速查表（对手不紧时）：
+Heads-up pushing cheat sheet (when the opponent is not tight):
 
-| 筹码 | 推注范围 |
+| Stack | Pushing Range |
 |---|---|
-| 1M | 前 100% |
-| 5M | 前 75% |
-| 10M | 前 50% |
+| 1M | Top 100% |
+| 5M | Top 75% |
+| 10M | Top 50% |
 
-### BB 跟注的经验法则
+### Rules of Thumb for BB Calling
 
-M < 10 时 SB 因弃牌权益总有优势，BB 的目标是用尽可能少的假设找到一条实用的跟注规则：对每一个 M，在"对手推注范围 × 我们跟注范围"的 EV 网格上标出对 BB 最有利的区域，发现**最优跟注范围是 SB 推注范围的一个固定比例**。
+At M < 10 the SB always has an edge thanks to fold equity; the BB's goal is a practical calling rule with as few assumptions as possible. For each M, mark the region most favorable to the BB on the "his pushing range × our calling range" EV grid, and the **optimal calling range turns out to be a fixed proportion of the SB's pushing range**.
 
-![M = 10 时 BB 的 EV 网格：红色带为最优跟注范围；若 SB 推 90%，BB 应跟 50%](assets/ch04-6.png)
+![The BB's EV grid at M = 10: the red band is the optimal calling range; if SB pushes 90%, BB should call 50%](assets/ch04-6.png)
 
-| 筹码 (M) | 跟注倍数 | 最优 BB 跟注率 = SB 推注率 × 倍数 |
+| Stack (M) | Call Multiple | Optimal BB Call% = SB Push% × Multiple |
 |---|---|---|
-| 1 | 10× | 他推 5% 你跟 50%；推 ≥ 20% 你全跟 |
-| 2 | 2× | 他推 ≥ 50% 你全跟；推 20% 你跟 40% |
-| 4 | 1× | 推多少跟多少 |
+| 1 | 10× | He pushes 5%, you call 50%; he pushes ≥ 20%, call everything |
+| 2 | 2× | He pushes ≥ 50%, call everything; he pushes 20%, you call 40% |
+| 4 | 1× | Match him exactly |
 | 6 | 2/3× | |
-| 9 | 1/2× | 他推 90% 你跟 50% |
+| 9 | 1/2× | He pushes 90%, you call 50% |
 
-单挑时（包括满员桌弃牌到小盲后形成的"事实单挑"），只要默记 M = 1–2 时几乎全跟、M = 4 时等比例跟、M = 6–9 时跟对手推注率的一半到三分之二，就能根据读到的对手推注频率持续压制他。
+Heads up (including the de facto heads-up that arises when a full table folds to the small blind), just remember: call nearly everything at M = 1–2, match him one-for-one at M = 4, and call half to two-thirds of his pushing frequency at M = 6–9 — and you will keep exploiting whatever pushing frequency you read him for.
 
-## 其他位置
+## Other Positions
 
-### 面对全下的跟注
+### Calling an All-In
 
-多人桌的复杂之处是身后还有未行动的玩家，需要保守假设（宁可错杀小的正期望，也不错跟小的负期望）：
+The complication at a full table is the players left to act behind us, so we make conservative assumptions (better to fold away a small positive edge than to call a small negative one):
 
-- 摊牌赢额 = 筹码量（不因 SB/BB 位置打折）；
-- 第二个跟注者的范围是 TT+、AQ+（前 5%）；
-- 若被两家跟注，我们的胜率按 0% 计（几乎必然被压制）。
+- Showdown win amount = stack (no discount for being in the SB/BB);
+- A second caller's range is TT+, AQ+ (top 5%);
+- If called twice, our win probability is treated as 0% (we are almost certainly dominated).
 
-因此最低胜率要求 = 50% + 5% × 身后剩余玩家数，并由此推出我们的跟注范围应为对手推注范围的一个倍数（HRM）：
+Therefore the minimum required win rate = 50% + 5% × players remaining behind, and our calling range should be a multiple (HRM) of the opponent's pushing range:
 
-| 剩余玩家 | 最低胜率 | 范围倍数 HRM |
+| Players Remaining | Minimum Win% | Range Multiple HRM |
 |---|---|---|
 | 5 | 75% | 5% |
 | 4 | 70% | 10% |
@@ -208,52 +208,52 @@ M < 10 时 SB 因弃牌权益总有优势，BB 的目标是用尽可能少的假
 | 1 | 55% | 55% |
 | 0 | 50% | 100% |
 
-示例：对手从 CO 位全下前 50%，我们在 BTN 位（身后剩 2 人），需要 60% 胜率；应跟 50% × 30% = 前 15%，用两因子模型验证：$Win\% = 50\% + 0.085\ln(50\%) - 0.085\ln(15\%) = 60.2\%$ ✓
+Example: the opponent pushes the top 50% from the cutoff (CO), we are on the button (BTN) with 2 players behind; we need 60% equity. We should call 50% × 30% = top 15%. Verifying with the two-factor model: $Win\% = 50\% + 0.085\ln(50\%) - 0.085\ln(15\%) = 60.2\%$ ✓
 
-各位置的跟注经验法则（保守估计，因此压线跟注往往非常 +EV；且高度依赖对对手推注范围的阅读）：
+Calling rules of thumb by position (conservative estimates, so a threshold call is usually very +EV; they also rely heavily on reading the opponent's pushing range):
 
-| 位置 | 我们的跟注范围 |
+| Position | Our Calling Range |
 |---|---|
-| MP | 5% × 对手范围 |
-| LP | 10% × 对手范围 |
-| CO | 30% × 对手范围 |
-| SB | 50% × 对手范围 |
+| MP | 5% × opponent's range |
+| LP | 10% × opponent's range |
+| CO | 30% × opponent's range |
+| SB | 50% × opponent's range |
 
-实战中在 CO 位面对全下，只需自问"他的推注范围有我手牌的 3 倍宽吗"：拿 AQ（前 5%），他会推 A5（前 15%）吗？拿 AT（前 10%），他会推 KJ（前 30%）吗？拿 KQ（前 20%），他会推 85（前 60%）吗？
+In practice, facing a shove in the CO, just ask "is his pushing range 3× wider than my cards?": holding AQ (top 5%), would he push A5 (top 15%)? Holding AT (top 10%), would he push KJ (top 30%)? Holding KQ (top 20%), would he push 85 (top 60%)?
 
-### 主动全下
+### Pushing All-In
 
-精确解析解很复杂，目标是在保守假设下做决策表：
+The exact analytical solution is complex; the goal is a decision table built on conservative assumptions:
 
-- 摊牌赢额 = 筹码量；
-- 第一个跟注者范围 55+、AT+（前 10%）；
-- 第二个跟注者范围 TT+、AQ+（前 5%）；
-- 被两家跟注时胜率按 20% 计；
-- 第三家跟注概率按 0% 计（永远不会被三家跟）。
+- Showdown win amount = stack;
+- First caller's range: 55+, AT+ (top 10%);
+- Second caller's range: TT+, AQ+ (top 5%);
+- Win probability when called twice: 20%;
+- Third caller probability: 0% (we are never called three times).
 
-回答两个问题：何时可以盈利地推 Broadway（前 30%）？何时可以盈利地推任意两张牌（前 100%）？结论（保守、非最优但足够好）：
+Answering two questions: when can we profitably push Broadway (top 30%)? When can we profitably push any two cards (top 100%)? Conclusions (conservative, not optimal, but good enough):
 
-- **AT+、55+（前 10%）**：任何位置、筹码直到 10M 都可盈利全下；
-- **Broadway（前 30%）**：1M 时任何位置、6M 时后位（late position）、10M 时 CO 位；
-- **任意两张牌（前 100%）**：1M 时后位、4M 时按钮位、10M 时小盲位。
+- **AT+, 55+ (top 10%)**: profitable shove from any position with stacks up to 10M;
+- **Broadway (top 30%)**: from any position at 1M, from late position at 6M, from the CO at 10M;
+- **Any two cards (top 100%)**: from late position at 1M, from the button at 4M, from the small blind at 10M.
 
-简化决策表：
+Simplified decision table:
 
-| 筹码 | 推 ATC 的位置 | 推 Broadway 的位置 | 推 AT+, 55+ |
+| Stack | Push ATC From | Push Broadway From | Push AT+, 55+ From |
 |---|---|---|---|
-| 1M | 后位 | 任何位置 | 任何位置 |
-| 5M | 按钮位 | 后位 | 任何位置 |
-| 10M | 小盲位 | CO 位 | 任何位置 |
+| 1M | Late position | Any position | Any position |
+| 5M | Button | Late position | Any position |
+| 10M | Small blind | CO | Any position |
 
-即：M < 10 时永远可以推前 10%；M < 1 时从任何位置推得极宽；M < 5 时后位推 Broadway。
+In short: at M < 10 you can always push the top 10%; at M < 1 push very wide from any position; at M < 5 push Broadway from late position.
 
-## 要点小结
+## Key Takeaways
 
-- 翻牌前全下是半诈唬：EV = 弃牌权益 + 摊牌权益；短筹码单挑时该值几乎恒为正，弃掉"烂牌"可能比用 3♣4♦ 跟 A♠K♠ 全下还亏。
-- 范围是一组手牌；用 Sklansky-Karlson 排名把范围映射到百分位，背下 5% / 10% / 20% / 30% / 50% 五档简化范围。最优范围内的每一手牌都 +EV。
-- M < 10 时假设对手跟注"前 x%"的手牌、忽略 ICM、只做推/弃两选一；加注会损失弃牌权益，不如直接全下。
-- 范围对范围胜率可用两因子对数模型估计：$Win\% = 50\% + 0.085\ln(V\%) - 0.085\ln(H\%)$，$R^2 = 0.98$，仅在 < 5% 的极紧范围失效。
-- 单挑推注：对手紧则推 100%；否则 M = 1 推 100%，漂移到 M = 10 推 50%；推注频率低于 50% 是最大的错误。
-- 单挑跟注：BB 最优跟注率 = SB 推注率 × 倍数（M=1 为 10×、M=2 为 2×、M=4 为 1×、M=6 为 2/3×、M=9 为 1/2×）。
-- 多人桌跟注：最低胜率 = 50% + 5% × 剩余玩家数，跟注范围 = 对手推注范围 × 位置倍数（MP 5%、LP 10%、CO 30%、SB 50%）——核心一问："他的推注范围比我的牌宽 3 倍吗？"
-- 多人桌全下：前 10%（AT+、55+）任何位置推到 10M；Broadway 在 1M 任意位置 / 6M 后位 / 10M CO 位；任意两张牌在 1M 后位 / 4M 按钮位 / 10M 小盲位。
+- A preflop all-in is a semi-bluff: EV = fold equity + showdown equity. In short-stack heads-up play this value is nearly always positive, and folding a "trash hand" can cost more than calling an all-in with 3♣4♦ against A♠K♠.
+- A range is a set of hands; use Sklansky-Karlson rankings to map ranges to percentiles, and memorize the five simplified ranges (5% / 10% / 20% / 30% / 50%). Every hand in an optimal range is individually +EV.
+- At M < 10, assume opponents call with a "top x%" range, ignore ICM, and restrict yourself to push/fold; raising forfeits fold equity, so just shove.
+- Range-versus-range equity is estimated by the two-factor logarithmic model $Win\% = 50\% + 0.085\ln(V\%) - 0.085\ln(H\%)$, $R^2 = 0.98$, which fails only for sub-5% ultra-tight ranges.
+- Heads-up pushing: against a tight opponent push 100%; otherwise push 100% at M = 1, drifting to 50% at M = 10; pushing less than 50% of hands is the biggest mistake.
+- Heads-up calling: the BB's optimal call% = SB push% × multiple (10× at M=1, 2× at M=2, 1× at M=4, 2/3× at M=6, 1/2× at M=9).
+- Full-table calling: minimum win rate = 50% + 5% × players remaining, calling range = opponent's pushing range × position multiple (MP 5%, LP 10%, CO 30%, SB 50%) — the core question: "is his pushing range 3× wider than my cards?"
+- Full-table pushing: top 10% (AT+, 55+) shoves profitably from any position up to 10M; Broadway from any position at 1M / late position at 6M / CO at 10M; any two cards from late position at 1M / button at 4M / SB at 10M.

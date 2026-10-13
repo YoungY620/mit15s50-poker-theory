@@ -1,135 +1,141 @@
-# Case 2：全下/弃牌策略与 Sklansky-Karlson 模型
+# Case 2: Push/Fold Strategy and the Sklansky-Karlson Model
 
-> MIT 15.S50 Poker Theory and Analytics（IAP 2015，Kevin Desmond）
-> 发布：2015 年 1 月 19 日（周五）；截止：2015 年 1 月 26 日（周五）
+> MIT 15.S50 Poker Theory and Analytics (IAP 2015, Kevin Desmond)
+> Issued: Friday, January 19, 2015; Due: Friday, January 26, 2015
 
-## 题目
+## Problems
 
-**说明**：本案例共 16 个问题，编号为 (1.1) 至 (3.6)。请简明作答并写出全部计算过程，注明你所做的任何假设。本案例按通过/不通过评分，通过线为 10/16 分。答案错误但过程合理可给部分分数，允许使用近似值。这些问题需要用到 PokerTracker 的胜率计算器（Equity Calculator），或等价的范围对范围（range-vs-range）胜率计算工具。
+**Notes**: This case contains sixteen (16) questions, labeled (1.1) through (3.6). Please answer all questions concisely and show all work. State any assumptions you are making. This case is graded pass/fail, where a passing grade is 10/16 points. Partial credit will be awarded for incorrect answers with appropriate work shown. Using approximations is acceptable. These questions rely on PokerTracker's Equity Calculator, or an equivalent range-vs-range equity calculator.
 
-### 场景
+### Scenario
 
-今天是 2014 年 6 月 7 日（周六），你正在世界扑克系列赛（WSOP）20 号赛事——\$3000 无限注德州扑克 Shootout（淘汰赛制）的第一轮中打到很深的阶段。该赛事的结构是：40 张 10 人桌各自打到只剩 1 人，然后 Day 2 由 Day 1 的 40 名胜者重新组桌。你这桌从开始的 10 人打到只剩 2 人，你以 78,000 筹码领先，另一名剩余玩家只有 12,000。
+It is Saturday, June 7, 2014, and you are deep in the first round of the World Series of Poker (WSOP) Event #20 \$3000 NLHE Shootout. The structure of this tournament is that each of the 40 ten-player tables plays down to 1 player, then new tables are formed on Day 2 with the 40 winners from Day 1. Your table is down to two players from the starting ten, and you are ahead in chips with 78,000, compared to the 12,000 of the other remaining player.
 
-牌桌为 2 人桌，如下所示。盲注 500/1000，前注 200。
+The table is 2-handed as follows. Blinds are 500/1000 with 200 antes.
 
-| 座位 | 玩家 | 筹码量 |
-|------|------|--------|
-| 1 | Hero（你） | 78,000 |
+| Seat | Name | Chip Count |
+|------|------|-----------|
+| 1 | Hero | 78,000 |
 | 2 | BB | 12,000 |
-| 3–9 | [空] | N/A |
+| 3 | [Empty] | N/A |
+| 4 | [Empty] | N/A |
+| 5 | [Empty] | N/A |
+| 6 | [Empty] | N/A |
+| 7 | [Empty] | N/A |
+| 8 | [Empty] | N/A |
+| 9 | [Empty] | N/A |
 
-### 问题 1
+### Question 1
 
-幸运的是，你认出对手是你本周早些时候打过的一场单桌锦标赛（Sit-n-Go，SnG）中的玩家。你曾观察过这位玩家——他是一位资深的轮盘赌玩家——当时他正在给年轻人传授建议：
+With good fortune, you recognize your opponent from a Sit-n-Go tournament you played earlier in the week. You were observing this player, who is a veteran roulette player, giving advice to the younger crowd.
 
-> Veteran（老手）："诀窍是永远不要在拿不到对子的情况下把全部筹码置于风险之中。你看，我看到这些愣头青拿着空气牌把钱全输光。在我看来，除非你有成手牌（made hand），否则不要拿你的锦标赛生命去冒险。"
+> Veteran: "The trick is never put all your chips at risk with less than a pair. You see, I see all of these hot shots losing all their money with no hands. The way I see it is that unless you have a made hand, don't risk your tournament life."
 
-在观察了他在那场 SnG 以及这场 Shootout 中的打法之后，你注意到他只用口袋对子（pocket pairs）全下，从不用对子以外的牌全下。你相信在与他单挑（heads up）时，这种心态依然会成立。
+After watching his play throughout that SnG tournament and throughout the Shootout, you notice that he only goes all-in with pocket pairs, and never with anything other than a pair. You believe that this mentality will hold true while you are playing him heads up.
 
-**(1.1)** Villain（对手）的范围（range）是什么？
+**(1.1)** What is the range of the Villain?
 
-**(1.2)** 作为小盲，如果你开局直接全下（open bet all-in），Villain 有多大概率跟注？
+**(1.2)** As the small blind, if you open bet all-in, what percentage of the time does the Villain call?
 
-**(1.3)** 给定他的跟注频率，你在小盲位（SB）的最优全下范围（pushing range）是什么？
+**(1.3)** What is your optimal pushing range from the SB given his calling frequency?
 
-**(1.4)** 给定你的全下范围，如果被跟注，你赢下这手牌的概率是多少？
+**(1.4)** What is your chance of winning the hand if called, given your pushing range?
 
-**(1.5)** 在看自己的牌之前，给定你的位置和双方的范围，你的 EV 是多少？
+**(1.5)** What is your EV before seeing your cards, given your position and both players' ranges?
 
-### 问题 2
+### Question 2
 
-接下来的一手牌，你在大盲位（BB），有 79,200 筹码，而 Villain 有 10,800 筹码。他开局全下（open pushes all-in）。
+The following hand, you are in the BB with 79,200 chips, compared to the Villain's 10,800 chips. He open pushes all-in.
 
-**(2.1)** Villain 的全下范围是什么？这占所有手牌的百分之几？
+**(2.1)** What is the Villain's pushing range and what percentage of hands does that represent?
 
-**(2.2)** 用前 30% 的手牌（按 Sklansky-Karlson 排名）跟注是 +EV 吗？
+**(2.2)** Is calling with the top 30% of hands (Sklansky-Karlson) a +EV call?
 
-**(2.3)** 你有更优的跟注范围吗？
+**(2.3)** Is there a more optimal range for you to call?
 
-**(2.4)** 如果有，该范围是什么？你应该有多高的跟注频率？
+**(2.4)** If so, what is the range and what percentage of the time should you call?
 
-**(2.5)** 假设你只按最优范围跟注，Villain 全下后的 EV 是多少？
+**(2.5)** What is the Villain's EV, given that he has pushed all-in, assuming you will call only the optimal range?
 
-### 问题 3
+### Question 3
 
-你晋级到下一轮，加入一张 4 人桌。打到只剩 2 人时，你是短筹码。你在小盲位，并判断 Villain 是一名稳健（solid）的玩家，他会跟注你大约 30% 的全下。
+You advance to the next round and join a 4-handed table. You play down to two players, where you are short-stacked. You are in the SB and identify the Villain as a solid player who will call about 30% of your all-in pushes.
 
-**(3.1)** 按 Sklansky-Karlson 模型，Villain 的跟注范围包含哪些牌？
+**(3.1)** Using the Sklansky-Karlson model, what hands are in the Villain's calling range?
 
-**(3.2)** 如果你的筹码量为 4M（即 4 倍大盲），你的最优全下范围是什么？
+**(3.2)** If you have a stack of 4M, what is your optimal pushing range?
 
-**(3.3)** 如果你在小盲位拿到 T♦5♦，使这次全下有利可图的最大筹码量是多少？假设 BB = 2×SB，无前注。
+**(3.3)** If you have T♦5♦ in the small blind, what is the maximum chip stack that would make this a profitable all-in bet? Assume BB = 2×SB with no antes.
 
-**(3.4)** 如果你在小盲位拿到 8♥8♦，使这次全下有利可图的最大筹码量是多少？
+**(3.4)** If you have 8♥8♦ in the small blind, what is the maximum chip stack that would make this a profitable all-in bet?
 
-**(3.5)** 如果你有 5M，且 Villain 的跟注范围是前 15%，你的最优全下范围是什么？
+**(3.5)** If you have 5M and the Villain's calling range is top 15%, what is your optimal pushing range?
 
-**(3.6)** 如果你有 5M，且 Villain 的跟注范围是任意两张牌（Any Two Cards，ATC），你的最优全下范围是什么？假设 BB = 2×SB，无前注。
+**(3.6)** If you have 5M and the Villain's calling range is Any Two Cards, what is your optimal pushing range? Assume BB = 2×SB with no antes.
 
-## 解答
+## Solutions
 
-### 问题 1
+### Question 1
 
-**(1.1)** 22+（所有口袋对子）。
+**(1.1)** 22+ (all pocket pairs).
 
-**(1.2)** 5.88%。
+**(1.2)** 5.88%.
 
-**(1.3)** 100%（任意两张牌全下）。
+**(1.3)** 100% (push any two cards).
 
 **(1.4)**
 
-- 模型估计：$50\% + 0.085 \times \ln(5.88\%) - 0.085 \times \ln(100\%) \approx 26\%$
-- 精确计算：33%
+- Model: $50\% + 0.085 \times \ln(5.88\%) - 0.085 \times \ln(100\%) \approx 26\%$
+- Exact: 33%
 
 **(1.5)**
 
-- 精确计算：
+- Exact:
 
 $$EV = 1{,}900 \times 94.12\% + 5.88\% \times \left(33\% \times 10{,}800 - 67\% \times 11{,}300\right) \approx 1{,}553$$
 
-- 模型估计：
+- Model:
 
 $$EV = 1{,}900 \times 94.12\% + 5.88\% \times \left(26\% \times 10{,}800 - 74\% \times 11{,}300\right) \approx 1{,}462$$
 
-### 问题 2
+### Question 2
 
-**(2.1)** 22+，占全部手牌的 5.88%。
+**(2.1)** 22+, representing 5.88% of hands.
 
-**(2.2)** 不是。前 30% 手牌对抗 22+ 的胜率约为 40%：
+**(2.2)** No. The top 30% of hands has about 40% equity against 22+:
 
 $$EV = 40\% \times 12{,}000 - 60\% \times 9{,}600 = -960$$
 
-**(2.3)** 有。
+**(2.3)** Yes.
 
-**(2.4)** 任何对抗 22+ 有 44.4% 或更高胜率的牌，即用 77+、AQs+ 跟注。我们的跟注频率为 4.22%。
+**(2.4)** Call with any hand that is 44.4% or better against 22+, so call with 77+, AQs+. We call 4.22% of the time.
 
 **(2.5)**
 
 $$EV = 95.78\% \times 1{,}900 + 4.22\% \times \left(39.67\% \times 11{,}500 - 60.33\% \times 10{,}100\right) \approx 1{,}755$$
 
-### 问题 3
+### Question 3
 
-**(3.1)** 22+、A2s+、K4s+、Q9s+、JTs、A2o+、K8o+、QJo。
+**(3.1)** 22+, A2s+, K4s+, Q9s+, JTs, A2o+, K8o+, QJo.
 
-**(3.2)** 任意两张牌（any two cards）。
+**(3.2)** Any two cards.
 
-**(3.3)** 设筹码量为 $x$（单位 M），令 $EV = 0$。T♦5♦ 对抗该范围的胜率为 35.67%：
+**(3.3)** Let $x$ be the stack size (in M), and set $EV = 0$. T♦5♦ has 35.67% equity against this range:
 
 $$0 = 70\% \times 1 + 30\% \times \left(35.67\% \times \left(x + \tfrac{1}{3}\right) - 64.33\% \times \left(x - \tfrac{1}{3}\right)\right)$$
 
-解得 $x \approx 9.3\text{M}$。
+which solves at $x \approx 9.3\text{M}$.
 
-**(3.4)** 88 面对这个范围是占优的一方（favorite），所以任何大小的筹码量全下都是有利可图的。
+**(3.4)** 88 is a favorite against this range, so any size stack makes this a profitable push.
 
-**(3.5)** 任意两张牌（any two cards）。
+**(3.5)** Any two cards.
 
-**(3.6)** 设全下频率为 $P\%$，最大化
+**(3.6)** Let $P\%$ be the pushing frequency, and maximize
 
 $$EV = P\% \times \left[\left(0.50 + 0.085\ln(1) - 0.085\ln(P\%)\right) \times 5.33 - \left(1 - \left(0.50 + 0.085\ln(1) - 0.085\ln(P\%)\right)\right) \times 4.67\right]$$
 
-当全下频率约为 54% 时取得最大值 $EV = 0.46$。即最优全下范围约为前 54% 的手牌。
+which peaks at $EV = 0.46$ when Push% ≈ 54%. So the optimal pushing range is roughly the top 54% of hands.
 
 ---
 
-*来源：MIT OpenCourseWare, 15.S50 Poker Theory and Analytics, January IAP 2015. <http://ocw.mit.edu>*
+*Source: MIT OpenCourseWare, 15.S50 Poker Theory and Analytics, January IAP 2015. <http://ocw.mit.edu>*

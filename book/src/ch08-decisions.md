@@ -1,163 +1,163 @@
-# 决策制定
+# L8 Decision Making
 
-本章为 Matt Hawrilenko（WSOP 金手链得主、曾被视为世界最强的限注德州玩家之一）的客座讲座。上一讲 Bill Chen 介绍了用计算机求解扑克的 Cepheus；本讲换一个角度：人类牌手如何在牌桌上实际运用博弈论。方法是先求解两个极简单的玩具游戏（toy games），再把其中的原理映射到一手真实的高额锦标赛场牌局，最后提炼出可以长期指导训练的原则。
+This chapter is a guest lecture by Matt Hawrilenko (WSOP bracelet winner, once regarded as one of the best limit hold'em players in the world). In the previous lecture Bill Chen presented Cepheus, the computer program that solved heads-up limit hold'em; this lecture approaches the problem from the other side: how can a human actually apply game theory at the table? The method is to solve two extremely simple toy games, map the principles onto one real high-stakes tournament hand, and distill training principles that can guide your development long after the course ends.
 
-## 读牌派与博弈论派
+## The Read-Based Approach vs. the Game-Theoretic Approach
 
-面对"打好扑克"这个巨大的博弈空间，人们通常有两种进路。**读牌派（read-based approach）** 试图弄清对手有什么牌、可能有什么牌，再据此行动——这是绝大多数人的打法。**博弈论派（game theoretic approach）** 则关心自己的整体策略是否平衡、是否会被剥削。
+Faced with the enormous game space of "playing good poker," people generally take one of two approaches. The **read-based approach** tries to figure out what the opponent has, or might have, and acts accordingly — this is what almost everybody does. The **game theoretic approach** asks whether your own overall strategy is balanced and whether it can be exploited.
 
-为什么博弈论值得学？一个类比：练柔术时，对付白带选手几乎什么招都管用；但随着对手升到蓝带、紫带、黑带，那些招数不仅失效，还会惹祸上身。扑克也一样：在家庭局里"紧凶、只用好牌下注、几乎不诈唬"可能很赚钱，因为对手会高估自己的牌力；但把同一套策略带到 Bellagio 的中额桌，就会被生吞活剥。正确的态度是从第一天起就按黑带的标准训练——学那些对最强对手也成立的打法。
+Why is game theory worth learning? An analogy from jujitsu: when you train against white belts, almost anything works. But as your opponents progress to blue, purple, and black belts, those same moves not only stop working — they get you into serious trouble. Poker is the same. In a home game, "play tight, bet your good hands, and almost never bluff" can be very profitable, because your opponents overvalue their hands. Take that same strategy to a mid-limit game at the Bellagio and you will get eaten alive. The right attitude is to train to black-belt standards from day one — learn the moves that hold up against the best competition.
 
-理论派可以往下解游戏、解动力系统；实践派关心博弈论告诉我该怎么思考某个局面。这两者并非二选一：玩具游戏正是连接理论与实践的桥梁。
+The theorist can solve games and dynamical systems; the practitioner cares about what game theory says about how to think through a specific situation. These are not either-or: toy games are the bridge between theory and practice.
 
-## 一手真实的牌局
+## A Real Hand
 
-先看本讲贯穿始终的实战手牌。几年前的一场 WSOP 锦标赛，已进入钱圈，六人桌，盲注 \$12,000/\$24,000，前注 \$3,000。讲述者（hero）在按钮位（button）前两位用 A♣A♥ 加注，一位明显比自己更强的对手跟注。
+Here is the hand that runs through the entire lecture. A WSOP tournament a few years ago, in the money, six-handed, blinds \$12,000/\$24,000 with a \$3,000 ante. The narrator (hero) raises two off the button with A♣A♥, and an opponent who is clearly the better player calls.
 
-- **翻牌** K♥J♦8♠：对手过牌，hero 下注，对手跟注（底池 \$160,000）。
-- **转牌** 5♣：对手过牌，hero 下注约 2/3 底池，对手跟注（底池 \$310,000）。
-- **河牌** K♣：对手主动下注约 \$1,080,000，进入一个 \$720,000 的底池。
+- **Flop** K♥J♦8♠: the opponent checks, hero bets, the opponent calls (pot \$160,000).
+- **Turn** 5♣: the opponent checks, hero bets about 2/3 of the pot, the opponent calls (pot \$310,000).
+- **River** K♣: the opponent leads out for about \$1,080,000 into a \$720,000 pot.
 
-![河牌圈局面：对手向 \$720,000 的底池下注 \$1,080,000，hero 手持 A♣A♥](assets/ch08-1.png)
+![The river situation: the opponent bets \$1,080,000 into a \$720,000 pot; hero holds A♣A♥](assets/ch08-1.png)
 
-hero 此刻完全读不懂：1.5 倍底池的下注意味着什么？他为什么不下全下？是在引诱跟注，还是想在自己弃牌时省下 \$300,000？大多数人在这种时刻的本能反应是收集更多"信息"去缩小对手的范围——他以前亮出过大诈唬吗？要不要盯着他找马脚（tell）？
+Hero has no idea what is going on. What does a bet of 1.5 times the pot mean? Why isn't he putting hero all in? Is he trying to entice a call, or trying to save \$300,000 in case hero folds? Most people's instinct at this moment is to gather more "information" to narrow the opponent's range — has he shown down big bluffs before? Should we stare him down for tells?
 
-## "对方也会变魔术"
+## "The Other Side Can Do Magic Too"
 
-关于马脚，先泼一盆冷水。扑克桌上的马脚或许对弱手有点用，但那是噪声海洋里的微弱信号，不足以作为职业本钱。有人拿 FBI 审讯官做过系列实验：让审讯官和随机路人一起观看面谈录像，判断被试者是否说谎。结果两组人的正确率都接近随机（约 53%），唯一差别是审讯官们对自己的判断自信得多——普通人只有五成把握，他们却九成确信自己是对的。
+On tells, some cold water first. Tells at the poker table may be worth something against weak players, but they are a very small signal in a very noisy environment — nothing to build a career on. A series of studies tested FBI interrogators: interrogators and random people off the street watched interview footage and judged whether the subject was lying. Both groups scored essentially at chance (about 53%); the only difference was that the interrogators were far more confident — ordinary people were about 50% sure of their judgments, while the interrogators were 90% sure they were right.
 
-这背后是**自我评估偏差（self-assessment bias）**。一项对 GE 工程师的经典调查让每人评估自己在全体工程师中的百分位：平均值落在第 80 百分位，约百名受访者中只有两人认为自己低于平均水平。电影《赌王之王》（Rounders）开篇引用过一句话，说的是同一件事在扑克里的版本："没几个玩家记得自己赢过的大底池，但每个玩家都能惊人准确地回忆起职业生涯中那些惨烈的爆冷（bad beat）。"记忆偏差喂养了自我评估偏差。
+Behind this lies **self-assessment bias**. A classic survey of GE engineers asked each one to estimate their own percentile rank among all the engineers: the average answer landed at the 80th percentile, and of roughly a hundred respondents only two rated themselves below average. The film *Rounders* opens with a quote that states the poker version of the same thing: "Few players remember the big pots they have won, but every player can remember with remarkable accuracy the outstanding tough beats of their career." Memory bias feeds self-assessment bias.
 
-讲述者自己付出过学费。WSOP 一场大赛的钱圈泡沫（money bubble）上——下一名出局者空手而归，其余人保证有钱——他左手边的玩家是第一次打 WSOP，兴奋到提前 40 分钟离桌生怕被淘汰。泡沫真正到来时，讲述者在小盲位拿到 4♦2♦，前面全部弃牌，他自认有"铁一般的阅读"，直接全下。对手说"我就知道你会这样"，然后**不看牌跟注**，翻开 9♦2♦——用一手烂牌压制了他，并以多出一两枚的筹码把他淘汰在泡沫上。这个阅读错到什么程度？对手不仅要不在乎泡沫出局，还要不在乎到连牌都不看——因为只要看了 9♦2♦ 就必须弃牌。
+The narrator paid tuition for this himself. On the exact money bubble of a big WSOP event — the next player out gets nothing, everyone else is guaranteed money — the player to his immediate left was playing his first WSOP and was so excited that he left the table 40 minutes early rather than risk busting. When the bubble actually arrived, the narrator looked down at 42o in the small blind, it folded to him, and trusting his "iron-clad read" he shoved all in. The opponent said "I knew you were going to do that" and **called without looking at his cards**, turning over 92o — dominating him with a terrible hand, and busting him on the bubble by one or two chips. How wrong does the read have to be? The opponent not only has to not care about busting on the bubble — he has to not care so much that he won't even look, because one look at 92o forces a fold.
 
-教训不只是"谦虚点"。**任何时刻你试图揣测对手的策略，她都可以反过来揣测你。**你在估算她的分布并作出回应，她在估算你认为她的分布是什么、并据此塑造自己的行动——双方都在"变魔术"。没有知识储备的人被逼到陌生局面时，本能反应就是变魔术；而强手恰恰会把你带到他们反复走过的陌生小路上。
+The lesson is more than "be humble." **Any time you try to divine your opponent's strategy, she can do the same thing back to you.** You are estimating her distribution and responding to it; she is estimating what you think her distribution is and shaping her actions around that — both sides are "doing magic." Players without a repertoire, when dragged into unfamiliar territory, instinctively resort to magic; and strong players will take you down exactly those strange side roads they have walked many times.
 
-因此本讲的第一条规则是：**忘掉她的牌（forget her hand）；更进一步，忘掉她的范围（forget her range）。** Jerrod Ankenman（《The Mathematics of Poker》作者之一）有句话点明了目标："如果我真的按最优方式打牌，我可以把我在每个局面下的完整策略写在一张纸上交给你，而你仍然赢不了我。"
+Hence the first rule of the lecture: **forget her hand; better yet, forget her range.** Jerrod Ankenman (co-author of *The Mathematics of Poker*) states the goal: "If I truly played optimally, I could write down my entire strategy on a piece of paper, what I would do in every single situation, and give it to you — and you couldn't beat me."
 
-问题是完整策略记不住——单挑限注德州是最小的真钱扑克游戏，也有约一千万亿（quintillion，$10^{18}$）个博弈状态。求解程序是黑箱，要让人脑理解策略背后的结构，需要玩具游戏。
+The problem is that a complete strategy cannot be memorized — heads-up limit hold'em, the smallest poker game played for real money, has about a quintillion ($10^{18}$) game states. Solvers are black boxes; for a human brain to understand the structure behind a strategy, we need toy games.
 
-## 玩具游戏一：抛硬币透视游戏
+## Toy Game 1: Coin Flip Clairvoyance
 
-**透视游戏（clairvoyance game）** 指一方或双方拥有完全局面信息的游戏：如果你总能知道对手的牌、且对手知道你知道，你会怎么打？**抛硬币透视游戏（Coin Flip Clairvoyance）** 的规则如下：
+A **clairvoyance game** is one in which one or both players have complete information about the game state: if you always knew your opponent's hand, and he knew that you knew, how would you play? The rules of **Coin Flip Clairvoyance**:
 
-1. 双方各下前注 \$1（底池 \$2）。
-2. 抛硬币：正面你赢，反面对手赢。但只有你能看到结果。
-3. 你可以选择下注 \$1 或过牌；对手只能过牌/跟注或弃牌。
+1. Each player antes \$1 (pot \$2).
+2. Flip a coin: heads you win, tails your opponent wins. But only you see the result.
+3. You may bet \$1 or check; your opponent can only check/call or fold.
 
-局面一：正面，显然下注。局面二：反面，怎么办？核心是两个问题：对手应该多频繁地跟注？你应该多频繁地诈唬？
+Scenario one: heads — obviously bet. Scenario two: tails — what now? The core is two questions: how often should your opponent call, and how often should you bluff?
 
-**跟注频率。** 跟注方要让对手对"诈唬"和"放弃"无差异，即令两者的期望相等：
+**Calling frequency.** The caller wants to make the opponent indifferent between bluffing and giving up, i.e., set the two expectations equal:
 
-$$E(\text{诈唬}) = E(\text{放弃}) \;\Longrightarrow\; P(1-C) = 1 \cdot C \;\Longrightarrow\; C = \frac{P}{P+1},$$
+$$E(\text{bluffing}) = E(\text{giving up}) \;\Longrightarrow\; P(1-C) = 1 \cdot C \;\Longrightarrow\; C = \frac{P}{P+1},$$
 
-其中 $P$ 为底池大小，$C$ 为跟注频率，$1$ 为诈唬下注额。左端是诈唬赢下的（底池乘以对手弃牌率），右端是诈唬被抓输掉的。本例 $P=2$，所以对手应以 $2/3$ 的频率跟注。注意底池越大，跟注频率越高——$C$ 渐近于 $1$：钱已经在池里了，必须更多地防止被诈唬偷走。
+where $P$ is the pot size, $C$ the calling frequency, and $1$ the bluff bet. The left side is what a bluff wins (the pot times the opponent's folding rate); the right side is what a bluff loses when caught. Here $P = 2$, so the opponent should call $2/3$ of the time. Note that the bigger the pot, the higher the calling frequency — $C$ asymptotes to $1$: the money is already in the pot, so you must defend more against being bluffed out of it.
 
-**诈唬频率。** 诈唬方要让对手对"跟注"和"弃牌"无差异。用诈唬与价值下注之比 $b$（而非百分比）写更简洁：
+**Bluffing frequency.** The bluffer wants to make the opponent indifferent between calling and folding. Writing the ratio of bluffs to value bets as $b$ (rather than a percentage) keeps the algebra clean:
 
-$$E(\text{跟注}) = E(\text{弃牌}) \;\Longrightarrow\; b\,(P+1) - 1 = 0 \;\Longrightarrow\; b = \frac{1}{P+1}.$$
+$$E(\text{calling}) = E(\text{folding}) \;\Longrightarrow\; b\,(P+1) - 1 = 0 \;\Longrightarrow\; b = \frac{1}{P+1}.$$
 
-即对手跟注时以 $b$ 的概率赢下 $P+1$、以 $1$ 的概率输掉跟注额。本例 $b=1/3$：每两次价值下注搭配一次诈唬。底池越大，诈唬比例反而越低——因为价值已经在池里，且对手跟注得更多，不需要太多诈唬就能兑现价值。
+That is, when the opponent calls, she wins $P+1$ against a bluff with probability $b$ and loses her call with probability $1$. Here $b = 1/3$: one bluff for every two value bets. The bigger the pot, the *lower* the bluffing proportion — the value is already in the pot and the opponent calls more, so you need few bluffs to collect your value.
 
-**推广到任意下注尺度。** 设底池为 $1$，$S$ 为下注占底池的比例，则：
+**Generalizing to arbitrary bet sizes.** Let the pot be $1$ and $S$ the bet as a proportion of the pot:
 
-$$\text{跟注频率} = \frac{1}{1+S}, \qquad \text{诈唬价值比（bluff-to-value ratio）} = \frac{S}{1+S}.$$
+$$\text{calling frequency} = \frac{1}{1+S}, \qquad \text{bluff-to-value ratio} = \frac{S}{1+S}.$$
 
-对手下注越大，你需要跟注的频率越低；对手诈唬越多，她必须搭配的价值下注也越多——诈唬区域扩大时，价值下注区域必须随之扩大。
+The more your opponent bets, the less frequently you need to call; the more she bluffs, the more value bets she must pair them with — as the bluffing region expands, the value-betting region must expand with it.
 
-**"如果只玩一次呢？"** 常见疑问：面对再也不会遇到的对手，何必平衡？答案是：这仍然是重复博弈。设想你将和一千个不同对手各玩一次抛硬币游戏，并决定"反正他们学不到我的历史，我 100% 诈唬"。每个对手其实是从所有可能策略的分布中的一次随机抽样：有人会过度弃牌被你吃掉，也有人会过度跟注把你吃掉。哪怕是对阵陌生人的第一手牌，你面对的也是这个策略分布——它就是重复博弈。
+**"What if you only play it once?"** A common objection: against an opponent you will never see again, why balance? The answer: it is still a repeated game. Imagine playing the coin-flip game once each against a thousand different opponents, and deciding "they can't learn from my history, so I'll bluff 100% of the time." Each opponent is really a random draw from the distribution of all possible strategies: some will over-fold and you will own them; others will over-call and they will own you. Even your very first hand against a stranger is played against this distribution of strategies — and that is a repeated game.
 
-**两点观察。** 第一，关键不是价值下注或诈唬本身，而是两者的组合：如果你"有正面就下注、反面就过牌"，对手会对你的每次下注弃牌，你的好牌分文不值。第二，我们最大化的是**整手牌集合**的价值，而非当前这一手牌的价值。
+**Two observations.** First, what matters is not value betting or bluffing in isolation but the combination of the two: if you "bet heads, check tails," your opponent folds to every bet and your good hands are worth nothing. Second, we are maximizing the value of our **entire set of hands**, not the value of the hand we currently hold.
 
-## 玩具游戏二：A-K-Q 游戏
+## Toy Game 2: The Ace-King-Queen Game
 
-**A-K-Q 游戏（Ace-King-Queen Game）** 是最经典的不完全信息玩具游戏：
+The **Ace-King-Queen game** is the most classic toy game of incomplete information:
 
-1. 双方各下前注 \$1，各发一张牌（从 A、K、Q 中抽取，你拿 A 对手就只有 K 或 Q）。
-2. 玩家 1 可以过牌或下注。
-3. 玩家 2 只能过牌/跟注或弃牌。
+1. Each player antes \$1 and is dealt one card from {A, K, Q} (if you hold the ace, your opponent holds only the king or the queen).
+2. Player 1 may check or bet.
+3. Player 2 can only check/call or fold.
 
-逐个情形分析：
+Case by case:
 
-- **你拿 A**：下注（对手跟注你赢，弃牌你也赢）。
-- **对手下注，你拿 A**：跟注。
-- **对手下注，你拿 Q**：弃牌。
+- **You hold the ace**: bet (if the opponent calls you win; if she folds you also win).
+- **Opponent bets, you hold the ace**: call.
+- **Opponent bets, you hold the queen**: fold.
 
-这三种情形涉及**占优与劣策略（dominant / dominated strategy）**：所谓劣策略，是指其价值严格不高于另一选择的策略。用 Q 跟注不可能赢，只会输钱，严格劣于弃牌。
+These three cases involve **dominant and dominated strategies**: a dominated strategy is one whose value is strictly no greater than that of another choice. Calling with the queen can never win and only loses money; it is strictly dominated by folding.
 
-- **你拿 K，过牌还是下注？** 这也是劣策略！对手拿 A 必跟、拿 Q 必弃，你用 K 下注赢不到任何额外的钱、只会输给 A，因此被过牌严格占优。
-- **你拿 Q**：要以一定频率下注（诈唬）。
-- **对手下注，你拿 K**：混合策略——以一定频率跟注（抓诈，bluff catch）。
+- **You hold the king — check or bet?** This is also a dominated strategy! The opponent always calls with the ace and always folds the queen, so betting the king wins no extra money and only loses to the ace; it is strictly dominated by checking.
+- **You hold the queen**: bet some of the time (bluff).
+- **Opponent bets, you hold the king**: a mixed strategy — call some of the time (bluff catch).
 
-跟注频率是多少？套用上一节的公式，应以 $\frac{1}{1+S}$ 的频率用"能赢诈唬的牌"继续。本例 $S=0.5$（下注 \$1 进入 \$2 底池），跟注频率为 $2/3$。能赢诈唬的牌是 A 和 K（Q 连诈唬都赢不了）。A 占这类牌的一半，全部跟注才到 $1/2$，还需再补 $1/6$：即**用全部 A 跟注，再用 $1/3$ 的 K 跟注**（$1/2 + 1/3 \times 1/2 = 2/3$）。
+How often should you call? Applying the formula from the previous section, you should continue at frequency $\frac{1}{1+S}$ with the hands that beat a bluff. Here $S = 0.5$ (betting \$1 into a \$2 pot), so the calling frequency is $2/3$. The hands that beat a bluff are aces and kings (the queen cannot beat even a bluff). Aces are half of those hands, and calling all of them only reaches $1/2$; you need another $1/6$: **call with all your aces and with $1/3$ of your kings** ($1/2 + 1/3 \times 1/2 = 2/3$).
 
-注意这与底池赔率思维的区别：拿 K 面对下注时，赔率思维问的是"我至少有 $1/3$ 的时候领先吗"——这需要揣测对手的牌；博弈论思维问的是"我要怎么做才能让对手对诈唬与否无差异"——只需要管理自己的整个范围。
+Note how this differs from pot-odds thinking. Holding the king against a bet, pot-odds thinking asks "am I ahead at least $1/3$ of the time?" — which requires divining the opponent's hand. Game-theoretic thinking asks "what must I do to make my opponent indifferent to bluffing?" — you only need to manage your own entire range.
 
-**新增一条观察**：把牌映射为三类很有用——价值牌（value hands）、抓诈牌（bluff catchers）、诈唬牌（bluffs）。**你对一手牌的策略决定了你对其他牌的策略。**既然 A 必定跟注，就必须搭配一部分 K 跟注；既然 A 必定下注，就该用最差的那部分牌（Q）诈唬——那部分牌从对手弃牌中获益最大。更微妙的是：如果你玩某手牌的方式与我不同，你对其余牌的最优玩法也与我不同。比如你只下注一半的 A 却仍下注 $1/3$ 的 K，比例就失衡了，失衡在这个游戏里就是输钱。
+**One new observation**: it is useful to map hands into three categories — value hands, bluff catchers, and bluffs. **Your strategy for one hand determines your strategy for other hands.** Since aces certainly call, some kings must call with them; since aces certainly bet, the worst part of the distribution (queens) should supply the bluffs — that part gains the most from the opponent's folds. More subtly: if you play one hand differently from me, your optimal play with your other hands differs from mine too. If you bet only half your aces but still bet a third of your kings, the proportions are out of whack — and out of balance, in this game, means losing money.
 
-德尔斐阿波罗神庙的三句铭文恰好概括到这里为止的内容：**认识你自己（know thyself）**——知道自己的牌、知道自己的分布；**凡事勿过度（nothing in excess）**——保持平衡；第三句"立誓则祸近"牵强附会，就记"恶作剧（mischief）"二字，留到剥削打法部分。讲述者强调：在"知道自己处于自身分布的哪个位置、并把分布塑造平衡"这项技能帮你赢出一套房子之前，不要操心扑克的任何其他东西——相比之下一切都是点缀。
+The three inscriptions at the Temple of Apollo at Delphi summarize everything so far: **know thyself** — know your hand and know your distribution; **nothing in excess** — stay balanced; the third, "make a pledge and mischief is nigh," is too much of a stretch, so just remember **mischief**, saved for the exploitation section. The narrator's emphasis: until knowing where you are in your own distribution — and shaping that distribution to be balanced — has bought you a house, do not worry about anything else in poker. By comparison, everything else is window dressing.
 
-## 思考同一手牌的三个层次
+## Three Levels of Thinking About the Same Hand
 
-回到开头那手牌。面对河牌 \$1,080,000 的下注，人们有三个层次的思考方式：
+Back to the opening hand. Facing the \$1,080,000 river bet, there are three levels on which people think:
 
-1. **我的牌 vs. 你的牌**：我有 AA，他是什么？KQ？KT？QT？Q9？——把对手钉死在一手牌上既困难也没多大用处。
-2. **我的牌 vs. 你的分布**：我的 AA 对抗"你根据已发生行动可能持有的所有牌"表现如何？这里的**分布（distribution）** 指给定全部已发生行动后，一名玩家可能持有的手牌的频率分布。
-3. **我的分布 vs. 你的分布**：塑造自己的行动，使其最大程度地利用对手的行动。重点不再是"我这手 AA 怎么办"，而是"我所有会以同样方式打到这里的牌分别怎么办——我恰好拿着 AA"。这是与博弈论最互补的层次。
+1. **My hand vs. your hand**: I have aces — what does he have? KQ? KT? QT? Q9? Pinning an opponent to one specific hand is both hard and not very useful.
+2. **My hand vs. your distribution**: how are my aces doing against "all the hands you might hold given the action so far"? Here a **distribution** is the frequency distribution of hands a player might hold, given all the action that has occurred.
+3. **My distribution vs. your distribution**: shape your own actions so that they maximally exploit the opponent's actions. The question is no longer "what do I do with these aces?" but "what do I do with every hand that would have arrived here the same way — I just happen to be holding aces." This is the level most complementary to game theory.
 
-用底池赔率想"我是否至少有 $1/3$ 的时候领先"，又是在变魔术。博弈论的问题是：我需要多频繁地跟注，才能让对手对诈唬无差异？
+Using pot odds to ask "am I ahead at least $1/3$ of the time?" is doing magic again. The game-theoretic question is: how often do I need to call to make my opponent indifferent to bluffing?
 
-## 把 A-K-Q 游戏映射到真实扑克
+## Mapping the AKQ Game to Real Poker
 
-下图是全讲最关键的一张图：把 A-K-Q 游戏的结构映射到真实扑克的完整范围上。
+The next figure is the single most important one in the lecture: mapping the structure of the AKQ game onto the full range of real poker.
 
-![A-K-Q 游戏到真实扑克的映射：顶部为摊牌期望最高的牌，底部为最低的牌](assets/ch08-2.png)
+![Mapping the AKQ game to real poker: the top of the bar holds the hands with the highest E.V. at showdown, the bottom the lowest](assets/ch08-2.png)
 
-把你在当前局面下可能持有的所有牌按摊牌期望（E.V. at showdown）从高到低排成一根条带：顶端是第 99 百分位的牌（在这个牌面上是四条 K 之类的坚果），底端是第 1 百分位的牌（4♦2♦ 之类）。结构是：
+Take every hand you might hold in the current spot and line them up from highest to lowest E.V. at showdown: at the top, the 99th-percentile hand (quad kings or so on this board); at the bottom, the 1st-percentile hand (something like 42o). The structure:
 
-- **跟注/加注区域**：用最顶端 $\frac{1}{1+S}$ 的牌继续（真实扑克允许加注，所以是"跟注或加注"）。目标是让对手的诈唬期望为零。
-- **诈唬价值比**：最底端 $\frac{S}{1+S}$ 的牌用来诈唬——摊牌价值最低的牌从对手弃牌中获益最大。
-- **中间地带**是"能赢诈唬"的抓诈牌。
+- **Call/raise region**: continue with the top $\frac{1}{1+S}$ of hands (real poker allows raising, hence "call or raise"). The goal is to make the opponent's bluffs zero-EV.
+- **Bluff-to-value ratio**: the bottom $\frac{S}{1+S}$ of hands become bluffs — the hands with the least showdown value gain the most when the opponent folds.
+- **The middle** is the bluff catchers that beat a bluff.
 
-价值下注区域与诈唬区域联动：你的价值下注范围越宽，需要搭配的诈唬就越多。顶尖无限注玩家那些看似疯狂的薄价值下注和抓诈，原理正在于此——他们价值下注多，所以诈唬也多；对手因此必须跟注更多。初学者最常见的失衡就是诈唬区域与价值区域脱节。
+The value-betting and bluffing regions are linked: the wider your value-betting range, the more bluffs it must be paired with. This is exactly the principle behind the seemingly insane thin value bets and bluff catches of the best no-limit players — they value bet a lot, so they bluff a lot, so their opponents must call more. The most common imbalance among beginners is a bluffing region disconnected from the value region.
 
-## 阅读自己的手牌（Reading Your Own Hand）
+## Reading Your Own Hand
 
-**阅读自己的手牌（RYOH）** 是扑克中最重要的技能：你对分布中一部分牌的处理，决定了对其余部分的处理。具体做法是在每条街（street）对自己的分布做两次更新：
+**Reading Your Own Hand (RYOH)** is the most important skill in poker: what you do with one part of your distribution determines what you do with the rest of it. Concretely, on each street you update your distribution twice:
 
-1. **牌面排除（card removal）**：根据新发出的公共牌修正组合数——翻出一张 8，你持有 88 的组合就从 6 种降到 3 种。
-2. **行动更新（account for your action）**：根据自己的动作删掉不会采取该动作的牌。
+1. **Card removal**: revise combo counts for the newly dealt board cards — when an 8 flops, your combinations of 88 drop from 6 to 3.
+2. **Account for your action**: delete the hands that would not have taken the action you took.
 
-下面用开头那手牌完整走一遍。讲述者在按钮位前两位加注，其翻牌前分布（preflop distribution）约为：
+Now walk through the opening hand in full. The narrator raised two off the button; a reasonable preflop distribution is roughly:
 
-| 类别 | 手牌 | 组合数 | 类别 | 手牌 | 组合数 |
+| Category | Hands | Combos | Category | Hands | Combos |
 |---|---|---|---|---|---|
-| 对子 | 22–AA | 各 6（共 78） | 无间隔 | AK、KQ、QJ、JT | 各 16 |
-| 同花连张 | T9s–65s | 各 4（共 20） | 间隔一张 | 86s、97s、T8s、J9s 各 4；QT 16 | 共 32 |
-| | | | 间隔两张 | KJ、AQ、KT、AJ | 各 16 |
-| | | | 间隔三张 | K9s 4；AT 16；A2s–A9s 32 | 共 52 |
+| Pairs | 22–AA | 6 each (78 total) | No gap | AK, KQ, QJ, JT | 16 each |
+| Suited connectors | T9s–65s | 4 each (20 total) | One gap | 86s, 97s, T8s, J9s 4 each; QT 16 | 32 total |
+| | | | Two gaps | KJ, AQ, KT, AJ | 16 each |
+| | | | Three gaps | K9s 4; AT 16; A2s–A9s 32 | 52 total |
 
-合计 **310 个组合**（combinations, combos）。
+**310 combinations** (combos) in total.
 
-- **翻牌 K♥J♦8♠，牌面排除更新**：含 K/J/8 的手牌组合数下降（88、JJ、KK 各 6→3，AK 16→12，KJ 16→9，86s、T8s、J9s 各 4→3，A2s–A9s 32→31 等），总数 310→**263**。
-- **翻牌行动更新**（对手过牌，hero 下注 \$75,000）：删掉不会下注的牌——66、77、99、TT、86s、97s、T8s、98s、87s、AQ、AT、A2s–A9s 归零，总数→**160**。具体哪些牌该过牌可以争论，重点是分布在收窄。
-- **转牌 5♣，牌面排除更新**：55 6→3，65s 4→3，总数→**156**。
-- **转牌行动更新**（对手过牌，hero 下注 \$205,000，对手跟注）：删掉 22、33、44、JT、J9s、65s 等，总数→**120**。
+- **Flop K♥J♦8♠, card-removal update**: combos containing a K, J, or 8 shrink (88, JJ, KK 6→3 each; AK 16→12; KJ 16→9; 86s, T8s, J9s 4→3 each; A2s–A9s 32→31; etc.), total 310→**263**.
+- **Flop action update** (opponent checks, hero bets \$75,000): delete the hands that would not bet — 66, 77, 99, TT, 86s, 97s, T8s, 98s, 87s, AQ, AT, A2s–A9s go to zero, total→**160**. Exactly which hands should check behind is debatable; the point is that the distribution is narrowing.
+- **Turn 5♣, card-removal update**: 55 6→3, 65s 4→3, total→**156**.
+- **Turn action update** (opponent checks, hero bets \$205,000, opponent calls): delete 22, 33, 44, JT, J9s, 65s, etc., total→**120**.
 
-这里做一次平衡检查：转牌圈价值下注约 96 个组合，剩下 24 个组合是诈唬。按公式，诈唬应为价值下注的 $\frac{S}{1+S}$，即约 $96 \times \frac{0.4}{1.4} \approx 27$ 个组合。实际有 24 个——相当不错。不必纠结每条街上个别牌的取舍，重点是经常这样自查："我在这条街上是否大致平衡？"
+Now run a balance check: on the turn hero is value betting about 96 combos, leaving 24 combos as bluffs. By the formula, bluffs should be $\frac{S}{1+S}$ of value bets, i.e., about $96 \times \frac{0.4}{1.4} \approx 27$ combos. The actual number is 24 — pretty good. There is no need to agonize over individual hands on each street; the point is to ask yourself regularly, "am I roughly balanced on this street?"
 
-- **河牌 K♣，牌面排除更新**：KK 3→1，AK 12→8，KQ 12→8，KJ 9→6，KT 12→8，K9s 3→2，总数→**102**。
+- **River K♣, card-removal update**: KK 3→1, AK 12→8, KQ 12→8, KJ 9→6, KT 12→8, K9s 3→2, total→**102**.
 
-## 河牌决策
+## The River Decision
 
-对手下注 \$1,080,000 进入 \$720,000 底池，$S = 1.5$，故应以
+The opponent bets \$1,080,000 into a \$720,000 pot, so $S = 1.5$, and hero should call with the hands that beat a bluff at frequency
 
-$$\frac{1}{1+S} = \frac{1}{2.5} = 40\%$$
+$$\frac{1}{1+S} = \frac{1}{2.5} = 40\%.$$
 
-的频率用"能赢诈唬的牌"跟注。把 102 个组合按牌力从高到低排列并累计频率（QJ 大致是仍能赢诈唬的最差牌），得到下图：
+Rank the 102 combos from strongest to weakest and accumulate the frequencies (QJ is roughly the worst hand that still beats a bluff), giving:
 
-![hero 河牌圈分布的累计频率：跟注线为前 40%，AA 落在第 62 百分位](assets/ch08-3.png)
+![Cumulative frequency of hero's river distribution: the calling line is the top 40%, and AA sits at the 62nd percentile](assets/ch08-3.png)
 
-| 手牌 | 累计百分位 | 手牌 | 累计百分位 |
+| Hand | Cumulative percentile | Hand | Cumulative percentile |
 |---|---|---|---|
 | KK | 1% | KT | 51% |
 | KJ | 9% | K9s | 54% |
@@ -165,70 +165,70 @@ $$\frac{1}{1+S} = \frac{1}{2.5} = 40\%$$
 | 88 | 17% | QQ | 69% |
 | 55 | 21% | AJ | 85% |
 | AK | 31% | QJ | 100% |
-| KQ | 41% | QT、T9s、76s | （赢不了诈唬） |
+| KQ | 41% | QT, T9s, 76s | (don't beat a bluff) |
 
-答案令人意外：这条街感觉像艰难抉择，但 AA 落在分布的第 62 百分位，远在 40% 的跟注线之外——**弃牌**。甚至连 KT（51%）也要弃。跟注范围大约是 KQ 及以上。
+The answer is surprising: this street *feels* like a tough decision, but AA sits at the 62nd percentile of the distribution, well outside the 40% calling line — **fold**. Even KT (51%) is a fold. The calling range is roughly KQ and better.
 
-注意一个推论：如果对手以为"他会弃掉 AA 这样的好牌"，于是 90% 的时候在这里诈唬，这算不算剥削了我们？不算。我们的分布在这里极强——能赢诈唬的牌里约一半带着三条 K。他诈唬撞上铜墙铁壁时输掉的，远比偶尔偷走底池赢到的多。分布强大时，对手无法靠多诈唬剥削你。
+Note one corollary: if the opponent thinks "he'll fold good hands like aces" and therefore bluffs here 90% of the time, is he exploiting us? No. Our distribution is extremely strong here — about half of the hands that beat a bluff have trip kings. What he loses running bluffs into that brick wall far outweighs what he wins by occasionally stealing the pot. When your distribution is strong, the opponent cannot exploit you by bluffing more.
 
-**直觉检验（gut check）**：我们真的想要一个"必须弃掉三条"的分布吗？这个牌面没有同花、没有顺子可能，弃三条感觉不对劲——要么只是感觉错了，要么说明前面某条街打错了。一条实用的经验法则（rule of thumb）：**如果一手牌你本会拿它做价值下注，你就该把分布塑造成不必弃掉它的样子。**
+**Gut check**: do we really want a distribution in which we *have* to fold trips? This board has no flush and no straight possibilities, so folding trips feels wrong — either the feeling is wrong, or something went wrong on an earlier street. A practical rule of thumb: **if you would bet a hand for value, you want a distribution where you don't have to fold it.**
 
-怎么修正？从更早的街把更多牌加进来：翻牌前多玩一些、翻牌转牌价值下注更宽，河牌的分布就更宽。例如把 JT、J9s 一路玩到底（它们排进"能赢诈唬"区的 97%、100%），跟注线就会下沉到覆盖大多数 K；再激进一些（把 J9o、J8o、J7s 也纳入），AA 被推到第 41 百分位左右，刚好挤进跟注区域——同一手 AA 在同一个河牌上，因为到达这里的路径不同，正确打法从弃牌变成跟注。反过来说，**如果你发现自己的河牌分布里有大量中等强度牌，你就必须用更多中等强度牌跟注，否则就会被剥削。**
+How to fix it? Add hands in from earlier streets: play more hands preflop, value bet wider on the flop and turn, and the river distribution widens. For example, if JT and J9s are played all the way through (they slot into the "beats a bluff" region at 97% and 100%), the calling line sinks to cover most kings; go further still (adding J9o, J8o, J7s) and AA gets pushed to about the 41st percentile, just inside the calling region — the same aces on the same river, but because the path to get here was different, the correct play changes from fold to call. Conversely, **if you find your river distribution full of medium-strength hands, you must call with more medium-strength hands, or you can be exploited.**
 
-顺带一提加注的情况：纯诈唬应该用分布最底部的牌（摊牌价值最低、从弃牌中获益最大）；但**诈唬加注（bluff raise）应该选用"你本来打算弃掉的牌里最强的那些"**——反正要弃，用其中最强的牌诈唬加注不占劣势，用更弱的牌反而是劣策略。
+A word on raising: pure bluffs should come from the very bottom of the distribution (least showdown value, most to gain from folds); but a **bluff raise should use the strongest hands among those you were going to fold anyway** — since you were folding them regardless, bluff-raising with the best of them costs nothing, and using weaker hands instead is a dominated strategy.
 
-**RYOH 的实践要点：**
+**RYOH in practice:**
 
-- 在每一条街上检查平衡，但别过度思考——盯着明显的失衡（glaring errors）修。这类检查主要应在牌桌之外做。
-- 不要只盯着 K♥J♦8♠5♣K♣ 这一块牌面练，否则会把策略过拟合到特定牌面上。
-- **不要无谓地二分你的分布（bifurcate your distribution）**：如果翻牌前用不同的加注尺度区分不同牌型，你的 310 个组合一开始就裂成两半，博弈树急剧缩水、范围也极易被读出。不是绝对不能做，但要理由充分且极其小心。讲述者本人只按牌面结构（听牌多少）调整下注尺度，从不按手牌类型调整——潜在收益太小，潜在损失太大。
-- 记录自己容易失衡的典型局面；等你准备转向剥削打法时，在对手身上寻找同样的倾向——你会失衡的地方，别人多半也会。
+- Check for balance on every street, but don't overthink it — fix the glaring errors. This work belongs mostly off the table.
+- Don't drill only the K♥J♦8♠5♣K♣ board, or you will overfit your strategy to one specific runout.
+- **Don't needlessly bifurcate your distribution**: if you use different preflop raise sizes for different hand types, your 310 combos split in half from the start, the game tree shrinks dramatically, and your range becomes easy to read. It is not absolutely forbidden, but it demands a very good reason and extreme care. The narrator himself adjusts bet sizes only for board texture (how draw-heavy it is), never for hand type — the potential gain is too small and the potential loss too big.
+- Record the spots where you tend to become imbalanced; when you are ready to move on to exploitive play, look for the same tendencies in your opponents — where you get imbalanced, others probably do too.
 
-**模型的假设要心中有数。** 把 A-K-Q 游戏映射到真实牌局，隐含假设了双方分布大致对称（你我的 A、K、Q 分布相当）。扑克中并非总是如此：满员桌你在枪口位（under the gun）加注、大盲跟注，你的分布远强于对手，并不对称，打法也应不同。不过随着手牌推进、双方行动不断收窄范围，分布会趋向对称。总体而言这个映射相当稳健，但要留意例外。
+**Keep the model's assumptions in mind.** Mapping the AKQ game onto a real hand implicitly assumes the two distributions are roughly symmetric (your aces, kings, and queens look like mine). That is not always true in poker: at a full table you raise under the gun and the big blind calls — your distribution is far stronger and the situation is not symmetric, so the play should differ. As the hand progresses and both players' actions narrow their ranges, however, the distributions tend toward symmetry. Overall the mapping is fairly robust, but watch for the exceptions.
 
-最后说明本讲刻意没讲的一件事：**如何挑选价值下注的牌**。公式给出了跟注与诈唬的比例，却没有回答"该下注哪些牌"——这需要用别的玩具游戏去研究（可参见《The Mathematics of Poker》）。选择 RYOH 作为核心方法正因为它足够灵活：无论你目前用哪些牌做价值下注、偏紧还是偏松，它都能整合进你的游戏。而且随着你玩的牌越来越多，新增的第 $n$ 手牌对期望的影响远小于新增的第 5 手——人人都会玩 TT，把 9♠6♥ 加进范围只是向零期望的门槛牌（threshold hands）靠近一步。
+Finally, one thing this lecture deliberately does not cover: **how to choose which hands to value bet**. The formulas give the calling and bluffing proportions, but do not answer "which hands should I bet?" — that requires other toy games (see *The Mathematics of Poker*). RYOH was chosen as the core method precisely because it is flexible: whatever hands you currently value bet, tight or loose, it integrates into your game. And as you add more hands, the marginal $n$th hand affects your expectation far less than the fifth — everyone plays TT; adding 9♠6♥ to your range is just one step toward the zero-EV threshold hands.
 
-## 剥削打法：在边际上动手
+## Exploitive Play: Working the Margins
 
-平衡是地基，剥削（exploitive play）是在地基上根据对手倾向做的调整。博弈论式的剥削不是"我就知道他在诈唬，不看牌跟注"，而是**移动边际（exploit at the margins）**——只调整那些期望接近零的边际牌，绝不动核心区域：
+Balance is the foundation; exploitive play is the adjustment built on top of it, based on opponent tendencies. Game-theoretic exploitation is not "I knew he was bluffing — I call blind." It is **exploiting at the margins** — moving only the marginal, near-zero-EV hands, and never touching the core regions:
 
-![剥削打法的基本原理：按对手倾向扩张或收缩边际的跟注、下注与诈唬](assets/ch08-4.png)
+![The foundations of exploitive play: expand or contract the marginal calls, bets, and bluffs according to the opponent's tendencies](assets/ch08-4.png)
 
-- 对手诈唬太多 → **扩张边际跟注**；
-- 对手价值下注不足 → **收缩边际跟注**（但不做大弃牌）；
-- 对手弃牌太多 → **扩张边际诈唬、收缩边际价值下注**；
-- 对手跟注太多 → **扩张边际价值下注、收缩边际诈唬**。
+- Opponent bluffs too much → **expand the marginal calls**;
+- Opponent doesn't value bet enough → **contract the marginal calls** (but never make the big fold);
+- Opponent folds too much → **expand the marginal bluffs, contract the marginal value bets**;
+- Opponent calls too much → **expand the marginal value bets, contract the marginal bluffs**.
 
-阅读的可信度决定边际移动幅度：小阅读小动，大阅读大动。但即便移动，移动的也是整段边际（"这个人似乎爱诈唬，我把分布整体微调一点"），而不是只针对当前手里这一张牌。
+The confidence of your read determines how far the margin moves: a small read moves it a little, a big read moves it more. But even when it moves, you move the entire marginal band ("this person seems bluffy, so I'll shade my whole distribution a bit") — not just the one hand you happen to be holding.
 
-反面教材就是泡沫上那手 4♦2♦。那是一个"顶部全下、底部弃牌"的局面，合理的剥削是把边际从 86s 挪到 85s、再到 K2o 这样一点点外扩；而讲述者直接跳到了整个分布的最底部——42o 对随机牌只有 33% 胜率——于是被恰到好处地惩罚了。**无论你对自己的阅读多有信心，你多半都高估了它。**
+The counterexample is that 42o hand on the bubble. It was a "shove the top, fold the bottom" situation, and sensible exploitation would have moved the margin from 86s to 85s, then maybe to K2o, one small step at a time; the narrator instead jumped straight to the very bottom of the distribution — 42o has only 33% equity against a random hand — and was suitably punished. **However confident you are in your read, you are probably overestimating it.**
 
-![泡沫手牌的分布示意：顶部全下、底部弃牌，42o 位于分布最底端](assets/ch08-5.png)
+![The bubble hand's distribution: shove the top, fold the bottom — and 42o sits at the very bottom](assets/ch08-5.png)
 
-**进阶剥削：别忘了底池也是变量。** 诈唬价值比 $\frac{S}{1+S}$ 里的 $S$ 提醒你：剥削可以不发生在对手犯错的当时当地。比如对手河牌弃牌过多，你若每次河牌都猛打，他很快就会收到反馈。另一种做法是在前几条街把底池做大一点——翻牌前加注大一点、翻牌圈下注大一点——然后在河牌照常行动。他仍然弃牌过多，你仍然多赢那些底池，只是每个被偷下的底池都成比例地更大了。这就是**下游剥削（exploit downstream）**：预判对手在哪里弱，不在那个局面里改变打法而打草惊蛇，而是在上游改变底池几何。
+**Advanced exploitation: don't forget that the pot is also a variable.** The $S$ in the bluff-to-value ratio $\frac{S}{1+S}$ reminds you that exploitation need not happen at the time and place of the opponent's mistake. Suppose an opponent folds too much on the river; if you hammer every river, she will get that feedback soon enough. The alternative is to make the pot a little bigger on earlier streets — raise a bit more preflop, bet a bit more on the flop — then take all your normal actions on the river. She still folds too much, you still win those extra pots, but every pot you steal is proportionally larger. This is **exploiting downstream**: anticipate where the opponent is weak, don't change your play in that spot and tip her off — change the pot geometry upstream instead.
 
-## 均衡与剥削之争
+## Equilibrium vs. Exploitation
 
-最后回答一个常见疑问：打纳什均衡只能保证不被剥削，锦标赛中是否必须主动剥削才能赢？这个流传已久的说法低估了均衡策略的强度。均衡策略的含义是让对手**撞死在他们自己的错误上**，同时自己尽量少犯错——而多数人对"少犯错"的估计过于乐观：你自以为在剥削别人的时候，往往也在被剥削。经验数据支持这一点：Cepheus 对优秀的职业牌手每百手赢约 4 个大注（bets），而顶尖人类牌手从其他人类身上每百手赢的还不到这个数字的一半。也许有一天人类强到必须靠剥削拉开差距，但现在离那一天还很远。
+One last common question: playing Nash equilibrium only guarantees you cannot be exploited — must you actively exploit to win tournaments? This long-circulating claim underestimates how strong equilibrium strategies are. An equilibrium strategy means letting your opponents **impale themselves on their own mistakes** while making as few mistakes as possible yourself — and most people are far too optimistic about the "few mistakes" part: while you think you are exploiting, you are often being exploited. The empirical evidence supports this: Cepheus beats strong professionals for about 4 bets per hundred hands, while the best human players win less than half that from other humans. Maybe one day humans will be good enough that exploitation is needed to pull ahead, but we are nowhere close to that day.
 
-本讲的四条原则，也就是德尔斐箴言的扑克版：
+The lecture's four principles — the Delphi maxims, poker edition:
 
-1. **认识你自己（know thyself）**：知道自己处于自身分布的哪个位置；
-2. **凡事勿过度（nothing in excess）**：保持分布平衡；
-3. **恶作剧（mischief）**：剥削；
-4. **在边际上剥削（exploit at the margins）**。
+1. **Know thyself**: know where you are in your own distribution;
+2. **Nothing in excess**: keep the distribution balanced;
+3. **Mischief**: exploit;
+4. **Exploit at the margins**.
 
-即使未来更多扑克游戏被计算机求解，从黑箱里拿出的策略仍需玩具游戏提供的直觉作脚手架，人类才能理解、记住并执行它们。
+Even as more poker games are solved by computers, the strategies that come out of the black box will still need the intuition toy games provide as scaffolding before humans can grasp, remember, and execute them.
 
-**参考文献**：Chen, B. & J. Ankenman. *The Mathematics of Poker*. ConJelCo, 2006.
+**Reference**: Chen, B. & J. Ankenman. *The Mathematics of Poker*. ConJelCo, 2006.
 
-## 要点小结
+## Key Takeaways
 
-- 读牌与找马脚是噪声中的弱信号；任何你试图揣测对手策略的时刻，对手也可以反过来揣测你。规则一：忘掉她的牌，忘掉她的范围——改为管理自己的分布。
-- 透视游戏给出两个核心公式：跟注频率 $\frac{1}{1+S}$，诈唬价值比 $\frac{S}{1+S}$（$S$ 为下注占底池比例）。底池越大跟注越多、诈唬比例越低。
-- "只玩一次"的对局仍是重复博弈：陌生对手是从策略分布中的随机抽样。
-- A-K-Q 游戏揭示：拿 K 下注是劣策略；最优解是用全部 A 加 $1/3$ 的 K 抓诈。把牌分为价值牌、抓诈牌、诈唬牌三类；你对一手牌的策略决定了对其他牌的策略。
-- 阅读自己的手牌（RYOH）是最重要的扑克技能：每条街做牌面排除与行动两次更新，并检查价值与诈唬比例是否平衡。
-- 实战案例中，河牌 $S=1.5$ 要求用前 40% 能赢诈唬的牌跟注；AA 位于分布第 62 百分位，应弃牌——分布强时对手无法靠多诈唬剥削你。经验法则：你会拿去做价值下注的牌，就该塑造出不必弃掉它的分布。
-- 剥削发生在边际上：按对手倾向扩张/收缩边际的跟注、诈唬与价值下注，阅读越强移动越多，但绝不动核心；也可以在上游做大底池，进行下游剥削。
-- 均衡策略比大多数人以为的更强：Cepheus 每百手赢优秀职业牌手约 4 个大注，超过顶尖人类对人类赢率的两倍。
+- Reads and tells are weak signals in a sea of noise; any time you try to divine your opponent's strategy, she can divine yours right back. Rule #1: forget her hand, forget her range — manage your own distribution instead.
+- The clairvoyance game yields the two core formulas: calling frequency $\frac{1}{1+S}$ and bluff-to-value ratio $\frac{S}{1+S}$ (where $S$ is the bet as a proportion of the pot). Bigger pot → call more, bluff proportionally less.
+- A "one-time" game is still a repeated game: an unknown opponent is a random draw from the distribution of strategies.
+- The AKQ game shows that betting the king is a dominated strategy; the optimum calls with all aces plus $1/3$ of kings as bluff catchers. Map hands into value hands, bluff catchers, and bluffs; your strategy for one hand determines your strategy for the others.
+- Reading Your Own Hand (RYOH) is the most important skill in poker: on every street, update once for card removal and once for your action, then check whether your value-to-bluff proportions are balanced.
+- In the case-study hand, the river bet $S = 1.5$ requires calling with the top 40% of hands that beat a bluff; AA sits at the 62nd percentile of the distribution and is a fold — when your distribution is strong, the opponent cannot exploit you by bluffing more. Rule of thumb: if you would bet a hand for value, build a distribution where you don't have to fold it.
+- Exploitation happens at the margins: expand or contract the marginal calls, bluffs, and value bets according to opponent tendencies — the stronger the read, the bigger the move, but never touch the core; you can also build bigger pots upstream and exploit downstream.
+- Equilibrium strategies are stronger than most people think: Cepheus beats strong professionals for about 4 bets per hundred hands — more than twice what the best humans win from other humans.

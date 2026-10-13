@@ -1,54 +1,54 @@
-# Case 3：卫星赛、盲注防守与 ICM
+# Case 3: Satellites, Blind Defense, and ICM
 
-> MIT 15.S50 Poker Theory and Analytics（IAP 2015，Kevin Desmond）
-> 发布：2015 年 1 月 23 日（周五）；截止：2015 年 1 月 30 日（周五）
+> MIT 15.S50 Poker Theory and Analytics (IAP 2015, Kevin Desmond)
+> Issued: Friday, January 23, 2015; Due: Friday, January 30, 2015
 
-## 题目
+## Problems
 
-**说明**：本案例共 12 个问题，编号为 (1.1) 至 (2.5)。请简明作答并写出全部计算过程，注明你所做的任何假设。本案例按通过/不通过评分，通过线为 7/12 分。答案错误但过程合理可给部分分数，允许使用近似值。这些问题需要用到 PokerTracker 的 ICM 计算器（ICM Calculator），或等价的独立筹码模型（Independent Chip Model，ICM）计算工具。
+**Notes**: This case contains twelve (12) questions, labeled (1.1) through (2.5). Please answer all questions concisely and show all work. State any assumptions you are making. This case is graded pass/fail, where a passing grade is 7/12 points. Partial credit will be awarded for incorrect answers with appropriate work shown. Using approximations is acceptable. These questions rely on PokerTracker's ICM Calculator, or an equivalent ICM (Independent Chip Model) calculator.
 
-### 场景
+### Scenario
 
-今天是 2014 年 7 月 3 日（周四），你正在打一场 \$550 超级卫星赛（Mega Satellite），目标是 WSOP 68 号赛事：\$10,000 无限注德州扑克主赛事（Main Event）。该锦标赛的结构是每 20 名玩家中有 1 人赢得一张价值 \$10,000 的主赛事门票。共有 140 人报名，前 7 名将赢得门票。目前锦标赛还剩 60 名玩家。
+It is Thursday, July 3, 2014, and you are playing in a \$550 Mega Satellite to the WSOP Event #68: \$10,000 NLHE Main Event. The structure of this tournament is that 1 in 20 players wins a \$10,000 ticket to the main tournament. There were 140 entries and the top 7 players will win tickets. There are 60 players remaining in the tournament.
 
-牌桌为 9 人桌，如下所示。盲注 1000/2000，前注 300。
+The table is 9-handed as follows. Blinds are 1000/2000 with 300 ante.
 
-| 座位 | 玩家 | 筹码量 |
-|------|------|--------|
-| 1 | Hero（你） | 40,000 |
+| Seat | Name | Chip Count |
+|------|------|-----------|
+| 1 | Hero | 40,000 |
 | 2 | UTG | 160,000 |
 | 3 | UTG+1 | 140,000 |
 | 4 | MP1 | 114,000 |
 | 5 | MP2 | 154,000 |
-| 6 | LP（后位） | 76,000 |
+| 6 | LP | 76,000 |
 | 7 | CO | 168,000 |
 | 8 | BTN | 182,000 |
 | 9 | SB | 160,000 |
 
-### 问题 1
+### Question 1
 
-在这手牌之前，你已经树立了非常紧（tight）的形象，结果是每次你在 BB 位时都会面对一次加注。作为短筹码，每一轮都丢掉这个大盲是很痛苦的，你正打算防守你的盲注。假设每次偷盲（steal）尝试都是加注到 3BB，且 Villains 用任意两张牌（ATC）偷盲。
+Prior to this hand, you have developed an image of being very tight, and as a result you are facing a raise every time you are in the BB. As a short stack, losing this BB every round is painful and you are looking to defend your blind. Assume each steal attempt is a raise of 3BB and the Villains are stealing with any two cards.
 
-**(1.1)** 你的 M 是多少？
+**(1.1)** What is your M?
 
-**(1.2)** 如果你决定再加注（re-raise）到 6BB，当 Villain 在 BTN 位时，他跟注的赔率是多少？
+**(1.2)** If you decide to re-raise to 6BB, what odds does the Villain have to call if he is the BTN?
 
-**(1.3)** 给定他的范围是 ATC，你的范围需要多强，才能让他这次跟注变成错误的选择？
+**(1.3)** Given that he has a range of ATC, what would your range have to be to make this a bad call for him?
 
-**(1.4)** 如果 Villain 再加注全下，你跟注的赔率是多少？
+**(1.4)** If the Villain re-raises all-in, what odds would you have to call?
 
-**(1.5)** 如果你直接加注到最大（全下）而不是加注到 3BB，Villain 跟注的赔率是多少？
+**(1.5)** If you raise the maximum instead of 3BB, what odds does the Villain have to call?
 
-**(1.6)** 如果你拿着 QTo 再加注全下，你更希望对手跟注还是弃牌？假设 Villain 会用任意两张牌跟注。
+**(1.6)** If you have QTo and re-raise all-in, do you prefer a call or a fold? Assume Villain will call with any two cards.
 
-### 问题 2
+### Question 2
 
-你打进了这场卫星赛的决赛桌，还剩 8 名玩家争夺 7 张 \$10,000 门票。所有人对门票的估值都是 \$10,000（如果赢下卫星赛，他们对是否去打主赛事无所谓）。你认为自己的水平与桌上其余玩家大致相当（average player）。筹码量如下：
+You reached the final table of the satellite and there are 8 players remaining to win seven \$10,000 tickets. Everyone values the tickets at \$10,000 (they are indifferent to playing the Main Event if they win the satellite). You view yourself as an approximately average player compared to the remainder of the table. The chip stacks are as follows:
 
-盲注 8000/16000，前注 2000。
+Blinds are 8000/16000 with 2000 ante.
 
-| 座位 | 玩家 | 筹码量 |
-|------|------|--------|
+| Seat | Name | Chip Count |
+|------|------|-----------|
 | 1 | Hero | 66,000 |
 | 2 | UTG | 13,000 |
 | 3 | UTG+1 | 80,000 |
@@ -58,71 +58,71 @@
 | 7 | BTN | 49,000 |
 | 8 | SB | 78,000 |
 
-**(2.1)** 按 PokerTracker 计算，我们在这个锦标赛中的 \$EV 是多少？如果有人提出协议分钱（chop），每人分 \$9,000，你应该接受吗？
+**(2.1)** Per PokerTracker, what is our \$EV in this tournament? If a chop (prize split) is offered and each player will get \$9,000, should you take it?
 
-**(2.2)** 你拿着 A♥ A♣，SB 用 ATC 开局全下。你跟注的筹码 EV（chip EV，cEV）是多少？
+**(2.2)** You have A♥ A♣ and SB open pushes all-in with ATC. What is your chip EV from calling?
 
-**(2.3)** 你跟注的 \$EV 是多少？你应该跟注吗？
+**(2.3)** What is your \$EV from calling? Should you call?
 
-**(2.4)** 做出错误行动的 \$EV 损失是多少？
+**(2.4)** What is the \$EV loss from doing the wrong action?
 
-**(2.5)** 接下来的一手牌，所有人弃牌到你在 SB 位，BB（座位 2）被强制全下（forced all-in）。你应该用什么范围跟注？假设你上一手牌弃牌了。
+**(2.5)** The following hand, it is folded to you in the SB and the BB (seat 2) is forced all-in. What range should you call? Assume you folded the previous hand.
 
-**(2.5)** 最优跟注的 \$EV 是多少？
+**(2.5)** What is the \$EV of calling optimally?
 
-## 解答
+## Solutions
 
-### 问题 1
+### Question 1
 
-**(1.1)** M 是筹码量与一轮强制下注（大小盲 + 前注）之比：
+**(1.1)** M is the ratio of your stack to one round of forced bets (blinds plus antes):
 
 $$M = \frac{40{,}000}{1{,}000 + 2{,}000 + 300 \times 9} = 7.1$$
 
-**(1.2)** Villain 需要跟注 6,000（即 3BB，因为他已投入 3BB 的加注）。底池为
+**(1.2)** The Villain is facing a call of 6,000 (3BB, having already put in a 3BB raise). The pot is
 
 $$1{,}000 + 2{,}000 + 300 \times 9 + 6{,}000 \times 3 - 2{,}000 = 21{,}700$$
 
-所以他需要的跟注胜率为
+so he would need his equity to be
 
-$$\frac{6{,}000}{27{,}700} \approx 22\%$$
+$$\frac{6{,}000}{27{,}700} \approx 22\% \quad \text{to call}$$
 
 **(1.3)**
 
-- 精确计算：临界点在前 2%（QQ+、AKs+），该范围对抗 ATC 的胜率对比为 80%/20%。
-- 模型估计：令阈值 22% 满足
+- Exact: the threshold is the top 2% (QQ+, AKs+); that range vs. ATC is an 80%/20% split.
+- Model: set the threshold at 22%:
 
 $$22\% = 50\% + 0.085 \times \ln(C\%) - 0.085 \times \ln(1)$$
 
-解得 $C\% \approx 3.7\%$，即你的范围需强到前 3.7% 左右。
+which solves at $C\% \approx 3.7\%$, i.e., your range has to be about the top 3.7%.
 
-**(1.4)** 有效筹码量（effective stacks）为 40,000。在这次加注之后，你的筹码将剩 $40{,}000 - 12{,}300 = 27{,}700$。加注前底池为 $15{,}700 + 12{,}000 = 27{,}700$。所以你面对的是用 27,700 去赢一个 $3 \times 27{,}700$ 的底池，所需胜率为 33%。
+**(1.4)** Effective stacks are 40,000. After this raise, your stack would be $40{,}000 - 12{,}300 = 27{,}700$. The pot would be $15{,}700 + 12{,}000 = 27{,}700$ before the raise. So you would be facing a bet of 27,700 to win a pot of $3 \times 27{,}700$, for 33% equity.
 
-**(1.5)** 有效筹码量为 $40{,}000 - 6{,}300 = 33{,}700$。我们把这个数量加注进 21,700 的底池，Villain 需要的跟注胜率为
+**(1.5)** The effective stack is $40{,}000 - 6{,}300 = 33{,}700$. We would raise this amount into a pot of 21,700, giving the Villain
 
-$$\frac{33{,}700}{21{,}700 + 33{,}700 \times 2} \approx 38\%$$
+$$\frac{33{,}700}{21{,}700 + 33{,}700 \times 2} \approx 38\% \quad \text{to call}$$
 
-**(1.6)** QTo 对抗 ATC 的胜率为 57%。如果 Villain 弃牌，我们的 EV 为
+**(1.6)** QTo is 57% vs. ATC. If the Villain folds, our EV is
 
 $$100\% \times 15{,}700 = 15{,}700$$
 
-如果 Villain 跟注，我们的 EV 为
+If the Villain calls, our EV is
 
 $$57\% \times (15{,}700 + 33{,}700) - 43\% \times 33{,}700 = 13{,}667$$
 
-所以我们更希望对手弃牌。
+so we prefer a fold.
 
-### 问题 2
+### Question 2
 
-**(2.1)** 我们的 ICM 权益（ICM equity）是 \$9,668。除非我们极度厌恶风险（risk averse），否则不应接受每人 \$9,000 的协议分钱。
+**(2.1)** Our ICM equity is \$9,668. We shouldn't take a deal for \$9,000 unless we are very risk averse.
 
-**(2.2)** AA 对抗 ATC 的胜率为 85%。跟注的筹码 EV 为
+**(2.2)** AA vs. ATC is 85%. So our chip EV is
 
 $$cEV = (48{,}000 + 8{,}000 \times 2 + 16{,}000 + 2{,}000 \times 8) \times 0.85 - 48{,}000 \times 0.15 = 74{,}400$$
 
-**(2.3)** 如果跟注并输掉，我们的 \$EV 为 0。如果跟注并获胜，各玩家筹码如下：
+**(2.3)** If we call and lose, our \$EV is 0. If we call and win, then the stacks are as follows:
 
-| 座位 | 玩家 | 筹码量 |
-|------|------|--------|
+| Seat | Name | Chip Count |
+|------|------|-----------|
 | 1 | Hero | 144,000 |
 | 2 | UTG | 11,000 |
 | 3 | UTG+1 | 78,000 |
@@ -132,28 +132,28 @@ $$cEV = (48{,}000 + 8{,}000 \times 2 + 16{,}000 + 2{,}000 \times 8) \times 0.85 
 | 7 | BTN | 47,000 |
 | 8 | SB | 12,000 |
 
-此时我们的 \$EV 为 \$9,990。因此跟注的 \$EV 为
+giving us a \$EV of \$9,990. Our \$EV from the call is then
 
 $$0.85 \times \$9{,}990 + 0.15 \times 0 = \$8{,}492$$
 
-如果弃牌，我们的筹码为 48,000，对应的 \$EV 为 \$9,445，高于 \$8,492。所以应该弃牌。
+If we fold, our stack is 48,000, giving us a \$EV of \$9,445, which is higher than \$8,492. So fold.
 
-**(2.4)** 跟注与弃牌的 \$EV 之差为
+**(2.4)** The difference between the calling \$EV and the folding \$EV is
 
 $$\$9{,}445 - \$8{,}492 = \$953$$
 
-即做出错误行动（跟注）会损失 \$953。
+so making the wrong action (calling) loses \$953.
 
-**(2.5)** BB 的范围是 ATC。如果我们弃牌，我们有 38,000 筹码，对应 \$EV 为 \$8,452。如果跟注并输掉，我们的筹码为 37,000，对应 \$EV 为 \$8,384。如果跟注并获胜，我们的 \$EV 为 \$10,000。设获胜概率为 $x$，当
+**(2.5)** BB's range is ATC. If we fold, we have 38,000 chips, giving us a \$EV of \$8,452. If we call and lose, our stack is 37,000, giving us a \$EV of \$8,384. If we call and win, our \$EV is \$10,000. So we can profitably call if our chance to win is $x$, where $x$ solves
 
 $$\$10{,}000 \times x + \$8{,}384 \times (1-x) > \$8{,}452$$
 
-时跟注有利可图，解得 $x > 4\%$。几乎任何牌都有超过 4% 的胜率，所以应该用 ATC（任意两张牌）跟注。
+or $x > 4\%$. So call with ATC.
 
-**(2.5)** 只要胜率超过 4% 就应该跟注（即永远跟注）。我们的范围对抗 ATC 的胜率为 50%，因此最优跟注的 \$EV 为
+**(2.5)** We should call any time our equity is more than 4% (i.e., always). This gives us an equity of 50% vs. ATC, meaning our \$EV from calling is
 
 $$50\% \times \$10{,}000 + 50\% \times \$8{,}384 = \$9{,}192$$
 
 ---
 
-*来源：MIT OpenCourseWare, 15.S50 Poker Theory and Analytics, January IAP 2015. <http://ocw.mit.edu>*
+*Source: MIT OpenCourseWare, 15.S50 Poker Theory and Analytics, January IAP 2015. <http://ocw.mit.edu>*

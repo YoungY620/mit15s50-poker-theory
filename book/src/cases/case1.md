@@ -1,230 +1,230 @@
-# Case 1：底池赔率、听牌与半诈唬
+# Case 1: Pot Odds, Draws, and the Semi-Bluff
 
-> MIT 15.S50 Poker Theory and Analytics（IAP 2015，Kevin Desmond）
-> 发布：2015 年 1 月 9 日（周五）；截止：2015 年 1 月 16 日（周五）
+> MIT 15.S50 Poker Theory and Analytics (IAP 2015, Kevin Desmond)
+> Issued: Friday, January 9, 2015; Due: Friday, January 16, 2015
 
-## 题目
+## Problems
 
-**说明**：本案例共 17 个问题，编号为 (1.1) 至 (4.5)。请简明作答并写出全部计算过程，注明你所做的任何假设。本案例按通过/不通过评分，通过线为 10/17 分。答案错误但过程合理可给部分分数，允许使用近似值。
+**Notes**: This case contains seventeen (17) questions, labeled (1.1) through (4.5). Please answer all questions concisely and show all work. State any assumptions you are making. This case is graded pass/fail, where a passing grade is 10/17 points. Partial credit will be awarded for incorrect answers with appropriate work shown. Using approximations is acceptable.
 
-### 场景
+### Scenario
 
-今天是 2014 年 5 月 30 日（周五），你回到世界扑克系列赛（World Series of Poker，WSOP）3 号赛事——\$1000 无限注德州扑克（No-Limit Hold'em）的第二天比赛。2,224 名参赛选手中还剩 186 人，你有 63,500 筹码，在 Day 2 开始时排全部 186 人的第 26 名。你刚换到一张新桌子，对其他玩家没有任何解读（reads）。你已经进入钱圈，但在决赛桌之前各名次奖金差异对你无关紧要（因此每一手牌都以最大化期望筹码数为目标行动）。
+It is Friday, May 30, 2014, and you are returning for the second day of the World Series of Poker (WSOP) Event #3 \$1000 No-Limit Hold'em. There are 186 of 2,224 players remaining, and you have 63,500 chips, making you 26th of 186 overall at the start of Day 2. You are entering a new table and have no reads. You are already in the money, but the differences between payoffs are immaterial to you until the final table (so act in a way that maximizes expected chips for that hand).
 
-牌桌为 8 人桌，如下所示。盲注（blinds）600/1200，前注（ante）200。你在按钮位（button，BTN），所有问题中你都在这个位置，但随着当天比赛进行筹码量会略有变化。
+The table is 8-handed as follows. Blinds are 600/1200 with 200 antes. You are on the button and will be in that position for all questions, although chip amounts will vary slightly as the day progresses.
 
-| 座位 | 玩家 | 筹码量 |
-|------|------|--------|
-| 1 | SB（小盲） | 22,800 |
-| 2 | [空] | N/A |
-| 3 | BB（大盲） | 17,900 |
-| 4 | UTG（枪口位） | 32,400 |
+| Seat | Name | Chip Count |
+|------|------|-----------|
+| 1 | SB | 22,800 |
+| 2 | [Empty] | N/A |
+| 3 | BB | 17,900 |
+| 4 | UTG | 32,400 |
 | 5 | UTG+1 | 25,800 |
-| 6 | MP1（中位 1） | 10,000 |
+| 6 | MP1 | 10,000 |
 | 7 | MP2 | 29,100 |
-| 8 | CO（关煞位） | 77,100 |
-| 9 | Hero（你） | 63,500 |
+| 8 | CO | 77,100 |
+| 9 | Hero | 63,500 |
 
-### 第 1 手牌
+### Hand 1
 
-- UTG+1：25,800，M = 7.59
-- MP1：10,000，M = 2.94
-- Hero（BTN）：63,500，M = 18.68
+- UTG+1: 25,800, M = 7.59
+- MP1: 10,000, M = 2.94
+- Hero (BTN): 63,500, M = 18.68
 
-**翻牌前（Pre Flop）**：（底池 3,400）Hero 在 BTN 拿到 A♣ 9♥
-1 人弃牌，UTG+1 加注到 3,600，1 人弃牌，MP2 跟注 3,600，1 人弃牌，Hero 跟注 3,600，2 人弃牌。
+**Pre Flop**: (3,400) Hero is BTN with A♣ 9♥
+1 fold, UTG+1 raises to 3,600, 1 fold, MP2 calls 3,600, 1 fold, Hero calls 3,600, 2 folds
 
-**翻牌（Flop）**：（底池 14,200）2♣ T♣ K♣（3 名玩家）
-UTG+1 下注 3,000，MP2 弃牌，轮到 Hero……
+**Flop**: (14,200) 2♣ T♣ K♣ (3 players)
+UTG+1 bets 3,000, MP2 folds, Hero…
 
-### 问题 1
+### Question 1
 
-**假设**：UTG+1 会在转牌（turn）再次下注，除非转牌是梅花——若发出梅花，他会对任何下注过牌/弃牌（check/fold）。
+**Assumptions**: UTG+1 will bet again on the turn, except if it's a club, in which case he will check/fold to any bet.
 
-**(1.1)** Hero 在听什么牌？
+**(1.1)** What hand is the Hero drawing to?
 
-**(1.2)** 他在下一张牌、或下两张牌内击中听牌（draw）的概率各是多少？
+**(1.2)** How likely is he to hit his draw on the next card, or the next two cards?
 
-**(1.3)** 为了看下一张牌，Hero 需要投入的筹码占底池的百分比是多少？
+**(1.3)** What percentage of the pot is the Hero contributing to see another card?
 
-**(1.4)** Hero 应该跟注吗？这次跟注的期望值（EV）大约是多少？
+**(1.4)** Should the Hero make this call? Approximately what is the EV of this call?
 
-**(1.5)** Hero 能有利可图地跟注的最大下注额是多少？
+**(1.5)** What is the largest bet that the Hero can profitably call?
 
-### 第 1 手牌（续）
+### Hand 1 (continued)
 
-- UTG+1：25,800，M = 7.59
-- MP1：10,000，M = 2.94
-- Hero（BTN）：63,500，M = 18.68
+- UTG+1: 25,800, M = 7.59
+- MP1: 10,000, M = 2.94
+- Hero (BTN): 63,500, M = 18.68
 
-**翻牌前**：（底池 3,400）Hero 在 BTN 拿到 A♣ 9♥
-1 人弃牌，UTG+1 加注到 3,600，1 人弃牌，MP2 跟注 3,600，1 人弃牌，Hero 跟注 3,600，2 人弃牌。
+**Pre Flop**: (3,400) Hero is BTN with A♣ 9♥
+1 fold, UTG+1 raises to 3,600, 1 fold, MP2 calls 3,600, 1 fold, Hero calls 3,600, 2 folds
 
-**翻牌**：（底池 14,200）2♣ T♣ K♣（3 名玩家）
-UTG+1 下注 3,000，MP2 弃牌，Hero 跟注 3,000。
+**Flop**: (14,200) 2♣ T♣ K♣ (3 players)
+UTG+1 bets 3,000, MP2 folds, Hero calls 3,000
 
-**转牌（Turn）**：（底池 20,200）5♦（2 名玩家）
-UTG+1 下注 9,000，轮到 Hero……
+**Turn**: (20,200) 5♦ (2 players)
+UTG+1 bets 9,000, Hero…
 
-### 问题 2
+### Question 2
 
-**假设**：无论牌面如何，UTG+1 在河牌（river）都会对任何尺度的下注下注/跟注（bet/call）。
+**Assumptions**: UTG+1 will bet/call any size bet on the river, regardless of the board.
 
-**(2.1)** Hero 在河牌击中听牌的概率是多少？
+**(2.1)** How likely is the Hero to hit his draw on the river?
 
-**(2.2)** 为了看下一张牌，Hero 需要投入的筹码占底池的百分比是多少？
+**(2.2)** What percentage of the pot is the Hero contributing to see another card?
 
-**(2.3)** Hero 需要在河牌圈赢多少，才能使这次跟注有利可图？这现实吗？
+**(2.3)** How much does the Hero have to make on the river to make this a profitable call? Is this realistic?
 
-### 场景变化
+### Scenario Update
 
-当天晚些时候，MP1 已被淘汰，换成一个短筹码玩家。你的解读是：UTG+1 和 BB 打法激进且跟注很松（aggressive and loose callers）；SB 则被你认为弱而紧（weak/tight）。各玩家筹码如下：
+Later in the day, MP1 has been eliminated and has been replaced by a short stack. Your reads are that UTG+1 and BB are aggressive and loose callers. You have identified SB as weak/tight. Chip stacks are as follows.
 
-| 座位 | 玩家 | 筹码量 |
-|------|------|--------|
+| Seat | Name | Chip Count |
+|------|------|-----------|
 | 1 | SB | 19,500 |
 | 2 | MP1 | 4,200 |
 | 3 | BB | 5,500 |
 | 4 | UTG | 38,600 |
 | 5 | UTG+1 | 13,200 |
-| 6 | [空] | N/A |
+| 6 | [Empty] | N/A |
 | 7 | MP2 | 33,100 |
 | 8 | CO | 90,500 |
 | 9 | Hero | 78,200 |
 
-### 第 2 手牌
+### Hand 2
 
-- Hero（BTN）：78,200，M = 23.00
-- SB：19,500，M = 5.74
+- Hero (BTN): 78,200, M = 23.00
+- SB: 19,500, M = 5.74
 
-**翻牌前**：（底池 3,400）Hero 在 BTN 拿到 5♥ 6♦
-4 人弃牌，Hero 加注到 3,600，SB 跟注 3,000，1 人弃牌。
+**Pre Flop**: (3,400) Hero is BTN with 5♥ 6♦
+4 folds, Hero raises to 3,600, SB calls 3,000, 1 fold
 
-**翻牌**：（底池 10,000）4♣ 7♠ K♥（3 名玩家）
-SB 过牌，Hero 下注 6,000，轮到 SB……
+**Flop**: (10,000) 4♣ 7♠ K♥ (3 players)
+SB checks, Hero bets 6,000, SB…
 
-### 问题 3
+### Question 3
 
-**假设**：SB 会用两对或更好的牌跟注。如果他跟注，无论转牌是什么他都会在转牌圈过牌。
+**Assumptions**: SB will call with a two pair or better. If he calls, he will check the turn on any card.
 
-**(3.1)** 如果 SB 有 70% 的时间弃牌，Hero 的弃牌权益（fold equity）是多少？
+**(3.1)** What is the Hero's fold equity if the SB folds 70% of the time?
 
-**(3.2)** 这次下注后，Hero 在被跟注情况下的 EV（EV-if-called）是多少？
+**(3.2)** What is the Hero's EV-if-called after this bet?
 
-**(3.3)** Hero 的下注是 +EV 吗？
+**(3.3)** Is the Hero's bet +EV?
 
-**(3.4)** SB 需要有多高的弃牌频率，才能使这次下注 +EV？
+**(3.4)** What percentage of the time does SB have to fold to make this bet +EV?
 
-### 第 2 手牌（续）
+### Hand 2 (continued)
 
-- Hero（BTN）：78,200，M = 23.00
-- SB：19,500，M = 5.74
+- Hero (BTN): 78,200, M = 23.00
+- SB: 19,500, M = 5.74
 
-**翻牌前**：（底池 3,400）Hero 在 BTN 拿到 5♥ 6♦
-4 人弃牌，Hero 加注到 3,600，SB 跟注 3,000，1 人弃牌。
+**Pre Flop**: (3,400) Hero is BTN with 5♥ 6♦
+4 folds, Hero raises to 3,600, SB calls 3,000, 1 fold
 
-**翻牌**：（底池 10,000）4♣ 7♠ K♥（3 名玩家）
-SB 过牌，Hero 下注 6,000，SB 加注到 15,700 全下（all in），轮到 Hero……
+**Flop**: (10,000) 4♣ 7♠ K♥ (3 players)
+SB checks, Hero bets 6,000, SB raises to 15,700 all in, Hero…
 
-### 问题 4
+### Question 4
 
-**(4.1)** Hero 在听什么牌？
+**(4.1)** What hand is the Hero drawing to?
 
-**(4.2)** 他在接下来的两张牌内击中听牌的概率是多少？
+**(4.2)** How likely is he to hit his draw on the next two cards?
 
-**(4.3)** 为了看接下来的两张牌，Hero 需要投入的筹码占底池的百分比是多少？
+**(4.3)** What percentage of the pot is the Hero contributing to see another two cards?
 
-**(4.4)** Hero 应该跟注吗？这次跟注的 EV 大约是多少？
+**(4.4)** Should the Hero make this call? Approximately what is the EV of this call?
 
-**(4.5)** Hero 能有利可图地跟注的最大加注额是多少？
+**(4.5)** What is the largest raise that the Hero can profitably call?
 
-## 解答
+## Solutions
 
-### 问题 1
+### Question 1
 
-**(1.1)** 同花（Flush）。
+**(1.1)** Flush.
 
-**(1.2)** Hero 有 9 张补牌（outs，剩余梅花）。
+**(1.2)** Hero has 9 outs (the remaining clubs).
 
-- 速算法则（quick rule）：一张牌 $9 \times 2\% = 18\%$；两张牌 $9 \times 4\% = 36\%$。
-- 精确计算：一张牌 $9/47 \approx 19\%$；两张牌
+- Quick rule: $9 \times 2\% = 18\%$ for one card, or $9 \times 4\% = 36\%$ for two cards.
+- Exact: $9/47 \approx 19\%$ for one card, or
 
-$$1 - \frac{38}{47}\times\frac{37}{46} \approx 35\%$$
+$$1 - \frac{38}{47}\times\frac{37}{46} \approx 35\% \quad \text{for two cards}$$
 
-**(1.3)** Hero 要跟注 3,000，跟注后底池为 20,200：
+**(1.3)** Hero must call 3,000 into a pot that will be 20,200 after the call:
 
 $$\frac{3{,}000}{20{,}200} \approx 15\%$$
 
-**(1.4)** 应该跟注。
+**(1.4)** Yes, call.
 
-- 若只按一张牌计算：$EV \approx 19\% \times 17{,}200 - 81\% \times 3{,}000 = 838$
-- 若按两张牌计算：$EV \approx 35\% \times 17{,}200 - 65\% \times 3{,}000 = 4{,}070$
+- If one card: $EV \approx 19\% \times 17{,}200 - 81\% \times 3{,}000 = 838$
+- If two cards: $EV \approx 35\% \times 17{,}200 - 65\% \times 3{,}000 = 4{,}070$
 
-**(1.5)** 设最大可跟注下注额为 $x$，令其占底池比例等于击中概率：
+**(1.5)** Let $x$ be the largest callable bet, and set its share of the pot equal to the probability of hitting:
 
-- 一张牌：$\dfrac{x}{14{,}200 + 2x} = 19\%$，解得 $x = 4{,}350$
-- 两张牌：$\dfrac{x}{14{,}200 + 2x} = 35\%$，解得 $x = 16{,}550$
+- One card: $\dfrac{x}{14{,}200 + 2x} = 19\%$, which gives $x = 4{,}350$
+- Two cards: $\dfrac{x}{14{,}200 + 2x} = 35\%$, which gives $x = 16{,}550$
 
-### 问题 2
+### Question 2
 
-**(2.1)** 同花听牌还剩 9 张补牌，剩余 46 张未知牌：
+**(2.1)** The flush draw still has 9 outs, with 46 unknown cards remaining:
 
-$$\frac{9}{46} = 19.6\% \quad(\text{速算法则为 } 18\%)$$
+$$\frac{9}{46} = 19.6\% \quad(\text{18\% by the quick rule})$$
 
-**(2.2)** Hero 要跟注 9,000，跟注后底池为 38,200：
+**(2.2)** Hero must call 9,000 into a pot that will be 38,200 after the call:
 
 $$\frac{9{,}000}{38{,}200} \approx 23.6\%$$
 
-**(2.3)** 如果只有同花能赢，所需底池大小为：
+**(2.3)** If only the flush is good, the pot needs to be
 
 $$9{,}000 / 19.6\% \approx 45{,}900$$
 
-即河牌圈还需多赢约 7,700（隐含赔率，implied odds）。若用速算法则：$9{,}000 / 18\% \approx 50{,}000 - 38{,}200 = 11{,}800$，即还需多赢 11,800。
+or 7,700 more than it currently offers (implied odds). With the quick rule: $9{,}000 / 18\% \approx 50{,}000 - 38{,}200 = 11{,}800$ more.
 
-对手在这次下注后只剩 10,000 筹码。所以如果使用速算法则，这不现实；但如果精确求解，则大概可行（需要再多赢 7,770 vs. 11,800）。
+The Villain has 10,000 left after this bet, so if you used the quick rule, then it's not realistic; but if you solved exactly, then it probably is (7,700 more vs. 11,800 more).
 
-### 问题 3
+### Question 3
 
-**(3.1)** 弃牌权益：
+**(3.1)** Fold equity:
 
 $$70\% \times 10{,}000 - 30\% \times 6{,}000 = 5{,}200$$
 
-**(3.2)** Hero 对抗 SB 的跟注范围（74 / K7 / K4 / 44 / 77 / KK）的胜率（equity）为 29%（速算法则：$8 \times 4\% = 32\%$）。
+**(3.2)** Hero's equity against SB's calling range (74 / K7 / K4 / 44 / 77 / KK) is 29% (quick rule: $8 \times 4\% = 32\%$).
 
 $$EV = 16{,}000 \times 29\% - 6{,}000 \times 71\% = 380$$
 
-（即被跟注时我们仍然是 +EV 的，所以我们并不介意被跟注。）
+(i.e., we prefer a call)
 
-**(3.3)** 是 +EV：
+**(3.3)** Yes:
 
 $$EV = 70\% \times 10{,}000 + 30\% \times \left[16{,}000 \times 29\% - 6{,}000 \times 71\%\right] = 7{,}114$$
 
-**(3.4)** 设 SB 的弃牌率为 $F$，令 $EV = 0$：
+**(3.4)** Let $F$ be SB's folding frequency, and set $EV = 0$:
 
 $$0 = F \times 10{,}000 + (1-F) \times \left[16{,}000 \times 29\% - 6{,}000 \times 71\%\right]$$
 
-解得 $F < 0\%$。也就是说，即使 SB 100% 跟注，我们也有足够的底池赔率（pot odds）去看后面两张牌，这次下注无论如何都是有利可图的。
+which solves at $F < 0\%$. We have the pot odds to see two more cards, so it's profitable even if he calls 100% of the time.
 
-### 问题 4
+### Question 4
 
-**(4.1)** 顺子（Straight）。
+**(4.1)** Straight.
 
-**(4.2)** Hero 有 8 张补牌（3 或 8，开口顺子听牌）：
+**(4.2)** Hero has 8 outs (a 3 or an 8, an open-ended straight draw):
 
-$$1 - \frac{39}{47}\times\frac{38}{46} \approx 31\% \quad(\text{速算法则：} 8 \times 4\% = 32\%)$$
+$$1 - \frac{39}{47}\times\frac{38}{46} \approx 31\% \quad(\text{quick rule: } 8 \times 4\% = 32\%)$$
 
-**(4.3)** Hero 要跟注 $15{,}700 - 6{,}000 = 9{,}700$，跟注后底池为 41,400：
+**(4.3)** Hero must call $15{,}700 - 6{,}000 = 9{,}700$ into a pot that will be 41,400 after the call:
 
 $$\frac{9{,}700}{41{,}400} \approx 23\%$$
 
-**(4.4)** 应该跟注：
+**(4.4)** Yes:
 
 $$EV = 31{,}700 \times 31\% - 9{,}700 \times 69\% = 3{,}134$$
 
-**(4.5)** 设最大可跟注加注额为 $x$：
+**(4.5)** Let $x$ be the largest callable raise:
 
 $$\frac{x}{22{,}000 + 2x} = 31\% \;\Rightarrow\; x \approx 17{,}947$$
 
 ---
 
-*来源：MIT OpenCourseWare, 15.S50 Poker Theory and Analytics, January IAP 2015. <http://ocw.mit.edu>*
+*Source: MIT OpenCourseWare, 15.S50 Poker Theory and Analytics, January IAP 2015. <http://ocw.mit.edu>*

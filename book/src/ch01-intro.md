@@ -1,113 +1,117 @@
-# L1 扑克理论导论
+# L1 Introduction to Poker Theory
 
-本章是全课程的导论：先介绍课程的主线内容与"概念—练习—进阶"的学习框架，再给出衡量赢家的量化标准，最后建立三个贯穿全书的基础工具与概念——手牌历史分析软件、有效筹码量（effective stack）与 Harrington 的 M 比率（M ratio）。
+This opening chapter sets up the whole course: the roadmap of topics and the "concepts–practice–advanced" learning framework, the quantitative yardsticks for what counts as a winning player, and three foundational tools and concepts that recur throughout the book — hand history analysis software, the effective stack, and Harrington's M ratio.
 
-## 课程主线
+## Course Roadmap
 
-课程依次覆盖以下主题：基本策略（basic strategy）、分析技术及其应用、翻牌前分析（preflop analysis）、锦标赛打法（tournament play）、扑克经济学（poker economics）、博弈论（game theory）与决策制定（decision making）。其中翻牌前分析是重中之重：新手在锦标赛中亏损的价值几乎全部来自翻牌前的失误，而这一部分恰恰最难凭直觉做对。后四个主题分别由嘉宾讲授：Joel Fried（分析技术）、Aaron Brown（扑克经济学）、Bill Chen（博弈论）、Matt Hawrilenko（决策制定）。
+The course covers, in order: basic strategy, analysis techniques and their applications, preflop analysis, tournament play, poker economics, game theory, and decision making. Preflop analysis carries the most weight: essentially all of the value a beginner loses in tournaments comes from preflop mistakes, and preflop is precisely the part that is hardest to get right by feel. The last four topics are taught by guest lecturers: Joel Fried (analytical techniques), Aaron Brown (poker economics), Bill Chen (game theory), and Matt Hawrilenko (decision making).
 
-## 如何学习：概念、练习与进阶
+## How to Study: Concepts, Practice, and Advanced Techniques
 
-学习任何复杂技能都可以拆成三层，本课程也按此组织，并用标记区分幻灯片难度：
+Learning any complex skill can be split into three layers, and the course is organized accordingly, with slides tagged by difficulty:
 
-- **基本概念（Concepts，标记 C）**：决策制定的基本框架，目标是做到不可剥削（un-exploitable）的打法，即扎实的 ABC 扑克。衡量标准是：当你坐下时，房间里的职业玩家不会纷纷转头想和你同桌。先成为小幅盈利的玩家，再谈大幅盈利。
-- **练习（Practice，标记 P）**：把概念落实到实时决策中。真实牌桌上没有计算器，也没有充分的信息和时间，因此需要把决策规则提炼成经验法则（rules of thumb），判断决策规则对四舍五入的敏感程度——哪些可以忽略、哪些必须严格执行——并处理影响现场发挥的心理因素。
-- **进阶技术（Advanced，标记 A）**：在掌握基本概念之后，学习如何从第一性原理推导决策规则，做小幅偏离以多榨取价值（比如每小时多磨出半个大盲注），即剥削性打法（exploitive play）；以及元游戏（metagame）概念——一切与单局决策无关的内容，如选桌、资金管理和"这局该不该打"。
+- **Concepts (tagged C)**: the basic framework for decision making, aimed at un-exploitable play — solid ABC poker. The benchmark: when you sit down, every pro in the room does not turn around and want to be at your table. Become a slightly winning player long before you try to become a hugely winning one.
+- **Practice (tagged P)**: applying the concepts in real time. At a real table there is no calculator, no complete information, and no time, so decision rules must be distilled into rules of thumb. You need to know how sensitive each rule is to rounding — which approximations you can ignore and which you must follow exactly — and to handle the psychological factors that affect live performance.
+- **Advanced Techniques (tagged A)**: once the fundamentals are down, derive decision rules from first principles and make small deviations to squeeze out extra value (for example, grinding out an additional half big blind per hour) — that is exploitive play — plus metagame concepts, everything unrelated to the hand-by-hand decision process: table selection, bankroll management, and "should I play this game at all."
 
-## 如何定义"赢"
+## How to Define "Winning"
 
-扑克中的"赢家"必须用量化指标定义，不同赛制各有口径：
+A "winner" in poker must be defined by a quantitative metric, and each format has its own:
 
-| 赛制 | 指标 | 优秀水准 |
+| Format | Metric | Strong level |
 | --- | --- | --- |
-| 现金局（线上） | 每百手赢的大盲注数 BB/100 | 5 BB/100 |
-| 现金局（现场） | 每小时赢的大盲注数 BB/小时 | 5 BB/小时 |
-| 多桌锦标赛（MTT） | 投资回报率（ROI） | 30% |
-| 单桌锦标赛（SnG） | 投资回报率（ROI） | 15% |
-| 通用 | 时薪（hourly） | $50–$200/小时 |
+| Cash games (online) | Big blinds won per 100 hands, BB/100 | 5 BB/100 |
+| Cash games (live) | Big blinds won per hour, BB/hour | 5 BB/hour |
+| Multi-table tournaments (MTT) | Return on investment (ROI) | 30% |
+| Sit-and-Go's (SnG) | Return on investment (ROI) | 15% |
+| General | Hourly rate | \$50–\$200/hour |
 
-## 本课程的教学视角
+The lecture video's worked example of ROI (from the blackboard, not the slides): ROI = total returned ÷ amount invested − 1 — invest \$100k, get back \$150k in total, and ROI = 150k/100k − 1 = 50%.
 
-本课程的价值判断主要来自讲师作为一名线上多桌锦标赛职业玩家（online MTT grinder）的视角，具体体现在四点：
+## Perspective of the Course
 
-- **以 ROI 为核心效率指标**，同时兼顾时薪。ROI 与时薪存在权衡：通常应最大化 ROI，直到它低到触及你为自己设定的时薪下限。补充 ROI 的常用手段是降级打更低注额——低注额的局更容易、赢率更高，但赢率乘上的是一个更小的基数。因此玩家会在不同注额之间移动，直到找到"ROI 可观且时薪不低于心理下限"的平衡点。
-- **专注现场锦标赛**。线上扑克的政策前景不明，而现场锦标赛社交性强、公开透明，冠军为众人所知。
-- **偏好保守、低方差（low-variance）的打法**。不提倡"职业玩家就该什么游戏都打"的做法，而是识别价值并把它变现。
-- **重视线上训练对现场打法的反哺**。线上能积累手数、能用软件复盘分析，学习速度是现场玩家无法比拟的——这正是现场锦标赛圈被线上出身职业玩家主导的原因。即便你此后只打算打现场，线上分析训练也能让你以快得多的速度学到现场永远看不到的东西。
+The value judgments in this course come mainly from the instructor's perspective as an online MTT grinder, in four specific ways:
 
-## 基本工具：手牌历史与分析软件
+- **ROI as the core efficiency metric**, with the hourly rate kept in view. There is a trade-off between ROI and hourly: you should generally maximize ROI until it falls to the hourly floor you set for yourself. The standard way to supplement ROI is to move down in stakes — lower-stakes games are easier and your win rate is higher, but that win rate is multiplied by a much smaller number. Players move around in stakes until they find the balance of "good ROI, hourly above the personal floor."
+- **Focus on live tournaments**. The policy outlook for online poker is uncertain, whereas live tournaments are social and public — everyone knows who wins them.
+- **Preference for conservative, low-variance play**. The course rejects the "a real pro plays every game" attitude in favor of identifying value and monetizing it.
+- **Online training feeds back into live play**. Online you can accumulate hands and review them with software at a speed no live player can match — which is exactly why the live tournament scene is dominated by players with online backgrounds. Even if you intend to play only live for the rest of your life, online analysis training lets you learn, much faster, things you would never see live.
 
-课程的分析建立在**手牌历史（hand history）**之上：扑克平台为每一手牌生成的文本文件，逐行记录牌局中发生的每个动作。这种格式在各类分析软件间基本通用。注意：真钱玩家可以随时向平台索取全部历史手牌，而练习币（play money）玩家的手牌历史只在本地保存、平台不留档——必须从一开始就开启本地保存，丢失后无法找回。
+## Basic Tools: Hand Histories and Analysis Software
 
-两个核心软件：
+The analysis in this course is built on the **hand history**: a text file the poker platform generates for every hand, recording each action line by line. The format is essentially universal across analysis software. One caveat: real-money players can request their complete hand histories from the platform at any time, but play-money players' histories are stored only locally, never archived by the site — you must enable local saving from day one, because lost histories cannot be recovered.
 
-- **PokerTracker**：扑克分析软件，可批量导入成千上万条手牌历史并自动完成统计分析，还内置胜率计算器（Equity Calc）、独立筹码模型（ICM）等工具。
-- **Universal Replayer**：免费的手牌历史可视化软件，读入文本格式的手牌历史后，把它像真实对局一样动画回放，便于复盘和向他人展示。
+Two core pieces of software:
 
-![Universal Replayer 将手牌历史文本回放为可视化的牌桌局面](assets/ch01-1.png)
+- **PokerTracker**: poker analytical software that imports hand histories by the thousand and computes statistics automatically; it also bundles tools such as an equity calculator and an independent chip model (ICM) calculator.
+- **Universal Replayer**: a free hand-history visualizer that reads a hand history text file and animates it as if you were watching the real game, useful for review and for showing hands to others.
 
-## 筹码量与有效筹码量
+![Universal Replayer playing a hand history text file back as a visualized table](assets/ch01-1.png)
 
-**筹码量（stack size）**是你面前筹码的价值。但做决策时真正相关的是**有效筹码量（effective stack size）**：
+## Stack Size and Effective Stack Size
 
-$$\text{有效筹码量} = \min(\text{你的筹码量},\ \text{仍在牌局中的最大筹码量})$$
+**Stack size** is the value of the chips in front of you. But the quantity that matters for decisions is the **effective stack size**:
 
-一个更直观的定义是：**你在这一手牌里最多可能输掉的筹码数**。此后凡说"筹码量"，基本一律指有效筹码量。
+$$\text{effective stack} = \min(\text{your stack},\ \text{biggest stack still in play})$$
 
-为什么有效筹码量比手牌本身更决定打法？看一个单挑（heads-up）例子：盲注 10/20，你在小盲位拿到 Q♥Q♦。
+A more intuitive definition: **the most chips you can possibly lose in this one hand**. From now on, "stack" almost always means effective stack.
 
-- 若双方各有 1500 筹码（合计 50 倍大小盲之和）：你加注到 60，对手再加注到 200，你加到 600，对手全下 1500——此时你的 QQ 很可能已经不够好了。筹码越深，QQ 与 AA 的差距越大。
-- 若你只有 300 筹码：你加注，对手全下，你根本无法弃牌——这手 QQ 打得和 AA 没有区别。
+Why does the effective stack shape play more than the cards themselves? Consider a heads-up example: blinds 10/20, and you hold Q♥Q♦ in the small blind.
 
-同样，即使你有 1500 而对手只有 300，对手一加注就意味着全下，你们没有来回加注的空间；对你的决策而言，你就当自己只有 300。筹码较浅时，你实际上是在用整个起手牌范围做"全下或弃牌"的决策。正因为行动何时结束由筹码更少的一方决定，有效筹码量才是决策的依据。
+- If both players have 1500 chips (about 50 times the blinds combined): you raise to 60, your opponent re-raises to 200, you make it 600, and he shoves 1500 — your queens are probably no longer good. The deeper the stacks, the wider the gap between QQ and AA.
+- If you have only 300 chips: you raise, your opponent shoves, and you cannot fold — the QQ plays identically to AA.
 
-## 玩家风格的四象限
+Likewise, even if you have 1500 while your opponent has 300, any raise from him means a shove, and there is no room for back-and-forth raising; as far as your decision is concerned, you might as well have 300 yourself. With shallow stacks you are effectively making an all-in-or-fold decision with your entire range of starting hands. Because the player with fewer chips determines when the action ends, the effective stack is the basis of decision making.
 
-Dan Harrington（"Action Dan"，1995 年 WSOP 主赛事冠军，两条 WSOP 金手链、一个 WPT 冠军得主）是公认的紧凶型 ABC 稳健玩家。他所属的**紧凶（tight-aggressive，TAG）**风格来自一个刻画基础打法气质的两维分类：一维是下注频率（激进 aggressive / 被动 passive，下注或加注算激进），另一维是跟注频率（紧 tight / 松 loose）。
+## The Four Quadrants of Player Style
 
-![扑克玩家风格四象限：TAG、LAG、紧弱与跟注站](assets/ch01-2.png)
+Dan Harrington ("Action Dan," 1995 WSOP Main Event champion, holder of two WSOP bracelets and one WPT title) is the archetype of the solid tight-aggressive ABC player. His **TAG (tight-aggressive)** style comes from a two-dimensional classification of basic playing temperaments: one axis is betting frequency (aggressive / passive — betting or raising counts as aggressive), the other is calling frequency (tight / loose).
 
-四个象限各有外号：
+![The four quadrants of poker player style: TAG, LAG, tight-passive, and calling machine](assets/ch01-2.png)
 
-- **TAG（紧凶）**：有好牌就下注，没好牌就弃牌。被称为稳健 ABC（solid ABC）打法，是整体上盈利最多的象限，也是本课程推荐的打法。
-- **LAG（松凶）**：有好牌当然下注，但愿意看很多牌、跟注很多，不轻易放弃一手牌。能否盈利取决于游戏类型、对手和挑选时机的本事——确实有不少大赢家是 LAG。
-- **TP（紧弱，"Weak"，也称岩石 rock）**：没牌就弃，有牌也只是过牌。这类玩家可以被完全碾压，你永远不用担心在他们身上输一个大晚上，一般认为他们打得明显次优。
-- **LP（松弱，"跟注站" calling machine）**：你有牌时他会跟注你的每一次下注，让你充分榨取价值；他有牌时却放任你便宜地看听牌（draw），让你到河牌再决定自己有没有牌。在现实的样本量下，这一象限几乎不可能有人盈利——他们是彻底的"鱼"（fish），是牌桌上最大的输家和赞助者。
+Each quadrant has a nickname:
 
-识别对手落在哪个象限，能直接帮你挑选值得入局的牌桌。
+- **TAG (tight-aggressive)**: bets with good hands, folds bad ones. Known as solid ABC play, it is the most profitable quadrant overall and the style this course recommends.
+- **LAG (loose-aggressive)**: certainly bets good hands, but is willing to see a lot of cards and call a lot before giving up on a hand. Whether it wins depends on the game type, the opponents, and the ability to pick spots — there are indeed many big LAG winners.
+- **TP (tight-passive, "Weak," also called a rock)**: folds without a hand and merely checks with one. These players can be run over completely; you never have to worry about a big losing night against them, and they are generally considered clearly sub-optimal.
+- **LP (loose-passive, the "calling machine")**: when you have a hand, he calls every one of your bets and lets you extract full value; when he has a hand, he lets you see your draws cheaply and decide by the river whether you have made something. Over any realistic sample size, it is essentially impossible for anyone in this quadrant to be a winner — they are complete "fish," the biggest losers and donors at the table.
 
-## Harrington 的 M 比率
+Recognizing which quadrant an opponent falls into directly helps you pick tables worth playing.
 
-M 比率的发明者其实是 Paul Magriel——世界级西洋双陆棋理论家、全球双陆棋锦标赛冠军最多的人、世界双陆棋系列赛（WSOB）评论员、八次 WSOP 决赛桌选手，以数学见长；但这一概念直到 Harrington 在《Harrington on Hold'em》三卷本（Vol. I *Strategic Play*，2004；Vol. II *The Endgame*，2005；Vol. III *The Workbook*，2006）中推广后才流行起来。
+In the video blackboard segment the instructor also maps these two axes onto two quantitative PokerTracker statistics (this mapping is not written in the slides or the transcript): the tight–loose axis (calling and entering frequency) corresponds to **VPIP** (voluntarily put money in pot), and the aggression axis (betting and raising frequency) corresponds to **AF** (aggression factor, the ratio of bets and raises to calls). This is exactly how online analysis turns a temperament classification into data; Chapter 2 develops these metrics in detail.
 
-**M 比率**定义为：
+## Harrington's M Ratio
 
-$$M = \frac{\text{有效筹码量}}{\text{大小盲注与前注（ante）之和}}$$
+The M ratio was actually invented by Paul Magriel — a world-class backgammon theorist, holder of the most backgammon tournament wins in the world, commentator for the World Series of Backgammon (WSOB), and an eight-time WSOP final-tablist, renowned for his mathematics — but the concept only caught on after Harrington popularized it in the *Harrington on Hold'em* trilogy (Vol. I *Strategic Play*, 2004; Vol. II *The Endgame*, 2005; Vol. III *The Workbook*, 2006).
 
-它有两个等价的解读：
+The **M ratio** is defined as:
 
-1. 如果你每手都弃牌，还能在被盲注耗光（blinded out）之前存活多少圈；
-2. 更重要的——你的筹码量相对于"抢盲（steal the blinds）价值"的倍数。
+$$M = \frac{\text{effective stack}}{\text{sum of the blinds and antes}}$$
 
-为什么不用"有多少个大盲注"来报筹码量？因为它传递的信息有根本缺陷：其一，它默认大盲是小盲的两倍（如 1/2、2/4），一旦盲注结构是 1/3、3/5，"多少个大盲"既不能说明你能看多少手牌，也不能说明你该多在乎翻牌前拿下底池；其二，它完全忽略前注——盲注 50/100 再加 25 的前注时，你实际筹码压力几乎翻倍，"大盲数"却毫无变化。
+It has two equivalent readings:
 
-M 比率之所以是更好的度量，是因为**盲注是驱动翻牌前决策的根本力量**：任何人打一手牌的唯一理由就是有人想赢走盲注——即使你拿着 K♠K♥，99% 的情况下能直接收下盲注你也会收下。盲注占你筹码的比例直接决定它的重要性：M 为 100 时盲注只是筹码的 1%，基本可以忽略，翻牌后的发展才主导决策；M 为 2 时盲注已是半个筹码量，不惜一切最大化抢下盲注的概率才是正解。
+1. If you folded every hand, how many rounds you could survive before being blinded out;
+2. More importantly — the ratio of your stack to the value of stealing the blinds.
 
-对锦标赛而言，M 还提供了一种跨盲注级别归一化决策的方法：1500 筹码、盲注 50/100 的局面，与筹码和盲注同乘 10 倍的局面，决策本质相同——心算一个除法即可，无需随级别升高改变打法框架。
+Why not report your stack as a number of big blinds? That measure is fundamentally flawed: first, it assumes the big blind is twice the small blind (as in 1/2 or 2/4); with a 1/3 or 3/5 structure, "how many big blinds" says nothing about how many hands you can see or how much you should care about winning the pot preflop. Second, it ignores antes entirely — at 50/100 blinds with a 25 ante, your real stack pressure nearly doubles while your "number of big blinds" does not change at all.
 
-### 其他 Harrington 比率
+The M ratio is the better measure because **the blinds are the fundamental force driving preflop decisions**: the only reason anyone plays any hand of poker is that someone wants to win the blinds — even holding K♠K♥, if you could simply take the blinds 99% of the time, you would. The blinds' share of your stack directly determines how much they matter: at M = 100 the blinds are only 1% of your stack and can essentially be ignored, so postflop developments dominate the decision; at M = 2 the blinds are half your stack, and maximizing your chance of winning them at any cost is the correct play.
 
-Harrington 还提出过两个未流行开来的比率：
+For tournaments, M also provides a way to normalize decisions across blind levels: 1500 chips at 50/100 blinds is essentially the same decision as ten times the chips at ten times the blinds — one mental division, no need to change your strategic framework as the levels rise.
 
-- **Q 比率** $Q = \dfrac{\text{你的筹码量}}{\text{全场平均筹码量}}$，用来衡量你在锦标赛中的相对位置：Q 为 5 时无需激进，Q 为 0.2 时则意味着离钱圈还很远、有大量追赶要做。
-- **有效 M 比率** $M_{\text{eff}} = M \times \dfrac{\text{桌上玩家数}}{10}$。其出发点是"还能存活多少圈"：桌上有 10 人时，M 为 10 意味着还能撑 10 圈盲注；但桌上只有 3 人时你每隔一手就要交盲注，实际存活时间大幅缩短，因此按桌子缺人程度等比例折减 M。这与讲师对 M 的解读（筹码相对于盲注的价值）不同，实战中很少使用。
+### Other Harrington Ratios
 
-## 要点小结
+Harrington proposed two further ratios that never caught on:
 
-- 课程主线：基本策略 → 分析技术 → 翻牌前分析（重中之重）→ 锦标赛打法 → 扑克经济学 → 博弈论 → 决策制定。
-- 学习分三层：基本概念（C，不可剥削的 ABC 打法）、练习（P，实时可用的经验法则）、进阶技术（A，剥削性调整与元游戏）。先成为小幅盈利玩家，再追求大幅盈利。
-- 赢家的量化标准：现金局 5 BB/100（线上）或 5 BB/小时（现场）；锦标赛 ROI 约 30%（MTT）/ 15%（SnG）；时薪 $50–$200。ROI 与时薪通过升降注额取得平衡。
-- 分析基础设施：务必保存手牌历史；PokerTracker 做统计分析，Universal Replayer 做可视化复盘。
-- 有效筹码量 $= \min(\text{你的筹码},\ \text{仍在局中的最大筹码})$，即你一手牌最多能输掉的筹码；决策永远基于有效筹码量而非名义筹码量。
-- 玩家风格四象限：TAG（紧凶，推荐）与 LAG（松凶）可能盈利；TP（紧弱）次优；LP（松弱，跟注站）是必输的"鱼"。
-- M 比率 $=$ 有效筹码量 ÷（盲注与前注之和），比"多少个大盲"更能刻画盲注对决策的压力，并能在不同盲注级别间归一化决策；Q 比率与有效 M 比率由 Harrington 提出但未流行。
+- **Q ratio** $Q = \dfrac{\text{your stack}}{\text{average player's stack}}$, measuring your relative position in the tournament: at Q = 5 there is no need to be aggressive, while Q = 0.2 means you are far from the money with a lot of catching up to do.
+- **Effective M ratio** $M_{\text{eff}} = M \times \dfrac{\text{players at the table}}{10}$. Its motivation is the "how many rounds can you survive" reading: at a 10-handed table, M = 10 means surviving 10 more rounds of blinds; but with only 3 players you pay a blind every other hand and your real survival time shrinks sharply, so M is discounted proportionally to how shorthanded the table is. This differs from the instructor's reading of M (the stack's value relative to the blinds) and is rarely used in practice.
+
+## Key Takeaways
+
+- Course roadmap: basic strategy → analysis techniques → preflop analysis (the centerpiece) → tournament play → poker economics → game theory → decision making.
+- Learning proceeds in three layers: concepts (C, un-exploitable ABC play), practice (P, real-time rules of thumb), and advanced techniques (A, exploitive adjustments and the metagame). Become a slightly winning player before chasing big wins.
+- Quantitative standards for winning: 5 BB/100 (online) or 5 BB/hour (live) in cash games; ROI around 30% (MTT) / 15% (SnG) in tournaments; hourly of \$50–\$200. Balance ROI against hourly by moving up or down in stakes; ROI = total returned ÷ invested − 1 (e.g. \$100k in, \$150k back → 50% ROI).
+- Analysis infrastructure: always save your hand histories; PokerTracker for statistical analysis, Universal Replayer for visual review.
+- Effective stack $= \min(\text{your stack},\ \text{biggest stack still in play})$, i.e. the most you can lose in one hand; always base decisions on the effective stack, not the nominal one.
+- The four style quadrants: TAG (tight-aggressive, recommended) and LAG (loose-aggressive) can win; TP (tight-passive) is sub-optimal; LP (loose-passive, calling machine) is the guaranteed-losing fish. Both axes are quantifiable: tightness ↔ VPIP, aggression ↔ AF.
+- M ratio $=$ effective stack ÷ (blinds plus antes); it captures the pressure the blinds put on decisions better than "number of big blinds" and normalizes decisions across blind levels. The Q ratio and effective M ratio are Harrington's but never caught on.

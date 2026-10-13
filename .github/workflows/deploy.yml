@@ -22,7 +22,10 @@ jobs:
       - uses: peaceiris/actions-mdbook@v2
         with:
           mdbook-version: "latest"
-      - run: mdbook build book
+      - name: Build English (site root)
+        run: mdbook build book
+      - name: Build Chinese (under /zh/)
+        run: mdbook build book-zh --dest-dir "$GITHUB_WORKSPACE/book/book/zh"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: book/book

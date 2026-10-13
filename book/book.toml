@@ -1,7 +1,7 @@
 [book]
-title = "MIT 15.S50 扑克理论与分析"
-authors = ["MIT OpenCourseWare (Kevin Desmond) · 中文整理"]
-language = "zh"
+title = "MIT 15.S50 Poker Theory and Analytics"
+authors = ["MIT OpenCourseWare (Kevin Desmond)"]
+language = "en"
 src = "src"
 
 [output.html]
@@ -9,3 +9,4 @@ default-theme = "light"
 preferred-dark-theme = "navy"
 git-repository-url = "https://github.com/YoungY620/mit15s50-poker-theory"
 mathjax-support = true
+additional-js = ["theme/lang-toggle.js"]
