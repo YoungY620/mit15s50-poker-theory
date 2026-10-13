@@ -3,3 +3,5 @@ book/book/
 .DS_Store
 book/book/
 book-zh/book/
+tools/render-check/node_modules/
+tools/render-check/shots/

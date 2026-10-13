@@ -8,5 +8,4 @@ src = "src"
 default-theme = "light"
 preferred-dark-theme = "navy"
 git-repository-url = "https://github.com/YoungY620/mit15s50-poker-theory"
-mathjax-support = true
-additional-js = ["theme/lang-toggle.js"]
+additional-js = ["theme/lang-toggle.js", "theme/mathjax.js"]
