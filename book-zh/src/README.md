@@ -1,6 +1,6 @@
 # MIT 15.S50 扑克理论与分析
 
-> 本书是 MIT OpenCourseWare 课程 **15.S50 Poker Theory and Analytics**（2015 年 1 月 IAP，讲师 Kevin Desmond）的中文精读版。内容全部来源于课程公开的讲义、讲课转录与作业材料，按原课程结构如实重组：删去过渡语与重复表达，保留全部知识点。原课程采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 协议，本书遵循同一协议。
+> 本书是 MIT OpenCourseWare 课程 **15.S50 Poker Theory and Analytics**（2015 年 1 月 IAP，讲师 Kevin Desmond）的中文精读版。内容均来自课程公开的讲义、讲课转录与作业材料，按原课程结构如实重组：删去过渡语与重复表达，保留全部知识点。原课程采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 协议，本书遵循同一协议。
 
 ## 关于这门课
 

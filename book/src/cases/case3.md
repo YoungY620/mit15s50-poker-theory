@@ -9,9 +9,9 @@
 
 ### Scenario
 
-It is Thursday, July 3, 2014, and you are playing in a \$550 Mega Satellite to the WSOP Event #68: \$10,000 NLHE Main Event. The structure of this tournament is that 1 in 20 players wins a \$10,000 ticket to the main tournament. There were 140 entries and the top 7 players will win tickets. There are 60 players remaining in the tournament.
+It is Thursday, July 3, 2014, and you are playing in a \$550 Mega Satellite to the WSOP Event #68: \$10,000 NLHE Main Event. In this tournament, 1 in 20 players wins a \$10,000 ticket to the main tournament. There were 140 entries, and the top 7 players will win tickets. 60 players remain in the tournament.
 
-The table is 9-handed as follows. Blinds are 1000/2000 with 300 ante.
+The table is 9-handed, with blinds of 1000/2000 and a 300 ante.
 
 | Seat | Name | Chip Count |
 |------|------|-----------|
@@ -27,7 +27,7 @@ The table is 9-handed as follows. Blinds are 1000/2000 with 300 ante.
 
 ### Question 1
 
-Prior to this hand, you have developed an image of being very tight, and as a result you are facing a raise every time you are in the BB. As a short stack, losing this BB every round is painful and you are looking to defend your blind. Assume each steal attempt is a raise of 3BB and the Villains are stealing with any two cards.
+Before this hand, you have developed an image of being very tight, and as a result you are facing a raise every time you are in the BB. As a short stack, losing this BB every round is painful and you are looking to defend your blind. Assume each steal attempt is a raise of 3BB and the Villains are stealing with any two cards.
 
 **(1.1)** What is your M?
 
@@ -95,7 +95,7 @@ $$22\% = 50\% + 0.085 \times \ln(C\%) - 0.085 \times \ln(1)$$
 
 which solves at $C\% \approx 3.7\%$, i.e., your range has to be about the top 3.7%.
 
-**(1.4)** Effective stacks are 40,000. After this raise, your stack would be $40{,}000 - 12{,}300 = 27{,}700$. The pot would be $15{,}700 + 12{,}000 = 27{,}700$ before the raise. So you would be facing a bet of 27,700 to win a pot of $3 \times 27{,}700$, for 33% equity.
+**(1.4)** Effective stacks are 40,000. After this raise, your stack would be $40{,}000 - 12{,}300 = 27{,}700$. Before the raise, the pot would be $15{,}700 + 12{,}000 = 27{,}700$. So you would be facing a bet of 27,700 to win a pot of $3 \times 27{,}700$, for 33% equity.
 
 **(1.5)** The effective stack is $40{,}000 - 6{,}300 = 33{,}700$. We would raise this amount into a pot of 21,700, giving the Villain
 
@@ -113,13 +113,13 @@ so we prefer a fold.
 
 ### Question 2
 
-**(2.1)** Our ICM equity is \$9,668. We shouldn't take a deal for \$9,000 unless we are very risk averse.
+**(2.1)** Our ICM equity is \$9,668. We should not take a deal for \$9,000 unless we are very risk averse.
 
 **(2.2)** AA vs. ATC is 85%. So our chip EV is
 
 $$cEV = (48{,}000 + 8{,}000 \times 2 + 16{,}000 + 2{,}000 \times 8) \times 0.85 - 48{,}000 \times 0.15 = 74{,}400$$
 
-**(2.3)** If we call and lose, our \$EV is 0. If we call and win, then the stacks are as follows:
+**(2.3)** If we call and lose, our \$EV is 0. If we call and win, the stacks are as follows:
 
 | Seat | Name | Chip Count |
 |------|------|-----------|
@@ -142,7 +142,7 @@ If we fold, our stack is 48,000, giving us a \$EV of \$9,445, which is higher th
 
 $$\$9{,}445 - \$8{,}492 = \$953$$
 
-so making the wrong action (calling) loses \$953.
+so taking the wrong action (calling) loses \$953.
 
 **(2.5)** BB's range is ATC. If we fold, we have 38,000 chips, giving us a \$EV of \$8,452. If we call and lose, our stack is 37,000, giving us a \$EV of \$8,384. If we call and win, our \$EV is \$10,000. So we can profitably call if our chance to win is $x$, where $x$ solves
 

@@ -9,7 +9,7 @@
 
 ### Scenario
 
-It is Friday, May 30, 2014, and you are returning for the second day of the World Series of Poker (WSOP) Event #3 \$1000 No-Limit Hold'em. There are 186 of 2,224 players remaining, and you have 63,500 chips, making you 26th of 186 overall at the start of Day 2. You are entering a new table and have no reads. You are already in the money, but the differences between payoffs are immaterial to you until the final table (so act in a way that maximizes expected chips for that hand).
+It is Friday, May 30, 2014, and you are returning for the second day of the World Series of Poker (WSOP) Event #3 \$1000 No-Limit Hold'em. There are 186 of 2,224 players remaining, and you have 63,500 chips, making you 26th of 186 overall at the start of Day 2. You are entering a new table and have no reads. Already in the money, you can treat the payoff differences as immaterial until the final table, so act to maximize expected chips for that hand.
 
 The table is 8-handed as follows. Blinds are 600/1200 with 200 antes. You are on the button and will be in that position for all questions, although chip amounts will vary slightly as the day progresses.
 
@@ -39,7 +39,7 @@ UTG+1 bets 3,000, MP2 folds, Hero…
 
 ### Question 1
 
-**Assumptions**: UTG+1 will bet again on the turn, except if it's a club, in which case he will check/fold to any bet.
+**Assumptions**: UTG+1 will bet again on the turn, except if it is a club, in which case he will check/fold to any bet.
 
 **(1.1)** What hand is the Hero drawing to?
 
@@ -78,7 +78,7 @@ UTG+1 bets 9,000, Hero…
 
 ### Scenario Update
 
-Later in the day, MP1 has been eliminated and has been replaced by a short stack. Your reads are that UTG+1 and BB are aggressive and loose callers. You have identified SB as weak/tight. Chip stacks are as follows.
+Later in the day, MP1 has been eliminated and replaced by a short stack. Your reads are that UTG+1 and BB are aggressive and loose callers. You have identified SB as weak/tight. Chip stacks are as follows.
 
 | Seat | Name | Chip Count |
 |------|------|-----------|
@@ -181,7 +181,7 @@ $$9{,}000 / 19.6\% \approx 45{,}900$$
 
 or 7,700 more than it currently offers (implied odds). With the quick rule: $9{,}000 / 18\% \approx 50{,}000 - 38{,}200 = 11{,}800$ more.
 
-The Villain has 10,000 left after this bet, so if you used the quick rule, then it's not realistic; but if you solved exactly, then it probably is (7,700 more vs. 11,800 more).
+The Villain has 10,000 left after this bet, so the 11,800 more required by the quick rule is not realistic, while the 7,700 more from the exact solution probably is.
 
 ### Question 3
 
@@ -203,7 +203,7 @@ $$EV = 70\% \times 10{,}000 + 30\% \times \left[16{,}000 \times 29\% - 6{,}000 \
 
 $$0 = F \times 10{,}000 + (1-F) \times \left[16{,}000 \times 29\% - 6{,}000 \times 71\%\right]$$
 
-which solves at $F < 0\%$. We have the pot odds to see two more cards, so it's profitable even if he calls 100% of the time.
+which solves at $F < 0\%$. We have the pot odds to see two more cards, so it is profitable even if he calls 100% of the time.
 
 ### Question 4
 

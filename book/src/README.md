@@ -1,12 +1,12 @@
 # MIT 15.S50 Poker Theory and Analytics
 
-> This book is a faithful text rendition of the MIT OpenCourseWare course **15.S50 Poker Theory and Analytics** (January IAP 2015, instructor Kevin Desmond). All content comes exclusively from the course's published materials — lecture slides, lecture transcripts, and assignment handouts — condensed into dense textbook prose: every knowledge point preserved, filler removed, chapter structure mirroring the original course. The original course is released under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/); this rendition follows the same license.
+> This book is a faithful text rendition of the MIT OpenCourseWare course **15.S50 Poker Theory and Analytics** (January IAP 2015, instructor Kevin Desmond). All content comes exclusively from the course's published materials (lecture slides, lecture transcripts, and assignment handouts), condensed into dense textbook prose: every knowledge point preserved, filler removed, and the chapter structure mirroring the original course. The original course is released under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/); this rendition follows the same license.
 >
 > 中文版：点击页面顶部的「中文」按钮切换。
 
 ## About the course
 
-Poker (no-limit Texas hold'em) is a decision environment with incomplete information and randomness — a natural testbed for game theory, probability, and data analysis. Across 8 lectures built on real online hand histories, the course teaches how to improve decisions systematically with analytical tools (PokerTracker, ICM calculators) and theoretical models (pot odds, Nash equilibrium, counterfactual regret minimization).
+Poker (no-limit Texas hold'em) is a decision environment with incomplete information and randomness: a natural testbed for game theory, probability, and data analysis. Across 8 lectures built on real online hand histories, the course teaches how to improve decisions systematically with analytical tools (PokerTracker, ICM calculators) and theoretical models (pot odds, Nash equilibrium, counterfactual regret minimization).
 
 ## Contents
 

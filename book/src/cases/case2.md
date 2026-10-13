@@ -5,11 +5,11 @@
 
 ## Problems
 
-**Notes**: This case contains sixteen (16) questions, labeled (1.1) through (3.6). Please answer all questions concisely and show all work. State any assumptions you are making. This case is graded pass/fail, where a passing grade is 10/16 points. Partial credit will be awarded for incorrect answers with appropriate work shown. Using approximations is acceptable. These questions rely on PokerTracker's Equity Calculator, or an equivalent range-vs-range equity calculator.
+**Notes**: This case contains sixteen (16) questions, labeled (1.1) through (3.6). Please answer all questions concisely and show all work. State any assumptions you are making. This case is graded pass/fail, where a passing grade is 10/16 points. You earn partial credit for incorrect answers when you show appropriate work. Approximations are acceptable. These questions rely on PokerTracker's Equity Calculator, or an equivalent range-vs-range equity calculator.
 
 ### Scenario
 
-It is Saturday, June 7, 2014, and you are deep in the first round of the World Series of Poker (WSOP) Event #20 \$3000 NLHE Shootout. The structure of this tournament is that each of the 40 ten-player tables plays down to 1 player, then new tables are formed on Day 2 with the 40 winners from Day 1. Your table is down to two players from the starting ten, and you are ahead in chips with 78,000, compared to the 12,000 of the other remaining player.
+It is Saturday, June 7, 2014, and you are deep in the first round of the World Series of Poker (WSOP) Event #20 \$3000 NLHE Shootout. Each of the 40 ten-player tables plays down to 1 player, and the 40 winners from Day 1 form new tables on Day 2. Your table is down to two players from the starting ten, and you lead in chips, 78,000 to the other player's 12,000.
 
 The table is 2-handed as follows. Blinds are 500/1000 with 200 antes.
 
@@ -27,11 +27,11 @@ The table is 2-handed as follows. Blinds are 500/1000 with 200 antes.
 
 ### Question 1
 
-With good fortune, you recognize your opponent from a Sit-n-Go tournament you played earlier in the week. You were observing this player, who is a veteran roulette player, giving advice to the younger crowd.
+With good fortune, you recognize your opponent from a Sit-n-Go tournament you played earlier in the week, where you watched this veteran roulette player give advice to the younger crowd.
 
 > Veteran: "The trick is never put all your chips at risk with less than a pair. You see, I see all of these hot shots losing all their money with no hands. The way I see it is that unless you have a made hand, don't risk your tournament life."
 
-After watching his play throughout that SnG tournament and throughout the Shootout, you notice that he only goes all-in with pocket pairs, and never with anything other than a pair. You believe that this mentality will hold true while you are playing him heads up.
+After watching his play throughout that SnG tournament and throughout the Shootout, you notice that he goes all-in only with pocket pairs. You believe this mentality will hold when you play him heads up.
 
 **(1.1)** What is the range of the Villain?
 
@@ -45,7 +45,7 @@ After watching his play throughout that SnG tournament and throughout the Shooto
 
 ### Question 2
 
-The following hand, you are in the BB with 79,200 chips, compared to the Villain's 10,800 chips. He open pushes all-in.
+The following hand, you are in the BB with 79,200 chips to the Villain's 10,800. He open pushes all-in.
 
 **(2.1)** What is the Villain's pushing range and what percentage of hands does that represent?
 
@@ -59,7 +59,7 @@ The following hand, you are in the BB with 79,200 chips, compared to the Villain
 
 ### Question 3
 
-You advance to the next round and join a 4-handed table. You play down to two players, where you are short-stacked. You are in the SB and identify the Villain as a solid player who will call about 30% of your all-in pushes.
+You advance to the next round and join a 4-handed table, playing down to two players where you are short-stacked. In the SB, you identify the Villain as a solid player who will call about 30% of your all-in pushes.
 
 **(3.1)** Using the Sklansky-Karlson model, what hands are in the Villain's calling range?
 
@@ -108,7 +108,7 @@ $$EV = 40\% \times 12{,}000 - 60\% \times 9{,}600 = -960$$
 
 **(2.3)** Yes.
 
-**(2.4)** Call with any hand that is 44.4% or better against 22+, so call with 77+, AQs+. We call 4.22% of the time.
+**(2.4)** Call with any hand that is 44.4% or better against 22+: 77+, AQs+, which is 4.22% of hands.
 
 **(2.5)**
 
