@@ -1,3 +1,4 @@
+<!-- escape-math: v1 -->
 # MIT 15.S50 Poker Theory and Analytics
 
 > This book is a faithful text rendition of the MIT OpenCourseWare course **15.S50 Poker Theory and Analytics** (January IAP 2015, instructor Kevin Desmond). All content comes exclusively from the course's published materials (lecture slides, lecture transcripts, and assignment handouts), condensed into dense textbook prose: every knowledge point preserved, filler removed, and the chapter structure mirroring the original course. The original course is released under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/); this rendition follows the same license.

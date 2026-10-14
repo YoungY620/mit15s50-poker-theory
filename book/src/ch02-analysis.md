@@ -1,3 +1,4 @@
+<!-- escape-math: v1 -->
 # Analytical Techniques
 
 This chapter shows how to improve your game with hand-tracking and analysis software such as PokerTracker 4 (PT4). PokerTracker has been the industry-leading analysis and tracking software for online poker since 2001, growing from limit hold'em only to Omaha, no-limit and pot-limit hold'em, and full tournament support. The core idea: poker is a sequence of discrete **decision points**. The software's value is not that it makes decisions for you, but that it helps you find the decision points where the answer is unclear, build data-driven models of your opponents, and carry the conclusions back to the table. The chapter is based on a guest lecture by Joel Freed, VIP Support Director at Max Value Software, PokerTracker's parent company; all examples use PT4.
@@ -10,7 +11,7 @@ What makes a decision point "interesting"? **When the expectation of the differe
 
 ### A Decision Point on the Bubble
 
-Consider a single-table SnG with a 50/30/20 payout: the buy-in is \$10, first place pays \$50, second \$30, third \$20. The blinds are 100/200 and four players remain. You are in the big blind with A♣Q♣ and a stack of 1,430. The cutoff open-shoves 5,700, the button folds, and the small blind calls all in for 2,980; both are already all in. The action is on you; the pot is 4,810 and it costs 1,430 to call.
+Consider a single-table SnG with a 50/30/20 payout: the buy-in is \\$10, first place pays \\$50, second \\$30, third \\$20. The blinds are 100/200 and four players remain. You are in the big blind with A♣Q♣ and a stack of 1,430. The cutoff open-shoves 5,700, the button folds, and the small blind calls all in for 2,980; both are already all in. The action is on you; the pot is 4,810 and it costs 1,430 to call.
 
 Start with **pot odds**: you are getting about 3.35:1, a break-even equity of roughly 23%. In a cash game, calling would be profitable with just 23% equity against the two hands combined. But this is a tournament, and that changes everything.
 
@@ -80,7 +81,7 @@ Multiple filters can be grouped with **AND / OR** (inclusive OR) and negated wit
 The vast majority of statistics answer the same question: **given the opportunity to take an action, how often did the player take it**:
 
 $$
-\text{statistic} = \frac{\text{number of times the action was taken}}{\text{number of opportunities to take it}} \times 100\%.
+\text{statistic} = \frac{\text{number of times the action was taken}}{\text{number of opportunities to take it}} \times 100\\%.
 $$
 
 Typical examples:
@@ -98,7 +99,7 @@ Typical examples:
 
 ## Worked Example: K♣Q♥ in the Big Blind Facing a Shove in a Fifty50
 
-Now we put all the tools together. A **Fifty50** tournament starts with 10 players and pays the top 5: reaching the money returns your buy-in (\$10), and the other half of the prize pool is distributed in proportion to chip stacks. The situation we want to analyze: six-handed (exactly on the bubble: one more elimination ends the tournament), we are in the big blind holding K♣Q♥ offsuit, facing a preflop all-in.
+Now we put all the tools together. A **Fifty50** tournament starts with 10 players and pays the top 5: reaching the money returns your buy-in (\\$10), and the other half of the prize pool is distributed in proportion to chip stacks. The situation we want to analyze: six-handed (exactly on the bubble: one more elimination ends the tournament), we are in the big blind holding K♣Q♥ offsuit, facing a preflop all-in.
 
 The filter path: Game Details → Fifty50; Hand Details → players dealt in, 6 to 6; Actions & Opportunities → preflop, Posted Big Blind; Hand Values → KQo; Actions & Opportunities → preflop Opportunities → Faced All In. Only two hands in the entire database match; situations that feel like they happen "all the time" usually have smaller samples than you think. We replay the second one.
 
@@ -122,7 +123,7 @@ Translating a percentage into a concrete range takes a tool: PT4's Equity Calcul
 
 That is, no 22 or 33, no weak aces at all (even A9 counts as only a middling ace), no weak suited aces: a fairly strong range.
 
-**Step 4: the ICM verdict.** PT4's replayer has a built-in ICM calculator: click the green ICM box to see the prize-pool equity analysis of the current spot. The default Average model (built from large-scale data analysis) says that with M ≈ 2.7, folded to in the small blind, an "average player" shoves about **33.9%** of hands (as weak as Q8s, K2s, K6o, any pair, any ace). Against that default range: push equity 15.83%, fold equity 15.28%, a **call**, but by only 0.55 percentage points (about \$0.60 of expectation in a \$10 tournament). The edge is small; poker advantage is precisely the accumulation of such marginal decisions.
+**Step 4: the ICM verdict.** PT4's replayer has a built-in ICM calculator: click the green ICM box to see the prize-pool equity analysis of the current spot. The default Average model (built from large-scale data analysis) says that with M ≈ 2.7, folded to in the small blind, an "average player" shoves about **33.9%** of hands (as weak as Q8s, K2s, K6o, any pair, any ace). Against that default range: push equity 15.83%, fold equity 15.28%, a **call**, but by only 0.55 percentage points (about \\$0.60 of expectation in a \\$10 tournament). The edge is small; poker advantage is precisely the accumulation of such marginal decisions.
 
 But we have already concluded this player is far tighter than average. Drag the Include slider from 33.9% down to 11%:
 

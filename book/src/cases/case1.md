@@ -1,3 +1,4 @@
+<!-- escape-math: v1 -->
 # Case 1: Pot Odds, Draws, and the Semi-Bluff
 
 > MIT 15.S50 Poker Theory and Analytics (IAP 2015, Kevin Desmond)
@@ -9,7 +10,7 @@
 
 ### Scenario
 
-It is Friday, May 30, 2014, and you are returning for the second day of the World Series of Poker (WSOP) Event #3 \$1000 No-Limit Hold'em. There are 186 of 2,224 players remaining, and you have 63,500 chips, making you 26th of 186 overall at the start of Day 2. You are entering a new table and have no reads. Already in the money, you can treat the payoff differences as immaterial until the final table, so act to maximize expected chips for that hand.
+It is Friday, May 30, 2014, and you are returning for the second day of the World Series of Poker (WSOP) Event #3 \\$1000 No-Limit Hold'em. There are 186 of 2,224 players remaining, and you have 63,500 chips, making you 26th of 186 overall at the start of Day 2. You are entering a new table and have no reads. Already in the money, you can treat the payoff differences as immaterial until the final table, so act to maximize expected chips for that hand.
 
 The table is 8-handed as follows. Blinds are 600/1200 with 200 antes. You are on the button and will be in that position for all questions, although chip amounts will vary slightly as the day progresses.
 
@@ -146,40 +147,40 @@ SB checks, Hero bets 6,000, SB raises to 15,700 all in, Hero…
 
 **(1.2)** Hero has 9 outs (the remaining clubs).
 
-- Quick rule: $9 \times 2\% = 18\%$ for one card, or $9 \times 4\% = 36\%$ for two cards.
-- Exact: $9/47 \approx 19\%$ for one card, or
+- Quick rule: $9 \times 2\\% = 18\\%$ for one card, or $9 \times 4\\% = 36\\%$ for two cards.
+- Exact: $9/47 \approx 19\\%$ for one card, or
 
-$$1 - \frac{38}{47}\times\frac{37}{46} \approx 35\% \quad \text{for two cards}$$
+$$1 - \frac{38}{47}\times\frac{37}{46} \approx 35\\% \quad \text{for two cards}$$
 
 **(1.3)** Hero must call 3,000 into a pot that will be 20,200 after the call:
 
-$$\frac{3{,}000}{20{,}200} \approx 15\%$$
+$$\frac{3{,}000}{20{,}200} \approx 15\\%$$
 
 **(1.4)** Yes, call.
 
-- If one card: $EV \approx 19\% \times 17{,}200 - 81\% \times 3{,}000 = 838$
-- If two cards: $EV \approx 35\% \times 17{,}200 - 65\% \times 3{,}000 = 4{,}070$
+- If one card: $EV \approx 19\\% \times 17{,}200 - 81\\% \times 3{,}000 = 838$
+- If two cards: $EV \approx 35\\% \times 17{,}200 - 65\\% \times 3{,}000 = 4{,}070$
 
 **(1.5)** Let $x$ be the largest callable bet, and set its share of the pot equal to the probability of hitting:
 
-- One card: $\dfrac{x}{14{,}200 + 2x} = 19\%$, which gives $x = 4{,}350$
-- Two cards: $\dfrac{x}{14{,}200 + 2x} = 35\%$, which gives $x = 16{,}550$
+- One card: $\dfrac{x}{14{,}200 + 2x} = 19\\%$, which gives $x = 4{,}350$
+- Two cards: $\dfrac{x}{14{,}200 + 2x} = 35\\%$, which gives $x = 16{,}550$
 
 ### Question 2
 
 **(2.1)** The flush draw still has 9 outs, with 46 unknown cards remaining:
 
-$$\frac{9}{46} = 19.6\% \quad(\text{18\% by the quick rule})$$
+$$\frac{9}{46} = 19.6\\% \quad(\text{18\\% by the quick rule})$$
 
 **(2.2)** Hero must call 9,000 into a pot that will be 38,200 after the call:
 
-$$\frac{9{,}000}{38{,}200} \approx 23.6\%$$
+$$\frac{9{,}000}{38{,}200} \approx 23.6\\%$$
 
 **(2.3)** If only the flush is good, the pot needs to be
 
-$$9{,}000 / 19.6\% \approx 45{,}900$$
+$$9{,}000 / 19.6\\% \approx 45{,}900$$
 
-or 7,700 more than it currently offers (implied odds). With the quick rule: $9{,}000 / 18\% \approx 50{,}000 - 38{,}200 = 11{,}800$ more.
+or 7,700 more than it currently offers (implied odds). With the quick rule: $9{,}000 / 18\\% \approx 50{,}000 - 38{,}200 = 11{,}800$ more.
 
 The Villain has 10,000 left after this bet, so the 11,800 more required by the quick rule is not realistic, while the 7,700 more from the exact solution probably is.
 
@@ -187,23 +188,23 @@ The Villain has 10,000 left after this bet, so the 11,800 more required by the q
 
 **(3.1)** Fold equity:
 
-$$70\% \times 10{,}000 - 30\% \times 6{,}000 = 5{,}200$$
+$$70\\% \times 10{,}000 - 30\\% \times 6{,}000 = 5{,}200$$
 
-**(3.2)** Hero's equity against SB's calling range (74 / K7 / K4 / 44 / 77 / KK) is 29% (quick rule: $8 \times 4\% = 32\%$).
+**(3.2)** Hero's equity against SB's calling range (74 / K7 / K4 / 44 / 77 / KK) is 29% (quick rule: $8 \times 4\\% = 32\\%$).
 
-$$EV = 16{,}000 \times 29\% - 6{,}000 \times 71\% = 380$$
+$$EV = 16{,}000 \times 29\\% - 6{,}000 \times 71\\% = 380$$
 
 (i.e., we prefer a call)
 
 **(3.3)** Yes:
 
-$$EV = 70\% \times 10{,}000 + 30\% \times \left[16{,}000 \times 29\% - 6{,}000 \times 71\%\right] = 7{,}114$$
+$$EV = 70\\% \times 10{,}000 + 30\\% \times \left[16{,}000 \times 29\\% - 6{,}000 \times 71\\%\right] = 7{,}114$$
 
 **(3.4)** Let $F$ be SB's folding frequency, and set $EV = 0$:
 
-$$0 = F \times 10{,}000 + (1-F) \times \left[16{,}000 \times 29\% - 6{,}000 \times 71\%\right]$$
+$$0 = F \times 10{,}000 + (1-F) \times \left[16{,}000 \times 29\\% - 6{,}000 \times 71\\%\right]$$
 
-which solves at $F < 0\%$. We have the pot odds to see two more cards, so it is profitable even if he calls 100% of the time.
+which solves at $F < 0\\%$. We have the pot odds to see two more cards, so it is profitable even if he calls 100% of the time.
 
 ### Question 4
 
@@ -211,19 +212,19 @@ which solves at $F < 0\%$. We have the pot odds to see two more cards, so it is 
 
 **(4.2)** Hero has 8 outs (a 3 or an 8, an open-ended straight draw):
 
-$$1 - \frac{39}{47}\times\frac{38}{46} \approx 31\% \quad(\text{quick rule: } 8 \times 4\% = 32\%)$$
+$$1 - \frac{39}{47}\times\frac{38}{46} \approx 31\\% \quad(\text{quick rule: } 8 \times 4\\% = 32\\%)$$
 
 **(4.3)** Hero must call $15{,}700 - 6{,}000 = 9{,}700$ into a pot that will be 41,400 after the call:
 
-$$\frac{9{,}700}{41{,}400} \approx 23\%$$
+$$\frac{9{,}700}{41{,}400} \approx 23\\%$$
 
 **(4.4)** Yes:
 
-$$EV = 31{,}700 \times 31\% - 9{,}700 \times 69\% = 3{,}134$$
+$$EV = 31{,}700 \times 31\\% - 9{,}700 \times 69\\% = 3{,}134$$
 
 **(4.5)** Let $x$ be the largest callable raise:
 
-$$\frac{x}{22{,}000 + 2x} = 31\% \;\Rightarrow\; x \approx 17{,}947$$
+$$\frac{x}{22{,}000 + 2x} = 31\\% \\;\Rightarrow\\; x \approx 17{,}947$$
 
 ---
 

@@ -1,3 +1,4 @@
+<!-- escape-math: v1 -->
 # L4 Preflop Analysis
 
 Preflop is the most precisely solvable decision point in tournament poker: the variables are few, the math is clean, and most live players get it spectacularly wrong. This chapter starts from a seemingly foldable trash hand, builds the language of ranges, and then systematically derives push/fold rules for heads-up and multi-way play at M ≤ 10.
@@ -14,7 +15,7 @@ No-limit hold'em tournament, blinds 125/250 with a 25 ante. The big blind, trifl
 
 A preflop all-in is essentially a semi-bluff: even when called, we are virtually never worse than 30% to win. Using the semi-bluff EV formula:
 
-$$EV = Pot \times Fold\% + (1-Fold\%) \times (Win\% \times WinAmt - Lose\% \times LoseAmt)$$
+$$EV = Pot \times Fold\\% + (1-Fold\\%) \times (Win\\% \times WinAmt - Lose\\% \times LoseAmt)$$
 
 Assume the opponent calls with 22+, A2+, JT+ (27.60% of all starting hands, a fairly wide calling range). Plugging 96o versus that range into PokerTracker's equity calculator: we never need to know his exact hand, only that "if he calls, he is equally likely to hold any hand in the range." Against {22+, A2+, JT+}, 96o wins **34.26%** of the time; when called, we are roughly a 35–65 underdog.
 
@@ -25,15 +26,15 @@ $$LoseAmt = 1100 - (125+25) = 950$$
 
 Plugging in: the EV of folding is 0, while the EV of pushing is
 
-$$EV_{push} = (1-27.6\%) \times 425 + 27.6\% \times [34.26\% \times 1250 - 65.74\% \times 950] = 307.7 - 54.2 = \mathbf{253.5}$$
+$$EV\_{push} = (1-27.6\\%) \times 425 + 27.6\\% \times [34.26\\% \times 1250 - 65.74\\% \times 950] = 307.7 - 54.2 = \mathbf{253.5}$$
 
 In this seemingly marginal spot, pushing earns 253.5 chips on average, and it only takes 1000 chips to win the whole tournament. Put another way, folding hands the opponent about 250 chips for free.
 
 ### Generalizing: The Conclusion Does Not Depend on the Call-Range Assumption
 
-The calculation above assumed a specific calling range. Make the call frequency $F\%$ a variable (the win rate $W\%$ moves with $F\%$: the tighter he calls, the more crushed we are when called):
+The calculation above assumed a specific calling range. Make the call frequency $F\\%$ a variable (the win rate $W\\%$ moves with $F\\%$: the tighter he calls, the more crushed we are when called):
 
-$$EV_{push} = (1-F\%) \times 425 + F\% \times [W\% \times 1250 - (1-W\%) \times 950]$$
+$$EV\_{push} = (1-F\\%) \times 425 + F\\% \times [W\\% \times 1250 - (1-W\\%) \times 950]$$
 
 ![Push EV as a function of the opponent's call frequency: total equity = fold equity + showdown equity, and it stays positive throughout](assets/ch04-1.png)
 
@@ -41,7 +42,7 @@ As shown above, Total Equity = Fold Equity + Showdown Equity. Fold equity declin
 
 How bad is folding? Open-folding this hand costs about 175 chips of EV, worse than calling an all-in with 3♣4♦ against A♠K♠:
 
-$$1250 \times 35.42\% - 950 \times 64.58\% = -171$$
+$$1250 \times 35.42\\% - 950 \times 64.58\\% = -171$$
 
 ### Counterintuitiveness and Chapter Goals
 
@@ -76,7 +77,7 @@ The Sklansky-Karlson ranking comes from Sklansky's October 4, 2003 post "Importa
 
 Derivation: assume the big blind calls only when his win probability is ≥ 50% (ignoring the subtle effect of pot odds, which shifts x only slightly and does not change the hand ordering). Then the BB's calling range is A8+, 22+ (13.12% of hands), and A8o wins 33% against it. Setting EV to zero for the break-even point:
 
-$$EV = 87\% \times 3 + 13\% \times [33\% \times x - 67\% \times (x-1)] = 0 \Rightarrow x \approx 62$$
+$$EV = 87\\% \times 3 + 13\\% \times [33\\% \times x - 67\\% \times (x-1)] = 0 \Rightarrow x \approx 62$$
 
 So with 62 chips or fewer, shoving A8o face-up is +EV. Each hand's x value depends on two factors: **how many hands you are marginally better than** (which drives fold equity) and **your chance of winning when behind** (which drives showdown equity when called). Victor Chubukov (Karlson) solved for every hand on October 24 of the same year. AA has x = ∞: face-up shoving aces never loses chips on average, no matter the stack. KK has x = 1290, verifiable via $0 = 0.9955 \times 3 + 0.0045 \times (0.1805x - 0.8195(x-1))$, which crosses zero near x ≈ 1040. The list runs all the way down to 32o with x ≈ 1.8. An alternative ranking (equity versus three random hands) may be more relevant for multi-way pots, but this course generally assumes a single caller, so we use Sklansky-Karlson.
 
@@ -126,7 +127,7 @@ In PokerTracker, fix our range and compute equity against each of the opponent's
 
 Running a multiple regression on the whole table with logarithmic variables gives:
 
-$$HeroWin\% = 50\% + 0.085 \times \ln(VillainRange) - 0.085 \times \ln(HeroRange) + \varepsilon$$
+$$HeroWin\\% = 50\\% + 0.085 \times \ln(VillainRange) - 0.085 \times \ln(HeroRange) + \varepsilon$$
 
 $R^2 = 0.98$ (81 observations, standard error 0.01). The 50% intercept and the two identical-magnitude coefficients (symmetry) are intriguing and intuitive. The wider he calls, the more weak hands he holds and the higher our equity; the wider we push, the more weak hands we hold ourselves and the lower our equity. The error concentrates in extremely tight ranges below 5% and is tolerable elsewhere. At M < 10 nobody plays a sub-5% range, so we can ignore it.
 
@@ -135,13 +136,13 @@ $R^2 = 0.98$ (81 observations, standard error 0.01). The 50% intercept and the t
 Let the small blind plus big blind equal 1 (all EV measured in M):
 
 $$EV = FoldEquity + ShowdownValue$$
-$$FoldEquity = 1 \times (1 - VillainCall\%)$$
-$$ShowdownValue = VillainCall\% \times [SDWinAmt \times HeroWin\% - SDLoseAmt \times HeroLose\%]$$
+$$FoldEquity = 1 \times (1 - VillainCall\\%)$$
+$$ShowdownValue = VillainCall\\% \times [SDWinAmt \times HeroWin\\% - SDLoseAmt \times HeroLose\\%]$$
 $$SDWinAmt = Stack + \tfrac{2}{3}, \quad SDLoseAmt = Stack$$
 
 (The +2/3 comes from winning one big blind; whether the stack is recorded before or after posting the blind introduces a ±1/3 nuance that makes little difference.) Substituting the Step 2 equity model yields one big equation in only three variables: his call frequency, our push frequency, and stack size:
 
-$$EV = (1 - VillainCall\%) + VillainCall\% \times \left[\left(Stack + \tfrac{2}{3}\right) \times HeroWin\% - Stack \times HeroLose\%\right]$$
+$$EV = (1 - VillainCall\\%) + VillainCall\\% \times \left[\left(Stack + \tfrac{2}{3}\right) \times HeroWin\\% - Stack \times HeroLose\\%\right]$$
 
 ### Step 4: Nash Equilibria
 
@@ -208,7 +209,7 @@ Therefore the minimum required win rate = 50% + 5% × players remaining behind, 
 | 1 | 55% | 55% |
 | 0 | 50% | 100% |
 
-Example: the opponent pushes the top 50% from the cutoff (CO), we are on the button (BTN) with 2 players behind; we need 60% equity. We should call 50% × 30% = top 15%. Verifying with the two-factor model: $Win\% = 50\% + 0.085\ln(50\%) - 0.085\ln(15\%) = 60.2\%$ ✓
+Example: the opponent pushes the top 50% from the cutoff (CO), we are on the button (BTN) with 2 players behind; we need 60% equity. We should call 50% × 30% = top 15%. Verifying with the two-factor model: $Win\\% = 50\\% + 0.085\ln(50\\%) - 0.085\ln(15\\%) = 60.2\\%$ ✓
 
 Calling rules of thumb by position (conservative estimates, so a threshold call is usually very +EV; they also rely heavily on reading the opponent's pushing range):
 
@@ -252,7 +253,7 @@ In short: at M < 10 you can always push the top 10%; at M < 1 push very wide fro
 - A preflop all-in is a semi-bluff: EV = fold equity + showdown equity. In short-stack heads-up play this value is nearly always positive, and folding a "trash hand" can cost more than calling an all-in with 3♣4♦ against A♠K♠.
 - A range is a set of hands; use Sklansky-Karlson rankings to map ranges to percentiles, and memorize the five simplified ranges (5% / 10% / 20% / 30% / 50%). Every hand in an optimal range is individually +EV.
 - At M < 10, assume opponents call with a "top x%" range, ignore ICM, and restrict yourself to push/fold; raising forfeits fold equity, so just shove.
-- Range-versus-range equity is estimated by the two-factor logarithmic model $Win\% = 50\% + 0.085\ln(V\%) - 0.085\ln(H\%)$, $R^2 = 0.98$, which fails only for sub-5% ultra-tight ranges.
+- Range-versus-range equity is estimated by the two-factor logarithmic model $Win\\% = 50\\% + 0.085\ln(V\\%) - 0.085\ln(H\\%)$, $R^2 = 0.98$, which fails only for sub-5% ultra-tight ranges.
 - Heads-up pushing: against a tight opponent push 100%; otherwise push 100% at M = 1, drifting to 50% at M = 10; pushing less than 50% of hands is the biggest mistake.
 - Heads-up calling: the BB's optimal call% = SB push% × multiple (10× at M=1, 2× at M=2, 1× at M=4, 2/3× at M=6, 1/2× at M=9).
 - Full-table calling: minimum win rate = 50% + 5% × players remaining, calling range = opponent's pushing range × position multiple (MP 5%, LP 10%, CO 30%, SB 50%). The core question: "is his pushing range 3× wider than my cards?"

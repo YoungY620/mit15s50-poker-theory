@@ -1,3 +1,4 @@
+<!-- escape-math: v1 -->
 # Case 2: Push/Fold Strategy and the Sklansky-Karlson Model
 
 > MIT 15.S50 Poker Theory and Analytics (IAP 2015, Kevin Desmond)
@@ -9,7 +10,7 @@
 
 ### Scenario
 
-It is Saturday, June 7, 2014, and you are deep in the first round of the World Series of Poker (WSOP) Event #20 \$3000 NLHE Shootout. Each of the 40 ten-player tables plays down to 1 player, and the 40 winners from Day 1 form new tables on Day 2. Your table is down to two players from the starting ten, and you lead in chips, 78,000 to the other player's 12,000.
+It is Saturday, June 7, 2014, and you are deep in the first round of the World Series of Poker (WSOP) Event #20 \\$3000 NLHE Shootout. Each of the 40 ten-player tables plays down to 1 player, and the 40 winners from Day 1 form new tables on Day 2. Your table is down to two players from the starting ten, and you lead in chips, 78,000 to the other player's 12,000.
 
 The table is 2-handed as follows. Blinds are 500/1000 with 200 antes.
 
@@ -85,18 +86,18 @@ You advance to the next round and join a 4-handed table, playing down to two pla
 
 **(1.4)**
 
-- Model: $50\% + 0.085 \times \ln(5.88\%) - 0.085 \times \ln(100\%) \approx 26\%$
+- Model: $50\\% + 0.085 \times \ln(5.88\\%) - 0.085 \times \ln(100\\%) \approx 26\\%$
 - Exact: 33%
 
 **(1.5)**
 
 - Exact:
 
-$$EV = 1{,}900 \times 94.12\% + 5.88\% \times \left(33\% \times 10{,}800 - 67\% \times 11{,}300\right) \approx 1{,}553$$
+$$EV = 1{,}900 \times 94.12\\% + 5.88\\% \times \left(33\\% \times 10{,}800 - 67\\% \times 11{,}300\right) \approx 1{,}553$$
 
 - Model:
 
-$$EV = 1{,}900 \times 94.12\% + 5.88\% \times \left(26\% \times 10{,}800 - 74\% \times 11{,}300\right) \approx 1{,}462$$
+$$EV = 1{,}900 \times 94.12\\% + 5.88\\% \times \left(26\\% \times 10{,}800 - 74\\% \times 11{,}300\right) \approx 1{,}462$$
 
 ### Question 2
 
@@ -104,7 +105,7 @@ $$EV = 1{,}900 \times 94.12\% + 5.88\% \times \left(26\% \times 10{,}800 - 74\% 
 
 **(2.2)** No. The top 30% of hands has about 40% equity against 22+:
 
-$$EV = 40\% \times 12{,}000 - 60\% \times 9{,}600 = -960$$
+$$EV = 40\\% \times 12{,}000 - 60\\% \times 9{,}600 = -960$$
 
 **(2.3)** Yes.
 
@@ -112,7 +113,7 @@ $$EV = 40\% \times 12{,}000 - 60\% \times 9{,}600 = -960$$
 
 **(2.5)**
 
-$$EV = 95.78\% \times 1{,}900 + 4.22\% \times \left(39.67\% \times 11{,}500 - 60.33\% \times 10{,}100\right) \approx 1{,}755$$
+$$EV = 95.78\\% \times 1{,}900 + 4.22\\% \times \left(39.67\\% \times 11{,}500 - 60.33\\% \times 10{,}100\right) \approx 1{,}755$$
 
 ### Question 3
 
@@ -122,7 +123,7 @@ $$EV = 95.78\% \times 1{,}900 + 4.22\% \times \left(39.67\% \times 11{,}500 - 60
 
 **(3.3)** Let $x$ be the stack size (in M), and set $EV = 0$. T♦5♦ has 35.67% equity against this range:
 
-$$0 = 70\% \times 1 + 30\% \times \left(35.67\% \times \left(x + \tfrac{1}{3}\right) - 64.33\% \times \left(x - \tfrac{1}{3}\right)\right)$$
+$$0 = 70\\% \times 1 + 30\\% \times \left(35.67\\% \times \left(x + \tfrac{1}{3}\right) - 64.33\\% \times \left(x - \tfrac{1}{3}\right)\right)$$
 
 which solves at $x \approx 9.3\text{M}$.
 
@@ -130,9 +131,9 @@ which solves at $x \approx 9.3\text{M}$.
 
 **(3.5)** Any two cards.
 
-**(3.6)** Let $P\%$ be the pushing frequency, and maximize
+**(3.6)** Let $P\\%$ be the pushing frequency, and maximize
 
-$$EV = P\% \times \left[\left(0.50 + 0.085\ln(1) - 0.085\ln(P\%)\right) \times 5.33 - \left(1 - \left(0.50 + 0.085\ln(1) - 0.085\ln(P\%)\right)\right) \times 4.67\right]$$
+$$EV = P\\% \times \left[\left(0.50 + 0.085\ln(1) - 0.085\ln(P\\%)\right) \times 5.33 - \left(1 - \left(0.50 + 0.085\ln(1) - 0.085\ln(P\\%)\right)\right) \times 4.67\right]$$
 
 which peaks at $EV = 0.46$ when Push% ≈ 54%. So the optimal pushing range is roughly the top 54% of hands.
 

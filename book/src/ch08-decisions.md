@@ -1,3 +1,4 @@
+<!-- escape-math: v1 -->
 # L8 Decision Making
 
 This chapter is a guest lecture by Matt Hawrilenko (WSOP bracelet winner, once regarded as one of the best limit hold'em players in the world). In the previous lecture Bill Chen presented Cepheus, the computer program that solved heads-up limit hold'em; this lecture approaches the problem from the other side: how can a human actually apply game theory at the table? The method is to solve two extremely simple toy games, map the principles onto one real high-stakes tournament hand, and distill training principles that can guide your development long after the course ends.
@@ -12,15 +13,15 @@ The theorist can solve games and dynamical systems; the practitioner cares about
 
 ## A Real Hand
 
-Here is the hand that runs through the entire lecture. A WSOP tournament a few years ago, in the money, six-handed, blinds \$12,000/\$24,000 with a \$3,000 ante. The narrator (hero) raises two off the button with A♣A♥, and an opponent who is clearly the better player calls.
+Here is the hand that runs through the entire lecture. A WSOP tournament a few years ago, in the money, six-handed, blinds \\$12,000/\\$24,000 with a \\$3,000 ante. The narrator (hero) raises two off the button with A♣A♥, and an opponent who is clearly the better player calls.
 
-- **Flop** K♥J♦8♠: the opponent checks, hero bets, the opponent calls (pot \$160,000).
-- **Turn** 5♣: the opponent checks, hero bets about 2/3 of the pot, the opponent calls (pot \$310,000).
-- **River** K♣: the opponent leads out for about \$1,080,000 into a \$720,000 pot.
+- **Flop** K♥J♦8♠: the opponent checks, hero bets, the opponent calls (pot \\$160,000).
+- **Turn** 5♣: the opponent checks, hero bets about 2/3 of the pot, the opponent calls (pot \\$310,000).
+- **River** K♣: the opponent leads out for about \\$1,080,000 into a \\$720,000 pot.
 
-![The river situation: the opponent bets \$1,080,000 into a \$720,000 pot; hero holds A♣A♥](assets/ch08-1.png)
+![The river situation: the opponent bets \\$1,080,000 into a \\$720,000 pot; hero holds A♣A♥](assets/ch08-1.png)
 
-Hero has no idea what is going on. What does a bet of 1.5 times the pot mean? Why isn't he putting hero all in? Is he trying to entice a call, or trying to save \$300,000 in case hero folds? Most people's instinct at this moment is to gather more "information" to narrow the opponent's range: has he shown down big bluffs before? Should we stare him down for tells?
+Hero has no idea what is going on. What does a bet of 1.5 times the pot mean? Why isn't he putting hero all in? Is he trying to entice a call, or trying to save \\$300,000 in case hero folds? Most people's instinct at this moment is to gather more "information" to narrow the opponent's range: has he shown down big bluffs before? Should we stare him down for tells?
 
 ## "The Other Side Can Do Magic Too"
 
@@ -40,21 +41,21 @@ The problem is that a complete strategy cannot be memorized: heads-up limit hold
 
 A **clairvoyance game** is one in which one or both players have complete information about the game state: if you always knew your opponent's hand, and he knew that you knew, how would you play? The rules of **Coin Flip Clairvoyance**:
 
-1. Each player antes \$1 (pot \$2).
+1. Each player antes \\$1 (pot \\$2).
 2. Flip a coin: heads you win, tails your opponent wins. But only you see the result.
-3. You may bet \$1 or check; your opponent can only check/call or fold.
+3. You may bet \\$1 or check; your opponent can only check/call or fold.
 
 Scenario one: heads, so you obviously bet. Scenario two: tails, so what now? The core is two questions: how often should your opponent call, and how often should you bluff?
 
 **Calling frequency.** The caller wants to make the opponent indifferent between bluffing and giving up, i.e., set the two expectations equal:
 
-$$E(\text{bluffing}) = E(\text{giving up}) \;\Longrightarrow\; P(1-C) = 1 \cdot C \;\Longrightarrow\; C = \frac{P}{P+1},$$
+$$E(\text{bluffing}) = E(\text{giving up}) \\;\Longrightarrow\\; P(1-C) = 1 \cdot C \\;\Longrightarrow\\; C = \frac{P}{P+1},$$
 
 where $P$ is the pot size, $C$ the calling frequency, and $1$ the bluff bet. The left side is what a bluff wins (the pot times the opponent's folding rate); the right side is what a bluff loses when caught. Here $P = 2$, so the opponent should call $2/3$ of the time. Note that the bigger the pot, the higher the calling frequency; $C$ asymptotes to $1$. The money is already in the pot, so you must defend more against being bluffed out of it.
 
 **Bluffing frequency.** The bluffer wants to make the opponent indifferent between calling and folding. Writing the ratio of bluffs to value bets as $b$ (rather than a percentage) keeps the algebra clean:
 
-$$E(\text{calling}) = E(\text{folding}) \;\Longrightarrow\; b\,(P+1) - 1 = 0 \;\Longrightarrow\; b = \frac{1}{P+1}.$$
+$$E(\text{calling}) = E(\text{folding}) \\;\Longrightarrow\\; b\\,(P+1) - 1 = 0 \\;\Longrightarrow\\; b = \frac{1}{P+1}.$$
 
 That is, when the opponent calls, she wins $P+1$ against a bluff with probability $b$ and loses her call with probability $1$. Here $b = 1/3$: one bluff for every two value bets. The bigger the pot, the *lower* the bluffing proportion: the value is already in the pot and the opponent calls more, so you need few bluffs to collect your value.
 
@@ -72,7 +73,7 @@ The more your opponent bets, the less frequently you need to call; the more she 
 
 The **Ace-King-Queen game** is the most classic toy game of incomplete information:
 
-1. Each player antes \$1 and is dealt one card from {A, K, Q} (if you hold the ace, your opponent holds only the king or the queen).
+1. Each player antes \\$1 and is dealt one card from {A, K, Q} (if you hold the ace, your opponent holds only the king or the queen).
 2. Player 1 may check or bet.
 3. Player 2 can only check/call or fold.
 
@@ -88,7 +89,7 @@ These three cases involve **dominant and dominated strategies**: a dominated str
 - **You hold the queen**: bet some of the time (bluff).
 - **Opponent bets, you hold the king**: a mixed strategy, calling some of the time (bluff catch).
 
-How often should you call? Applying the formula from the previous section, you should continue at frequency $\frac{1}{1+S}$ with the hands that beat a bluff. Here $S = 0.5$ (betting \$1 into a \$2 pot), so the calling frequency is $2/3$. The hands that beat a bluff are aces and kings (the queen cannot beat even a bluff). Aces are half of those hands, and calling all of them only reaches $1/2$; you need another $1/6$: **call with all your aces and with $1/3$ of your kings** ($1/2 + 1/3 \times 1/2 = 2/3$).
+How often should you call? Applying the formula from the previous section, you should continue at frequency $\frac{1}{1+S}$ with the hands that beat a bluff. Here $S = 0.5$ (betting \\$1 into a \\$2 pot), so the calling frequency is $2/3$. The hands that beat a bluff are aces and kings (the queen cannot beat even a bluff). Aces are half of those hands, and calling all of them only reaches $1/2$; you need another $1/6$: **call with all your aces and with $1/3$ of your kings** ($1/2 + 1/3 \times 1/2 = 2/3$).
 
 Note how this differs from pot-odds thinking. Holding the king against a bet, pot-odds thinking asks "am I ahead at least $1/3$ of the time?", which requires divining the opponent's hand. Game-theoretic thinking asks "what must I do to make my opponent indifferent to bluffing?"; you only need to manage your own entire range.
 
@@ -98,7 +99,7 @@ The three inscriptions at the Temple of Apollo at Delphi summarize everything so
 
 ## Three Levels of Thinking About the Same Hand
 
-Back to the opening hand. Facing the \$1,080,000 river bet, there are three levels on which people think:
+Back to the opening hand. Facing the \\$1,080,000 river bet, there are three levels on which people think:
 
 1. **My hand vs. your hand**: I have aces; what does he have? KQ? KT? QT? Q9? Pinning an opponent to one specific hand is both hard and not very useful.
 2. **My hand vs. your distribution**: how are my aces doing against "all the hands you might hold given the action so far"? Here a **distribution** is the frequency distribution of hands a player might hold, given all the action that has occurred.
@@ -139,9 +140,9 @@ Now walk through the opening hand in full. The narrator raised two off the butto
 **310 combinations** (combos) in total.
 
 - **Flop K♥J♦8♠, card-removal update**: combos containing a K, J, or 8 shrink (88, JJ, KK 6→3 each; AK 16→12; KJ 16→9; 86s, T8s, J9s 4→3 each; A2s–A9s 32→31; etc.), total 310→**263**.
-- **Flop action update** (opponent checks, hero bets \$75,000): delete the hands that would not bet — 66, 77, 99, TT, 86s, 97s, T8s, 98s, 87s, AQ, AT, A2s–A9s go to zero, total→**160**. Exactly which hands should check behind is debatable; the point is that the distribution is narrowing.
+- **Flop action update** (opponent checks, hero bets \\$75,000): delete the hands that would not bet — 66, 77, 99, TT, 86s, 97s, T8s, 98s, 87s, AQ, AT, A2s–A9s go to zero, total→**160**. Exactly which hands should check behind is debatable; the point is that the distribution is narrowing.
 - **Turn 5♣, card-removal update**: 55 6→3, 65s 4→3, total→**156**.
-- **Turn action update** (opponent checks, hero bets \$205,000, opponent calls): delete 22, 33, 44, JT, J9s, 65s, etc., total→**120**.
+- **Turn action update** (opponent checks, hero bets \\$205,000, opponent calls): delete 22, 33, 44, JT, J9s, 65s, etc., total→**120**.
 
 Now run a balance check: on the turn hero is value betting about 96 combos, leaving 24 combos as bluffs. By the formula, bluffs should be $\frac{S}{1+S}$ of value bets, i.e., about $96 \times \frac{0.4}{1.4} \approx 27$ combos. The actual number, 24, is pretty good. There is no need to agonize over individual hands on each street; the point is to ask yourself regularly, "am I roughly balanced on this street?"
 
@@ -149,9 +150,9 @@ Now run a balance check: on the turn hero is value betting about 96 combos, leav
 
 ## The River Decision
 
-The opponent bets \$1,080,000 into a \$720,000 pot, so $S = 1.5$, and hero should call with the hands that beat a bluff at frequency
+The opponent bets \\$1,080,000 into a \\$720,000 pot, so $S = 1.5$, and hero should call with the hands that beat a bluff at frequency
 
-$$\frac{1}{1+S} = \frac{1}{2.5} = 40\%.$$
+$$\frac{1}{1+S} = \frac{1}{2.5} = 40\\%.$$
 
 Rank the 102 combos from strongest to weakest and accumulate the frequencies (QJ is roughly the worst hand that still beats a bluff), giving:
 

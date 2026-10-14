@@ -1,3 +1,4 @@
+<!-- escape-math: v1 -->
 # L1 Introduction to Poker Theory
 
 This opening chapter sets up the whole course: the roadmap of topics and the "concepts–practice–advanced" learning framework, the quantitative yardsticks for what counts as a winning player, and three foundational tools and concepts that recur throughout the book. The three are hand history analysis software, the effective stack, and Harrington's M ratio.
@@ -24,9 +25,9 @@ A "winner" in poker must be defined by a quantitative metric, and each format ha
 | Cash games (live) | Big blinds won per hour, BB/hour | 5 BB/hour |
 | Multi-table tournaments (MTT) | Return on investment (ROI) | 30% |
 | Sit-and-Go's (SnG) | Return on investment (ROI) | 15% |
-| General | Hourly rate | \$50–\$200/hour |
+| General | Hourly rate | \\$50–\\$200/hour |
 
-The lecture video's worked example of ROI (from the blackboard, not the slides): ROI = total returned ÷ amount invested − 1. Invest \$100k, get back \$150k in total, and ROI = 150k/100k − 1 = 50%.
+The lecture video's worked example of ROI (from the blackboard, not the slides): ROI = total returned ÷ amount invested − 1. Invest \\$100k, get back \\$150k in total, and ROI = 150k/100k − 1 = 50%.
 
 ## Perspective of the Course
 
@@ -104,13 +105,13 @@ For tournaments, M also provides a way to normalize decisions across blind level
 Harrington proposed two further ratios that never caught on:
 
 - **Q ratio** $Q = \dfrac{\text{your stack}}{\text{average player's stack}}$, measuring your relative position in the tournament: at Q = 5 there is no need to be aggressive, while Q = 0.2 means you are far from the money with a lot of catching up to do.
-- **Effective M ratio** $M_{\text{eff}} = M \times \dfrac{\text{players at the table}}{10}$. Its motivation is the "how many rounds can you survive" reading. At a 10-handed table, M = 10 means surviving 10 more rounds of blinds. But with only 3 players you pay a blind every other hand and your real survival time shrinks sharply, so M is discounted proportionally to how shorthanded the table is. This differs from the instructor's reading of M (the stack's value relative to the blinds) and is rarely used in practice.
+- **Effective M ratio** $M\_{\text{eff}} = M \times \dfrac{\text{players at the table}}{10}$. Its motivation is the "how many rounds can you survive" reading. At a 10-handed table, M = 10 means surviving 10 more rounds of blinds. But with only 3 players you pay a blind every other hand and your real survival time shrinks sharply, so M is discounted proportionally to how shorthanded the table is. This differs from the instructor's reading of M (the stack's value relative to the blinds) and is rarely used in practice.
 
 ## Key Takeaways
 
 - Course roadmap: basic strategy → analysis techniques → preflop analysis (the centerpiece) → tournament play → poker economics → game theory → decision making.
 - Learning proceeds in three layers: concepts (C, un-exploitable ABC play), practice (P, real-time rules of thumb), and advanced techniques (A, exploitive adjustments and the metagame). Become a slightly winning player before chasing big wins.
-- Quantitative standards for winning: 5 BB/100 (online) or 5 BB/hour (live) in cash games; ROI around 30% (MTT) / 15% (SnG) in tournaments; hourly of \$50–\$200. Balance ROI against hourly by moving up or down in stakes; ROI = total returned ÷ invested − 1 (e.g. \$100k in, \$150k back → 50% ROI).
+- Quantitative standards for winning: 5 BB/100 (online) or 5 BB/hour (live) in cash games; ROI around 30% (MTT) / 15% (SnG) in tournaments; hourly of \\$50–\\$200. Balance ROI against hourly by moving up or down in stakes; ROI = total returned ÷ invested − 1 (e.g. \\$100k in, \\$150k back → 50% ROI).
 - Analysis infrastructure: always save your hand histories; PokerTracker for statistical analysis, Universal Replayer for visual review.
 - Effective stack $= \min(\text{your stack},\ \text{biggest stack still in play})$, i.e. the most you can lose in one hand; always base decisions on the effective stack, not the nominal one.
 - The four style quadrants: TAG (tight-aggressive, recommended) and LAG (loose-aggressive) can win; TP (tight-passive) is sub-optimal; LP (loose-passive, calling machine) is the guaranteed-losing fish. Both axes are quantifiable: tightness ↔ VPIP, aggression ↔ AF.
