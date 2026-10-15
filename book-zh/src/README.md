@@ -27,3 +27,5 @@
 
 - [MIT OCW 课程主页](https://ocw.mit.edu/courses/15-s50-poker-theory-and-analytics-january-iap-2015/)（含 8 讲完整视频）
 - 课程软件：[PokerStars](http://www.pokerstars.net/)（练习平台）、[PokerTracker](http://www.pokertracker.com/)（数据分析）、[Universal Replayer](http://www.universal-replayer.net/)（手牌回放）
+
+> 本书由 [course-textbook-builder](https://gist.github.com/YoungY620/d4932154735b55903d5a53b5f6f406c9) 流程生成。

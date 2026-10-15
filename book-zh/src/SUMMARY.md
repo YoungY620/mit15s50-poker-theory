@@ -19,3 +19,7 @@
 - [Case 1](cases/case1.md)
 - [Case 2](cases/case2.md)
 - [Case 3](cases/case3.md)
+
+# 附录
+
+- [术语表](glossary.md)

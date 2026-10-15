@@ -1,12 +1,12 @@
 // 真实渲染检查：无头 Chromium 逐页加载 mdBook 站点
 // 用法: node check.js [baseURL]
-//   默认 http://127.0.0.1:8736（先在被检目录起 python3 -m http.server 8734）
+//   默认 http://127.0.0.1:8735（先在被检目录起 python3 -m http.server 8734）
 //   也可传 https://youngy620.github.io/mit15s50-poker-theory 检查线上
 const { chromium } = require('playwright-core');
 const fs = require('fs');
 const path = require('path');
 
-const BASE = process.argv[2] || 'http://127.0.0.1:8736';
+const BASE = process.argv[2] || 'http://127.0.0.1:8735';
 const CHROME = process.env.CHROME_PATH ||
   `${process.env.HOME}/Library/Caches/ms-playwright/chromium-1124/chrome-mac/Chromium.app/Contents/MacOS/Chromium`;
 const SHOTS = path.join(__dirname, 'shots');
@@ -15,7 +15,7 @@ const PAGES = [
   'index.html', 'ch01-intro.html', 'ch02-analysis.html', 'ch03-basic-strategy.html',
   'ch04-preflop.html', 'ch05-tournament.html', 'ch06-poker-economics.html',
   'ch07-game-theory.html', 'ch08-decisions.html',
-  'cases/case1.html', 'cases/case2.html', 'cases/case3.html',
+  'cases/case1.html', 'cases/case2.html', 'cases/case3.html', 'glossary.html',
 ];
 
 (async () => {

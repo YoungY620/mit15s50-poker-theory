@@ -29,3 +29,5 @@ Poker (no-limit Texas hold'em) is a decision environment with incomplete informa
 
 - [MIT OCW course home](https://ocw.mit.edu/courses/15-s50-poker-theory-and-analytics-january-iap-2015/) (full lecture videos)
 - Course software: [PokerStars](http://www.pokerstars.net/) (play platform), [PokerTracker](http://www.pokertracker.com/) (analysis), [Universal Replayer](http://www.universal-replayer.net/) (hand replay)
+
+> Generated with the [course-textbook-builder](https://gist.github.com/YoungY620/d4932154735b55903d5a53b5f6f406c9) workflow.
